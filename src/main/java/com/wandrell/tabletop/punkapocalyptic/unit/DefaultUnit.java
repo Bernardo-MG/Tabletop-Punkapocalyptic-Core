@@ -12,195 +12,194 @@ import com.wandrell.tabletop.valuehandler.ValueHandler;
 
 public final class DefaultUnit implements Unit {
 
-    private final ValueHandler<Integer> actions;
-    private final ValueHandler<Integer> agility;
-    private Armor armor;
-    private final ValueHandler<Integer> combat;
-    private final Collection<Equipment> equipment = new LinkedList<>();
-    private final String name;
-    private final ValueHandler<Integer> precision;
-    private final Collection<SpecialRule> rules = new LinkedList<>();
-    private final ValueHandler<Integer> strength;
-    private final ValueHandler<Integer> tech;
-    private final ValueHandler<Integer> toughness;
-    private final Collection<Weapon> weapons = new LinkedList<>();
-    private final ValueHandler<Integer> weaponSlots;
+    private final ValueHandler            actions;
+    private final ValueHandler            agility;
+    private Armor                         armor;
+    private final ValueHandler            combat;
+    private final Collection<Equipment>   equipment = new LinkedList<>();
+    private final String                  name;
+    private final ValueHandler            precision;
+    private final Collection<SpecialRule> rules     = new LinkedList<>();
+    private final ValueHandler            strength;
+    private final ValueHandler            tech;
+    private final ValueHandler            toughness;
+    private final Collection<Weapon>      weapons   = new LinkedList<>();
+    private final ValueHandler            weaponSlots;
 
     public DefaultUnit(final DefaultUnit unit) {
-	super();
+        super();
 
-	name = unit.name;
+        name = unit.name;
 
-	actions = unit.actions.createNewInstance();
-	agility = unit.agility.createNewInstance();
-	combat = unit.combat.createNewInstance();
-	precision = unit.precision.createNewInstance();
-	strength = unit.strength.createNewInstance();
-	tech = unit.tech.createNewInstance();
-	toughness = unit.toughness.createNewInstance();
+        actions = unit.actions.createNewInstance();
+        agility = unit.agility.createNewInstance();
+        combat = unit.combat.createNewInstance();
+        precision = unit.precision.createNewInstance();
+        strength = unit.strength.createNewInstance();
+        tech = unit.tech.createNewInstance();
+        toughness = unit.toughness.createNewInstance();
 
-	weaponSlots = unit.weaponSlots.createNewInstance();
+        weaponSlots = unit.weaponSlots.createNewInstance();
 
-	for (final Equipment e : unit.equipment) {
-	    equipment.add(e);
-	}
+        for (final Equipment e : unit.equipment) {
+            equipment.add(e);
+        }
 
-	for (final Weapon w : unit.weapons) {
-	    weapons.add(w);
-	}
+        for (final Weapon w : unit.weapons) {
+            weapons.add(w);
+        }
 
-	for (final SpecialRule r : unit.rules) {
-	    rules.add(r);
-	}
-    }
-    @Override
-    public final String toString(){
-	return getName();
+        for (final SpecialRule r : unit.rules) {
+            rules.add(r);
+        }
     }
 
-    public DefaultUnit(final String name, final ValueHandler<Integer> actions,
-	    final ValueHandler<Integer> agility,
-	    final ValueHandler<Integer> combat,
-	    final ValueHandler<Integer> precision,
-	    final ValueHandler<Integer> strength,
-	    final ValueHandler<Integer> tech,
-	    final ValueHandler<Integer> toughness,
-	    final ValueHandler<Integer> weaponSlots) {
-	super();
+    public DefaultUnit(final String name, final ValueHandler actions,
+            final ValueHandler agility, final ValueHandler combat,
+            final ValueHandler precision, final ValueHandler strength,
+            final ValueHandler tech, final ValueHandler toughness,
+            final ValueHandler weaponSlots) {
+        super();
 
-	this.name = name;
+        this.name = name;
 
-	this.actions = actions;
-	this.agility = agility;
-	this.combat = combat;
-	this.precision = precision;
-	this.strength = strength;
-	this.tech = tech;
-	this.toughness = toughness;
+        this.actions = actions;
+        this.agility = agility;
+        this.combat = combat;
+        this.precision = precision;
+        this.strength = strength;
+        this.tech = tech;
+        this.toughness = toughness;
 
-	this.weaponSlots = weaponSlots;
+        this.weaponSlots = weaponSlots;
     }
 
     @Override
     public final void addEquipment(final Equipment equipment) {
-	_getEquipment().add(equipment);
+        _getEquipment().add(equipment);
     }
 
     @Override
     public final void addRule(final SpecialRule rule) {
-	_getSpecialRules().add(rule);
+        _getSpecialRules().add(rule);
     }
 
     @Override
     public final void addWeapon(final Weapon weapon) {
-	_getWeapons().add(weapon);
+        _getWeapons().add(weapon);
     }
 
     @Override
     public final void clearEquipment() {
-	_getEquipment().clear();
+        _getEquipment().clear();
     }
 
     @Override
     public final void clearRules() {
-	_getSpecialRules().clear();
+        _getSpecialRules().clear();
     }
 
     @Override
     public final void clearWeapons() {
-	_getWeapons().clear();
+        _getWeapons().clear();
     }
 
     @Override
     public final DefaultUnit createNewInstance() {
-	return new DefaultUnit(this);
+        return new DefaultUnit(this);
     }
 
     @Override
-    public final ValueHandler<Integer> getActions() {
-	return actions;
+    public final ValueHandler getActions() {
+        return actions;
     }
 
     @Override
-    public final ValueHandler<Integer> getAgility() {
-	return agility;
+    public final ValueHandler getAgility() {
+        return agility;
     }
 
     @Override
     public final Armor getArmor() {
-	return armor;
+        return armor;
     }
 
     @Override
-    public final ValueHandler<Integer> getCombat() {
-	return combat;
+    public final ValueHandler getCombat() {
+        return combat;
     }
 
     @Override
     public final Collection<Equipment> getEquipment() {
-	return Collections.unmodifiableCollection(_getEquipment());
+        return Collections.unmodifiableCollection(_getEquipment());
     }
 
     @Override
-    public final ValueHandler<Integer> getFreeWeaponSlots() {
-	return weaponSlots;
+    public final ValueHandler getFreeWeaponSlots() {
+        return weaponSlots;
     }
 
     @Override
     public final String getName() {
-	return name;
+        return name;
     }
 
     @Override
-    public final ValueHandler<Integer> getPrecision() {
-	return precision;
+    public final ValueHandler getPrecision() {
+        return precision;
     }
 
     @Override
     public final Collection<SpecialRule> getSpecialRules() {
-	return Collections.unmodifiableCollection(_getSpecialRules());
+        return Collections.unmodifiableCollection(_getSpecialRules());
     }
 
     @Override
-    public final ValueHandler<Integer> getStrength() {
-	return strength;
+    public final ValueHandler getStrength() {
+        return strength;
     }
 
     @Override
-    public final ValueHandler<Integer> getTech() {
-	return tech;
+    public final ValueHandler getTech() {
+        return tech;
     }
 
     @Override
-    public final ValueHandler<Integer> getToughness() {
-	return toughness;
+    public final ValueHandler getToughness() {
+        return toughness;
     }
 
     @Override
-    public final ValueHandler<Integer> getValoration() {
-	// TODO
-	return null;
+    public final ValueHandler getValoration() {
+        // TODO
+        return null;
     }
 
     @Override
     public final Collection<Weapon> getWeapons() {
-	return Collections.unmodifiableCollection(_getWeapons());
+        return Collections.unmodifiableCollection(_getWeapons());
     }
 
+    @Override
     public final void setArmor(final Armor armor) {
-	this.armor = armor;
+        this.armor = armor;
+    }
+
+    @Override
+    public final String toString() {
+        return getName();
     }
 
     protected final Collection<Equipment> _getEquipment() {
-	return equipment;
+        return equipment;
     }
 
     protected final Collection<SpecialRule> _getSpecialRules() {
-	return rules;
+        return rules;
     }
 
     protected final Collection<Weapon> _getWeapons() {
-	return weapons;
+        return weapons;
     }
 
 }

@@ -5,67 +5,67 @@ import java.util.Collection;
 import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 
 public final class DefaultRangedWeapon extends AbstractWeapon implements
-	RangedWeapon {
+        RangedWeapon {
 
     public final class DefaultRangedDistance implements RangedDistance {
 
-	private final Integer distanceShort;
-	private final Integer distanceMedium;
-	private final Integer distanceLong;
+        private final Integer distanceLong;
+        private final Integer distanceMedium;
+        private final Integer distanceShort;
 
-	public DefaultRangedDistance(final Integer distanceShort,
-		final Integer distanceMedium, final Integer distanceLong) {
-	    super();
+        public DefaultRangedDistance(final Integer distanceShort,
+                final Integer distanceMedium, final Integer distanceLong) {
+            super();
 
-	    this.distanceShort = distanceShort;
-	    this.distanceMedium = distanceMedium;
-	    this.distanceLong = distanceLong;
-	}
+            this.distanceShort = distanceShort;
+            this.distanceMedium = distanceMedium;
+            this.distanceLong = distanceLong;
+        }
 
-	@Override
-	public final Integer getLongDistance() {
-	    return distanceLong;
-	}
+        @Override
+        public final Integer getLongDistance() {
+            return distanceLong;
+        }
 
-	@Override
-	public final Integer getMediumDistance() {
-	    return distanceMedium;
-	}
+        @Override
+        public final Integer getMediumDistance() {
+            return distanceMedium;
+        }
 
-	@Override
-	public final Integer getShortDistance() {
-	    return distanceShort;
-	}
+        @Override
+        public final Integer getShortDistance() {
+            return distanceShort;
+        }
 
     }
 
     private final RangedDistance distancesCM;
     private final RangedDistance distancesInches;
 
-    public DefaultRangedWeapon(final String name, final Integer strength,
-	    final Integer penetration, final Collection<SpecialRule> rules,
-	    final RangedDistance distancesCM, RangedDistance distancesInches) {
-	super(name, strength, penetration, rules);
+    public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
+        super(weapon);
 
-	this.distancesCM = distancesCM;
-	this.distancesInches = distancesInches;
+        distancesCM = weapon.distancesCM;
+        distancesInches = weapon.distancesInches;
     }
 
-    public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
-	super(weapon);
+    public DefaultRangedWeapon(final String name, final Integer strength,
+            final Integer penetration, final Collection<SpecialRule> rules,
+            final RangedDistance distancesCM, RangedDistance distancesInches) {
+        super(name, strength, penetration, rules);
 
-	distancesCM = weapon.distancesCM;
-	distancesInches = weapon.distancesInches;
+        this.distancesCM = distancesCM;
+        this.distancesInches = distancesInches;
     }
 
     @Override
     public final RangedDistance getDistancesImperialUnits() {
-	return distancesInches;
+        return distancesInches;
     }
 
     @Override
     public final RangedDistance getDistancesMetricSystem() {
-	return distancesCM;
+        return distancesCM;
     }
 
 }
