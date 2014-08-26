@@ -27,6 +27,8 @@ import com.wandrell.tabletop.valuehandler.ValueHandler;
 public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
     private final Collection<Armor>  armorOptions;
+    private final Integer            maxWeapons;
+    private final Integer            minWeapons;
     private final Unit               unit;
     private final Collection<Weapon> weaponOptions;
 
@@ -34,18 +36,27 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
         super();
 
         this.unit = unit.unit.createNewInstance();
+
         armorOptions = unit.armorOptions;
         weaponOptions = unit.weaponOptions;
+
+        maxWeapons = unit.maxWeapons;
+        minWeapons = unit.minWeapons;
     }
 
     public DefaultAvailabilityUnit(final Unit unit,
             final Collection<Armor> armorOptions,
-            final Collection<Weapon> weaponOptions) {
+            final Collection<Weapon> weaponOptions, final Integer maxWeapons,
+            final Integer minWeapons) {
         super();
 
         this.unit = unit;
+
         this.armorOptions = armorOptions;
         this.weaponOptions = weaponOptions;
+
+        this.maxWeapons = maxWeapons;
+        this.minWeapons = minWeapons;
     }
 
     @Override
@@ -116,6 +127,16 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     @Override
     public final ValueHandler getFreeWeaponSlots() {
         return getUnit().getFreeWeaponSlots();
+    }
+
+    @Override
+    public final Integer getMaxWeapons() {
+        return maxWeapons;
+    }
+
+    @Override
+    public final Integer getMinWeapons() {
+        return minWeapons;
     }
 
     @Override
