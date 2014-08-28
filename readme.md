@@ -1,5 +1,5 @@
-## Tabletop's Pendragon Core library
-Default implementation of the Pendragon's API extension for the library for the Tabletop project.
+## Tabletop's Punkapocalyptic Core library
+Default implementation of the Punkapocalyptic's API extension for the library for the Tabletop project.
 
 ### Version
 The project is still under development, so expect a certain degree of instability. Class paths and names may change, and classes keep receiving enhancements which make them change with frequency.
