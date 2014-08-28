@@ -140,11 +140,6 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final String getName() {
-        return getUnit().getName();
-    }
-
-    @Override
     public final ValueHandler getPrecision() {
         return getUnit().getPrecision();
     }
@@ -167,6 +162,11 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     @Override
     public final ValueHandler getToughness() {
         return getUnit().getToughness();
+    }
+
+    @Override
+    public final String getUnitName() {
+        return getUnit().getUnitName();
     }
 
     @Override

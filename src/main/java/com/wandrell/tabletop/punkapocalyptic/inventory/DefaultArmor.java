@@ -17,7 +17,6 @@ package com.wandrell.tabletop.punkapocalyptic.inventory;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 
 import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 
@@ -25,20 +24,26 @@ public final class DefaultArmor implements Armor {
 
     private final Integer                 armor;
     private final String                  name;
-    private final Collection<SpecialRule> rules = new LinkedList<>();
+    private final Collection<SpecialRule> rules;
 
     public DefaultArmor(final DefaultArmor armor) {
         super();
 
         this.armor = armor.armor;
-        this.name = armor.name;
+
+        name = armor.name;
+
+        rules = armor.rules;
     }
 
-    public DefaultArmor(final String name, final Integer armor) {
+    public DefaultArmor(final String name, final Integer armor,
+            final Collection<SpecialRule> rules) {
         super();
 
         this.name = name;
         this.armor = armor;
+
+        this.rules = rules;
     }
 
     @Override

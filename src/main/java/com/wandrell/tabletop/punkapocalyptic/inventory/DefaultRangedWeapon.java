@@ -22,7 +22,7 @@ import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 public final class DefaultRangedWeapon extends AbstractWeapon implements
         RangedWeapon {
 
-    public final class DefaultRangedDistance implements RangedDistance {
+    private final class DefaultRangedDistance implements RangedDistance {
 
         private final Integer distanceLong;
         private final Integer distanceMedium;
@@ -56,21 +56,51 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     private final RangedDistance distancesCM;
     private final RangedDistance distancesInches;
+    private final Integer        penetrationLong;
+    private final Integer        penetrationMedium;
+    private final Integer        penetrationShort;
+    private final Integer        strengthLong;
+    private final Integer        strengthMedium;
+    private final Integer        strengthShort;
 
     public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
         super(weapon);
 
         distancesCM = weapon.distancesCM;
         distancesInches = weapon.distancesInches;
+
+        penetrationShort = weapon.penetrationShort;
+        penetrationMedium = weapon.penetrationMedium;
+        penetrationLong = weapon.penetrationLong;
+
+        strengthShort = weapon.strengthShort;
+        strengthMedium = weapon.strengthMedium;
+        strengthLong = weapon.strengthLong;
     }
 
-    public DefaultRangedWeapon(final String name, final Integer strength,
-            final Integer penetration, final Collection<SpecialRule> rules,
-            final RangedDistance distancesCM, RangedDistance distancesInches) {
-        super(name, strength, penetration, rules);
+    public DefaultRangedWeapon(final String name, final Integer cost,
+            final Integer penetrationShort, final Integer penetrationMedium,
+            final Integer penetrationLong, final Integer strengthShort,
+            final Integer strengthMedium, final Integer strengthLong,
+            final Integer distanceShortCM, final Integer distanceMediumCM,
+            final Integer distanceLongCM, final Integer distanceShortInches,
+            final Integer distanceMediumInches,
+            final Integer distanceLongInches,
+            final Collection<SpecialRule> rules) {
+        super(name, cost, rules);
 
-        this.distancesCM = distancesCM;
-        this.distancesInches = distancesInches;
+        this.distancesCM = new DefaultRangedDistance(distanceShortCM,
+                distanceMediumCM, distanceLongCM);
+        this.distancesInches = new DefaultRangedDistance(distanceShortInches,
+                distanceMediumInches, distanceLongInches);
+
+        this.penetrationShort = penetrationShort;
+        this.penetrationMedium = penetrationMedium;
+        this.penetrationLong = penetrationLong;
+
+        this.strengthShort = strengthShort;
+        this.strengthMedium = strengthMedium;
+        this.strengthLong = strengthLong;
     }
 
     @Override
@@ -81,6 +111,36 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     @Override
     public final RangedDistance getDistancesMetricSystem() {
         return distancesCM;
+    }
+
+    @Override
+    public final Integer getLongPenetration() {
+        return penetrationLong;
+    }
+
+    @Override
+    public final Integer getLongStrength() {
+        return strengthLong;
+    }
+
+    @Override
+    public final Integer getMediumPenetration() {
+        return penetrationMedium;
+    }
+
+    @Override
+    public final Integer getMediumStrength() {
+        return strengthMedium;
+    }
+
+    @Override
+    public final Integer getShortPenetration() {
+        return penetrationShort;
+    }
+
+    @Override
+    public final Integer getShortStrength() {
+        return strengthShort;
     }
 
 }

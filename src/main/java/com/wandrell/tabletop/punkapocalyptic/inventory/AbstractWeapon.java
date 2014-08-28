@@ -22,27 +22,28 @@ import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 
 class AbstractWeapon implements Weapon {
 
+    private final Integer                 cost;
     private final String                  name;
-    private final Integer                 penetration;
     private final Collection<SpecialRule> rules;
-    private final Integer                 strength;
 
     public AbstractWeapon(final AbstractWeapon weapon) {
         super();
 
         name = weapon.name;
-        strength = weapon.strength;
-        penetration = weapon.penetration;
+
+        cost = weapon.cost;
+
         rules = weapon.rules;
     }
 
-    public AbstractWeapon(final String name, final Integer strength,
-            final Integer penetration, final Collection<SpecialRule> rules) {
+    public AbstractWeapon(final String name, final Integer cost,
+            final Collection<SpecialRule> rules) {
         super();
 
         this.name = name;
-        this.strength = strength;
-        this.penetration = penetration;
+
+        this.cost = cost;
+
         this.rules = rules;
     }
 
@@ -64,23 +65,18 @@ class AbstractWeapon implements Weapon {
     }
 
     @Override
+    public final Integer getCost() {
+        return cost;
+    }
+
+    @Override
     public final String getName() {
         return name;
     }
 
     @Override
-    public final Integer getPenetration() {
-        return penetration;
-    }
-
-    @Override
     public final Collection<SpecialRule> getSpecialRules() {
         return Collections.unmodifiableCollection(_getSpecialRules());
-    }
-
-    @Override
-    public final Integer getStrength() {
-        return strength;
     }
 
     @Override

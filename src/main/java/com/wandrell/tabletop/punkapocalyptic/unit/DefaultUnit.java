@@ -155,11 +155,6 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final String getName() {
-        return name;
-    }
-
-    @Override
     public final ValueHandler getPrecision() {
         return precision;
     }
@@ -185,6 +180,11 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
+    public final String getUnitName() {
+        return name;
+    }
+
+    @Override
     public final ValueHandler getValoration() {
         // TODO
         return null;
@@ -202,7 +202,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final String toString() {
-        return getName();
+        return getUnitName();
     }
 
     protected final Collection<Equipment> _getEquipment() {

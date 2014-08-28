@@ -23,24 +23,40 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
         MeleeWeapon {
 
     private final Integer combat;
+    private final Integer penetration;
+    private final Integer strength;
 
     public DefaultMeleeWeapon(final DefaultMeleeWeapon weapon) {
         super(weapon);
 
         combat = weapon.combat;
+        penetration = weapon.penetration;
+        strength = weapon.strength;
     }
 
-    public DefaultMeleeWeapon(final String name, final Integer strength,
-            final Integer penetration, final Integer combat,
-            final Collection<SpecialRule> rules) {
-        super(name, strength, penetration, rules);
+    public DefaultMeleeWeapon(final String name, final Integer cost,
+            final Integer strength, final Integer penetration,
+            final Integer combat, final Collection<SpecialRule> rules) {
+        super(name, cost, rules);
 
         this.combat = combat;
+        this.penetration = penetration;
+        this.strength = strength;
     }
 
     @Override
     public final Integer getCombatModifier() {
         return combat;
+    }
+
+    @Override
+    public final Integer getPenetration() {
+        return penetration;
+    }
+
+    @Override
+    public final Integer getStrength() {
+        return strength;
     }
 
 }
