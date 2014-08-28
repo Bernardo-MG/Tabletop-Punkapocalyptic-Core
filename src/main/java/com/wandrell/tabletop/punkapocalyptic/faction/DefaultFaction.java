@@ -43,7 +43,7 @@ public final class DefaultFaction implements Faction {
         this.name = name;
 
         for (final AvailabilityUnit unit : units) {
-            units.add(unit);
+            this.units.add(unit);
         }
     }
 
