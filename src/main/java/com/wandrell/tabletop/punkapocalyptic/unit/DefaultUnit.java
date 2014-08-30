@@ -69,6 +69,8 @@ public final class DefaultUnit implements Unit {
 
         cost = unit.cost;
 
+        armor = unit.armor;
+
         for (final Equipment e : unit.equipment) {
             equipment.add(e);
         }
