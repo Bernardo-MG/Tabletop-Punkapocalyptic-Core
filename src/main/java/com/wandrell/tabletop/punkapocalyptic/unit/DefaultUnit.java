@@ -24,8 +24,10 @@ import com.wandrell.tabletop.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.valuehandler.module.generator.UnitCostStore;
+import com.wandrell.tabletop.valuehandler.AbstractValueHandler;
 import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
 import com.wandrell.tabletop.valuehandler.ValueHandler;
+import com.wandrell.tabletop.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.valuehandler.module.generator.DefaultGenerator;
 import com.wandrell.tabletop.valuehandler.module.interval.DefaultIntervalModule;
 import com.wandrell.tabletop.valuehandler.module.validator.IntervalValidator;
@@ -166,6 +168,9 @@ public final class DefaultUnit implements Unit {
         }
 
         _getEquipment().add(equipment);
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     @Override
@@ -184,11 +189,17 @@ public final class DefaultUnit implements Unit {
         }
 
         _getWeapons().add(weapon);
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     @Override
     public final void clearEquipment() {
         _getEquipment().clear();
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     @Override
@@ -199,6 +210,9 @@ public final class DefaultUnit implements Unit {
     @Override
     public final void clearWeapons() {
         _getWeapons().clear();
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     @Override
@@ -320,6 +334,9 @@ public final class DefaultUnit implements Unit {
     @Override
     public final void setArmor(final Armor armor) {
         this.armor = armor;
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     @Override
