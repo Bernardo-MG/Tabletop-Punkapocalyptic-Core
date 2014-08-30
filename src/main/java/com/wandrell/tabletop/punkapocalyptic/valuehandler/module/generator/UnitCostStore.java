@@ -1,37 +1,21 @@
 package com.wandrell.tabletop.punkapocalyptic.valuehandler.module.generator;
 
-import java.util.Collection;
-
-import com.wandrell.tabletop.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Weapon;
+import com.wandrell.tabletop.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.valuehandler.module.StoreModule;
 
 public class UnitCostStore extends StoreModule {
 
-    private final Armor              armor;
-    private final Integer            baseCost;
-    private final Collection<Weapon> weapons;
+    private final Unit unit;
 
-    public UnitCostStore(final Integer baseCost,
-            final Collection<Weapon> weapons, final Armor armor) {
+    public UnitCostStore(final Unit unit) {
         super();
 
-        if (baseCost == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as base cost");
+        if (unit == null) {
+            throw new NullPointerException("Received a null pointer as unit");
         }
 
-        if (weapons == null) {
-            throw new NullPointerException("Received a null pointer as weapons");
-        }
-
-        if (armor == null) {
-            throw new NullPointerException("Received a null pointer as armor");
-        }
-
-        this.baseCost = baseCost;
-        this.weapons = weapons;
-        this.armor = armor;
+        this.unit = unit;
     }
 
     public UnitCostStore(final UnitCostStore store) {
@@ -41,9 +25,7 @@ public class UnitCostStore extends StoreModule {
             throw new NullPointerException("Received a null pointer as store");
         }
 
-        baseCost = store.baseCost;
-        weapons = store.weapons;
-        armor = store.armor;
+        unit = store.unit;
     }
 
     @Override
@@ -58,13 +40,15 @@ public class UnitCostStore extends StoreModule {
     public final Integer getValue() {
         Integer cost;
 
-        cost = getBaseCost();
+        cost = getUnit().getBaseCost();
 
-        for (final Weapon weapon : getWeapons()) {
+        for (final Weapon weapon : getUnit().getWeapons()) {
             cost += weapon.getCost();
         }
 
-        cost += getArmor().getCost();
+        if (getUnit().getArmor() != null) {
+            cost += getUnit().getArmor().getCost();
+        }
 
         return cost;
     }
@@ -72,16 +56,8 @@ public class UnitCostStore extends StoreModule {
     @Override
     public final void setValue(final Integer value) {}
 
-    protected final Armor getArmor() {
-        return armor;
-    }
-
-    protected final Integer getBaseCost() {
-        return baseCost;
-    }
-
-    protected final Collection<Weapon> getWeapons() {
-        return weapons;
+    protected final Unit getUnit() {
+        return unit;
     }
 
 }

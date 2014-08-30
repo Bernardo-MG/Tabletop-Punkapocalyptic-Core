@@ -83,8 +83,7 @@ public final class DefaultUnit implements Unit {
 
         valoration = new DefaultValueHandler("valoration",
                 new DefaultGenerator(), new DefaultIntervalModule(),
-                new UnitCostStore(cost, weapons, armor),
-                new IntervalValidator());
+                new UnitCostStore(this), new IntervalValidator());
     }
 
     public DefaultUnit(final String name, final ValueHandler actions,
@@ -154,8 +153,7 @@ public final class DefaultUnit implements Unit {
 
         valoration = new DefaultValueHandler("valoration",
                 new DefaultGenerator(), new DefaultIntervalModule(),
-                new UnitCostStore(cost, weapons, armor),
-                new IntervalValidator());
+                new UnitCostStore(this), new IntervalValidator());
     }
 
     @Override
