@@ -22,29 +22,47 @@ public final class DefaultEquipment implements Equipment {
     public DefaultEquipment(final DefaultEquipment equipment) {
         super();
 
+        if (equipment == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as equipment");
+        }
+
         this.name = equipment.name;
     }
 
     public DefaultEquipment(final String name) {
         super();
 
+        if (name == null) {
+            throw new NullPointerException("Received a null pointer as name");
+        }
+
         this.name = name;
     }
 
     @Override
     public final boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+
+        if (getClass() != obj.getClass()) {
             return false;
+        }
+
         DefaultEquipment other = (DefaultEquipment) obj;
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
+
         return true;
     }
 

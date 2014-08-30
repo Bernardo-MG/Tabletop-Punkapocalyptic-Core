@@ -29,6 +29,10 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
     public DefaultMeleeWeapon(final DefaultMeleeWeapon weapon) {
         super(weapon);
 
+        if (weapon == null) {
+            throw new NullPointerException("Received a null pointer as weapon");
+        }
+
         combat = weapon.combat;
         penetration = weapon.penetration;
         strength = weapon.strength;
@@ -38,6 +42,20 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
             final Integer strength, final Integer penetration,
             final Integer combat, final Collection<SpecialRule> rules) {
         super(name, cost, rules);
+
+        if (combat == null) {
+            throw new NullPointerException("Received a null pointer as combat");
+        }
+
+        if (penetration == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as penetration");
+        }
+
+        if (strength == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as strength");
+        }
 
         this.combat = combat;
         this.penetration = penetration;

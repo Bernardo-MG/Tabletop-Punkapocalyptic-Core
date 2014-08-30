@@ -32,6 +32,21 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
                 final Integer distanceMedium, final Integer distanceLong) {
             super();
 
+            if (distanceShort == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as short distance");
+            }
+
+            if (distanceMedium == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as medium distance");
+            }
+
+            if (distanceLong == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as long distance");
+            }
+
             this.distanceShort = distanceShort;
             this.distanceMedium = distanceMedium;
             this.distanceLong = distanceLong;
@@ -66,6 +81,10 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
         super(weapon);
 
+        if (weapon == null) {
+            throw new NullPointerException("Received a null pointer as weapon");
+        }
+
         distancesCM = weapon.distancesCM;
         distancesInches = weapon.distancesInches;
 
@@ -88,6 +107,66 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
             final Integer distanceLongInches,
             final Collection<SpecialRule> rules) {
         super(name, cost, rules);
+
+        if (distanceShortCM == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as short distance in cm");
+        }
+
+        if (distanceMediumCM == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as medium distance in cm");
+        }
+
+        if (distanceLongCM == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as long distance in cm");
+        }
+
+        if (distanceShortInches == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as short distance in inches");
+        }
+
+        if (distanceMediumInches == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as medium distance in inches");
+        }
+
+        if (distanceLongInches == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as long distance in inches");
+        }
+
+        if (penetrationShort == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as short range penetration");
+        }
+
+        if (penetrationMedium == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as medium range penetration");
+        }
+
+        if (penetrationLong == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as long range penetration");
+        }
+
+        if (strengthShort == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as short range strength");
+        }
+
+        if (strengthMedium == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as medium range strength");
+        }
+
+        if (strengthLong == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as long range strength");
+        }
 
         this.distancesCM = new DefaultRangedDistance(distanceShortCM,
                 distanceMediumCM, distanceLongCM);

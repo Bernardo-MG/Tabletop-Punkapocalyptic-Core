@@ -16,6 +16,19 @@ public class UnitCostStore extends StoreModule {
             final Collection<Weapon> weapons, final Armor armor) {
         super();
 
+        if (baseCost == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as base cost");
+        }
+
+        if (weapons == null) {
+            throw new NullPointerException("Received a null pointer as weapons");
+        }
+
+        if (armor == null) {
+            throw new NullPointerException("Received a null pointer as armor");
+        }
+
         this.baseCost = baseCost;
         this.weapons = weapons;
         this.armor = armor;
@@ -23,6 +36,10 @@ public class UnitCostStore extends StoreModule {
 
     public UnitCostStore(final UnitCostStore store) {
         super(store);
+
+        if (store == null) {
+            throw new NullPointerException("Received a null pointer as store");
+        }
 
         baseCost = store.baseCost;
         weapons = store.weapons;
@@ -59,7 +76,7 @@ public class UnitCostStore extends StoreModule {
         return armor;
     }
 
-    protected Integer getBaseCost() {
+    protected final Integer getBaseCost() {
         return baseCost;
     }
 

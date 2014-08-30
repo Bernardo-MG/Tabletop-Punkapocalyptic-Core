@@ -29,6 +29,10 @@ public final class DefaultFaction implements Faction {
     public DefaultFaction(final DefaultFaction faction) {
         super();
 
+        if (faction == null) {
+            throw new NullPointerException("Received a null pointer as faction");
+        }
+
         name = faction.name;
 
         for (final AvailabilityUnit unit : faction.units) {
@@ -40,11 +44,51 @@ public final class DefaultFaction implements Faction {
             final Collection<AvailabilityUnit> units) {
         super();
 
+        if (name == null) {
+            throw new NullPointerException("Received a null pointer as name");
+        }
+
+        if (units == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as units list");
+        }
+
         this.name = name;
 
         for (final AvailabilityUnit unit : units) {
+            if (unit == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as unit");
+            }
+
             this.units.add(unit);
         }
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        DefaultFaction other = (DefaultFaction) obj;
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -56,6 +100,21 @@ public final class DefaultFaction implements Faction {
     @Override
     public final String getName() {
         return name;
+    }
+
+    @Override
+    public final int hashCode() {
+        final int prime = 31;
+        int result = 1;
+
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+
+        return result;
+    }
+
+    @Override
+    public final String toString() {
+        return getName();
     }
 
     protected final Collection<AvailabilityUnit> getAvailableUnitsModifiable() {

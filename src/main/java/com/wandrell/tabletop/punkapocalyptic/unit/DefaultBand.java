@@ -31,6 +31,10 @@ public final class DefaultBand implements Band {
     public DefaultBand(final DefaultBand band) {
         super();
 
+        if (band == null) {
+            throw new NullPointerException("Received a null pointer as band");
+        }
+
         faction = band.faction;
         bullets = band.bullets.createNewInstance();
 
@@ -41,6 +45,14 @@ public final class DefaultBand implements Band {
 
     public DefaultBand(final Faction faction, final ValueHandler bullets) {
         super();
+
+        if (faction == null) {
+            throw new NullPointerException("Received a null pointer as faction");
+        }
+
+        if (bullets == null) {
+            throw new NullPointerException("Received a null pointer as bullets");
+        }
 
         this.faction = faction;
         this.bullets = bullets;

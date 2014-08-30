@@ -51,6 +51,10 @@ public final class DefaultUnit implements Unit {
     public DefaultUnit(final DefaultUnit unit) {
         super();
 
+        if (unit == null) {
+            throw new NullPointerException("Received a null pointer as band");
+        }
+
         name = unit.name;
 
         actions = unit.actions.createNewInstance();
@@ -90,6 +94,50 @@ public final class DefaultUnit implements Unit {
             final ValueHandler weaponSlots, final Integer cost) {
         super();
 
+        if (name == null) {
+            throw new NullPointerException("Received a null pointer as name");
+        }
+
+        if (actions == null) {
+            throw new NullPointerException("Received a null pointer as actions");
+        }
+
+        if (agility == null) {
+            throw new NullPointerException("Received a null pointer as agility");
+        }
+
+        if (combat == null) {
+            throw new NullPointerException("Received a null pointer as agility");
+        }
+
+        if (precision == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as precision");
+        }
+
+        if (strength == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as strength");
+        }
+
+        if (tech == null) {
+            throw new NullPointerException("Received a null pointer as tech");
+        }
+
+        if (toughness == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as toughness");
+        }
+
+        if (weaponSlots == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as weaponSlots");
+        }
+
+        if (cost == null) {
+            throw new NullPointerException("Received a null pointer as cost");
+        }
+
         this.name = name;
 
         this.actions = actions;
@@ -112,16 +160,29 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void addEquipment(final Equipment equipment) {
+        if (equipment == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as equipment");
+        }
+
         _getEquipment().add(equipment);
     }
 
     @Override
     public final void addRule(final SpecialRule rule) {
+        if (rule == null) {
+            throw new NullPointerException("Received a null pointer as rule");
+        }
+
         _getSpecialRules().add(rule);
     }
 
     @Override
     public final void addWeapon(final Weapon weapon) {
+        if (weapon == null) {
+            throw new NullPointerException("Received a null pointer as weapon");
+        }
+
         _getWeapons().add(weapon);
     }
 
@@ -143,6 +204,32 @@ public final class DefaultUnit implements Unit {
     @Override
     public final DefaultUnit createNewInstance() {
         return new DefaultUnit(this);
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        DefaultUnit other = (DefaultUnit) obj;
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -218,6 +305,16 @@ public final class DefaultUnit implements Unit {
     @Override
     public final Collection<Weapon> getWeapons() {
         return Collections.unmodifiableCollection(_getWeapons());
+    }
+
+    @Override
+    public final int hashCode() {
+        final int prime = 31;
+        int result = 1;
+
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+
+        return result;
     }
 
     @Override

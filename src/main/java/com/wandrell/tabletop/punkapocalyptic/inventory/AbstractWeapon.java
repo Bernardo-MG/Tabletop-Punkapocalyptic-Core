@@ -17,6 +17,7 @@ package com.wandrell.tabletop.punkapocalyptic.inventory;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 
 import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 
@@ -24,43 +25,75 @@ class AbstractWeapon implements Weapon {
 
     private final Integer                 cost;
     private final String                  name;
-    private final Collection<SpecialRule> rules;
+    private final Collection<SpecialRule> rules = new LinkedHashSet<>();
 
     public AbstractWeapon(final AbstractWeapon weapon) {
         super();
+
+        if (weapon == null) {
+            throw new NullPointerException("Received a null pointer as weapon");
+        }
 
         name = weapon.name;
 
         cost = weapon.cost;
 
-        rules = weapon.rules;
+        rules.addAll(weapon.rules);
     }
 
     public AbstractWeapon(final String name, final Integer cost,
             final Collection<SpecialRule> rules) {
         super();
 
+        if (name == null) {
+            throw new NullPointerException("Received a null pointer as name");
+        }
+
+        if (cost == null) {
+            throw new NullPointerException("Received a null pointer as cost");
+        }
+
+        if (rules == null) {
+            throw new NullPointerException("Received a null pointer as rules");
+        }
+
         this.name = name;
 
         this.cost = cost;
 
-        this.rules = rules;
+        for (final SpecialRule rule : rules) {
+            if (rule == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as rule");
+            }
+
+            this.rules.add(rule);
+        }
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+
+        if (getClass() != obj.getClass()) {
             return false;
+        }
+
         AbstractWeapon other = (AbstractWeapon) obj;
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
+
         return true;
     }
 
@@ -80,7 +113,7 @@ class AbstractWeapon implements Weapon {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -88,7 +121,7 @@ class AbstractWeapon implements Weapon {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return getName();
     }
 

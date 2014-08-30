@@ -17,6 +17,7 @@ package com.wandrell.tabletop.punkapocalyptic.unit;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 
 import com.wandrell.tabletop.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Equipment;
@@ -26,19 +27,23 @@ import com.wandrell.tabletop.valuehandler.ValueHandler;
 
 public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
-    private final Collection<Armor>  armorOptions;
+    private final Collection<Armor>  armorOptions  = new LinkedHashSet<>();
     private final Integer            maxWeapons;
     private final Integer            minWeapons;
     private final Unit               unit;
-    private final Collection<Weapon> weaponOptions;
+    private final Collection<Weapon> weaponOptions = new LinkedHashSet<>();
 
     public DefaultAvailabilityUnit(final DefaultAvailabilityUnit unit) {
         super();
 
+        if (unit == null) {
+            throw new NullPointerException("Received a null pointer as unit");
+        }
+
         this.unit = unit.unit.createNewInstance();
 
-        armorOptions = unit.armorOptions;
-        weaponOptions = unit.weaponOptions;
+        armorOptions.addAll(unit.armorOptions);
+        weaponOptions.addAll(unit.weaponOptions);
 
         maxWeapons = unit.maxWeapons;
         minWeapons = unit.minWeapons;
@@ -50,27 +55,77 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
             final Integer minWeapons) {
         super();
 
-        this.unit = unit;
+        if (unit == null) {
+            throw new NullPointerException("Received a null pointer as unit");
+        }
 
-        this.armorOptions = armorOptions;
-        this.weaponOptions = weaponOptions;
+        if (armorOptions == null) {
+            throw new NullPointerException("Received a null pointer as armors");
+        }
+
+        if (weaponOptions == null) {
+            throw new NullPointerException("Received a null pointer as weapons");
+        }
+
+        if (maxWeapons == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as maximum weapons");
+        }
+
+        if (minWeapons == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as minimum weapons");
+        }
+
+        this.unit = unit;
 
         this.maxWeapons = maxWeapons;
         this.minWeapons = minWeapons;
+
+        for (final Armor armor : armorOptions) {
+            if (armor == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as armor");
+            }
+
+            this.armorOptions.add(armor);
+        }
+
+        for (final Weapon weapon : weaponOptions) {
+            if (weapon == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as weapon");
+            }
+
+            this.weaponOptions.add(weapon);
+        }
     }
 
     @Override
     public final void addEquipment(final Equipment equipment) {
+        if (equipment == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as equipment");
+        }
+
         getUnit().addEquipment(equipment);
     }
 
     @Override
     public final void addRule(final SpecialRule rule) {
+        if (rule == null) {
+            throw new NullPointerException("Received a null pointer as rule");
+        }
+
         getUnit().addRule(rule);
     }
 
     @Override
     public final void addWeapon(final Weapon weapon) {
+        if (weapon == null) {
+            throw new NullPointerException("Received a null pointer as weapon");
+        }
+
         getUnit().addWeapon(weapon);
     }
 
@@ -92,6 +147,11 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     @Override
     public final DefaultAvailabilityUnit createNewInstance() {
         return new DefaultAvailabilityUnit(this);
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        return getUnit().equals(obj);
     }
 
     @Override
@@ -190,8 +250,18 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
+    public final int hashCode() {
+        return getUnit().hashCode();
+    }
+
+    @Override
     public final void setArmor(final Armor armor) {
         getUnit().setArmor(armor);
+    }
+
+    @Override
+    public final String toString() {
+        return getUnit().toString();
     }
 
     protected final Collection<Armor> getArmorOptionsModifiable() {
