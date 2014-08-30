@@ -23,7 +23,12 @@ import com.wandrell.tabletop.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
+import com.wandrell.tabletop.punkapocalyptic.valuehandler.module.generator.UnitCostStore;
+import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
 import com.wandrell.tabletop.valuehandler.ValueHandler;
+import com.wandrell.tabletop.valuehandler.module.generator.DefaultGenerator;
+import com.wandrell.tabletop.valuehandler.module.interval.DefaultIntervalModule;
+import com.wandrell.tabletop.valuehandler.module.validator.IntervalValidator;
 
 public final class DefaultUnit implements Unit {
 
@@ -31,6 +36,7 @@ public final class DefaultUnit implements Unit {
     private final ValueHandler            agility;
     private Armor                         armor;
     private final ValueHandler            combat;
+    private final Integer                 cost;
     private final Collection<Equipment>   equipment = new LinkedList<>();
     private final String                  name;
     private final ValueHandler            precision;
@@ -38,6 +44,7 @@ public final class DefaultUnit implements Unit {
     private final ValueHandler            strength;
     private final ValueHandler            tech;
     private final ValueHandler            toughness;
+    private final ValueHandler            valoration;
     private final Collection<Weapon>      weapons   = new LinkedList<>();
     private final ValueHandler            weaponSlots;
 
@@ -56,6 +63,8 @@ public final class DefaultUnit implements Unit {
 
         weaponSlots = unit.weaponSlots.createNewInstance();
 
+        cost = unit.cost;
+
         for (final Equipment e : unit.equipment) {
             equipment.add(e);
         }
@@ -67,13 +76,18 @@ public final class DefaultUnit implements Unit {
         for (final SpecialRule r : unit.rules) {
             rules.add(r);
         }
+
+        valoration = new DefaultValueHandler("valoration",
+                new DefaultGenerator(), new DefaultIntervalModule(),
+                new UnitCostStore(cost, weapons, armor),
+                new IntervalValidator());
     }
 
     public DefaultUnit(final String name, final ValueHandler actions,
             final ValueHandler agility, final ValueHandler combat,
             final ValueHandler precision, final ValueHandler strength,
             final ValueHandler tech, final ValueHandler toughness,
-            final ValueHandler weaponSlots) {
+            final ValueHandler weaponSlots, final Integer cost) {
         super();
 
         this.name = name;
@@ -87,6 +101,13 @@ public final class DefaultUnit implements Unit {
         this.toughness = toughness;
 
         this.weaponSlots = weaponSlots;
+
+        this.cost = cost;
+
+        valoration = new DefaultValueHandler("valoration",
+                new DefaultGenerator(), new DefaultIntervalModule(),
+                new UnitCostStore(cost, weapons, armor),
+                new IntervalValidator());
     }
 
     @Override
@@ -140,6 +161,11 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
+    public final Integer getBaseCost() {
+        return cost;
+    }
+
+    @Override
     public final ValueHandler getCombat() {
         return combat;
     }
@@ -186,8 +212,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final ValueHandler getValoration() {
-        // TODO
-        return null;
+        return valoration;
     }
 
     @Override

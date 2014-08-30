@@ -115,6 +115,11 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
+    public final Integer getBaseCost() {
+        return getUnit().getBaseCost();
+    }
+
+    @Override
     public final ValueHandler getCombat() {
         return getUnit().getCombat();
     }

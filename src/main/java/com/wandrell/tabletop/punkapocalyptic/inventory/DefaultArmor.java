@@ -23,6 +23,7 @@ import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 public final class DefaultArmor implements Armor {
 
     private final Integer                 armor;
+    private Integer                       cost = 0;
     private final String                  name;
     private final Collection<SpecialRule> rules;
 
@@ -30,6 +31,7 @@ public final class DefaultArmor implements Armor {
         super();
 
         this.armor = armor.armor;
+        cost = armor.cost;
 
         name = armor.name;
 
@@ -69,6 +71,11 @@ public final class DefaultArmor implements Armor {
     }
 
     @Override
+    public final Integer getCost() {
+        return cost;
+    }
+
+    @Override
     public final String getName() {
         return name;
     }
@@ -84,6 +91,10 @@ public final class DefaultArmor implements Armor {
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
+    }
+
+    public final void setCost(final Integer cost) {
+        this.cost = cost;
     }
 
     @Override
