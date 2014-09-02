@@ -45,14 +45,14 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
         armorOptions.addAll(unit.armorOptions);
         weaponOptions.addAll(unit.weaponOptions);
 
-        maxWeapons = unit.maxWeapons;
         minWeapons = unit.minWeapons;
+        maxWeapons = unit.maxWeapons;
     }
 
     public DefaultAvailabilityUnit(final Unit unit,
             final Collection<Armor> armorOptions,
-            final Collection<Weapon> weaponOptions, final Integer maxWeapons,
-            final Integer minWeapons) {
+            final Collection<Weapon> weaponOptions, final Integer minWeapons,
+            final Integer maxWeapons) {
         super();
 
         if (unit == null) {
