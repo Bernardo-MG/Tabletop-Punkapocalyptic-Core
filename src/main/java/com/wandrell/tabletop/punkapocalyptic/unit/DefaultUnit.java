@@ -17,7 +17,7 @@ package com.wandrell.tabletop.punkapocalyptic.unit;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 
 import com.wandrell.tabletop.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Equipment;
@@ -39,15 +39,15 @@ public final class DefaultUnit implements Unit {
     private Armor                         armor;
     private final ValueHandler            combat;
     private final Integer                 cost;
-    private final Collection<Equipment>   equipment = new LinkedList<>();
+    private final Collection<Equipment>   equipment = new LinkedHashSet<>();
     private final String                  name;
     private final ValueHandler            precision;
-    private final Collection<SpecialRule> rules     = new LinkedList<>();
+    private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
     private final ValueHandler            strength;
     private final ValueHandler            tech;
     private final ValueHandler            toughness;
     private final ValueHandler            valoration;
-    private final Collection<Weapon>      weapons   = new LinkedList<>();
+    private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
     private final ValueHandler            weaponSlots;
 
     public DefaultUnit(final DefaultUnit unit) {
