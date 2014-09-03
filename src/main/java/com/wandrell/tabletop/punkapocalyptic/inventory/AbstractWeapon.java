@@ -24,6 +24,7 @@ import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
 class AbstractWeapon implements Weapon {
 
     private final Integer                 cost;
+    private final Integer                 hands;
     private final String                  name;
     private final Collection<SpecialRule> rules = new LinkedHashSet<>();
 
@@ -37,12 +38,13 @@ class AbstractWeapon implements Weapon {
         name = weapon.name;
 
         cost = weapon.cost;
+        hands = weapon.hands;
 
         rules.addAll(weapon.rules);
     }
 
     public AbstractWeapon(final String name, final Integer cost,
-            final Collection<SpecialRule> rules) {
+            final Integer hands, final Collection<SpecialRule> rules) {
         super();
 
         if (name == null) {
@@ -53,6 +55,10 @@ class AbstractWeapon implements Weapon {
             throw new NullPointerException("Received a null pointer as cost");
         }
 
+        if (hands == null) {
+            throw new NullPointerException("Received a null pointer as hands");
+        }
+
         if (rules == null) {
             throw new NullPointerException("Received a null pointer as rules");
         }
@@ -60,6 +66,7 @@ class AbstractWeapon implements Weapon {
         this.name = name;
 
         this.cost = cost;
+        this.hands = hands;
 
         for (final SpecialRule rule : rules) {
             if (rule == null) {
@@ -100,6 +107,11 @@ class AbstractWeapon implements Weapon {
     @Override
     public final Integer getCost() {
         return cost;
+    }
+
+    @Override
+    public final Integer getHands() {
+        return hands;
     }
 
     @Override

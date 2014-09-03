@@ -39,15 +39,16 @@ public final class DefaultUnit implements Unit {
     private Armor                         armor;
     private final ValueHandler            combat;
     private final Integer                 cost;
-    private final Collection<Equipment>   equipment = new LinkedHashSet<>();
+    private final Collection<Equipment>   equipment      = new LinkedHashSet<>();
+    private Integer                       maxWeaponSlots = 2;
     private final String                  name;
     private final ValueHandler            precision;
-    private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
+    private final Collection<SpecialRule> rules          = new LinkedHashSet<>();
     private final ValueHandler            strength;
     private final ValueHandler            tech;
     private final ValueHandler            toughness;
     private final ValueHandler            valoration;
-    private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
+    private final Collection<Weapon>      weapons        = new LinkedHashSet<>();
     private final ValueHandler            weaponSlots;
 
     public DefaultUnit(final DefaultUnit unit) {
@@ -188,10 +189,14 @@ public final class DefaultUnit implements Unit {
             throw new NullPointerException("Received a null pointer as weapon");
         }
 
-        _getWeapons().add(weapon);
+        if (getFreeWeaponSlots().getStoredValue() >= weapon.getHands()) {
+            _getWeapons().add(weapon);
+            getFreeWeaponSlots().addValue(-weapon.getHands());
 
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+            ((AbstractValueHandler) getValoration())
+                    .fireValueChangedEvent(new ValueHandlerEvent(
+                            getValoration()));
+        }
     }
 
     @Override
@@ -210,6 +215,8 @@ public final class DefaultUnit implements Unit {
     @Override
     public final void clearWeapons() {
         _getWeapons().clear();
+
+        getFreeWeaponSlots().setValue(getMaxWeaponSlots());
 
         ((AbstractValueHandler) getValoration())
                 .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
@@ -279,6 +286,11 @@ public final class DefaultUnit implements Unit {
     @Override
     public final ValueHandler getFreeWeaponSlots() {
         return weaponSlots;
+    }
+
+    @Override
+    public final Integer getMaxWeaponSlots() {
+        return maxWeaponSlots;
     }
 
     @Override

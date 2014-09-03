@@ -39,9 +39,10 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
     }
 
     public DefaultMeleeWeapon(final String name, final Integer cost,
-            final Integer strength, final Integer penetration,
-            final Integer combat, final Collection<SpecialRule> rules) {
-        super(name, cost, rules);
+            final Integer hands, final Integer strength,
+            final Integer penetration, final Integer combat,
+            final Collection<SpecialRule> rules) {
+        super(name, cost, hands, rules);
 
         if (combat == null) {
             throw new NullPointerException("Received a null pointer as combat");

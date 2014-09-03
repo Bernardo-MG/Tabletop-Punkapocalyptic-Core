@@ -98,15 +98,16 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     public DefaultRangedWeapon(final String name, final Integer cost,
-            final Integer penetrationShort, final Integer penetrationMedium,
-            final Integer penetrationLong, final Integer strengthShort,
-            final Integer strengthMedium, final Integer strengthLong,
-            final Integer distanceShortCM, final Integer distanceMediumCM,
-            final Integer distanceLongCM, final Integer distanceShortInches,
+            final Integer hands, final Integer penetrationShort,
+            final Integer penetrationMedium, final Integer penetrationLong,
+            final Integer strengthShort, final Integer strengthMedium,
+            final Integer strengthLong, final Integer distanceShortCM,
+            final Integer distanceMediumCM, final Integer distanceLongCM,
+            final Integer distanceShortInches,
             final Integer distanceMediumInches,
             final Integer distanceLongInches,
             final Collection<SpecialRule> rules) {
-        super(name, cost, rules);
+        super(name, cost, hands, rules);
 
         if (distanceShortCM == null) {
             throw new NullPointerException(

@@ -19,6 +19,12 @@ public final class DefaultSpecialRule implements SpecialRule {
 
     private final String name;
 
+    public DefaultSpecialRule(final DefaultSpecialRule rule) {
+        super();
+
+        name = rule.name;
+    }
+
     public DefaultSpecialRule(final String name) {
         super();
 
@@ -27,6 +33,7 @@ public final class DefaultSpecialRule implements SpecialRule {
         }
 
         this.name = name;
+
     }
 
     @Override
