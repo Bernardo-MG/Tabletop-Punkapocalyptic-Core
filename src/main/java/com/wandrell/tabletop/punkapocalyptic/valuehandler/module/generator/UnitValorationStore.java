@@ -4,11 +4,11 @@ import com.wandrell.tabletop.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.valuehandler.module.StoreModule;
 
-public class UnitCostStore extends StoreModule {
+public class UnitValorationStore extends StoreModule {
 
     private final Unit unit;
 
-    public UnitCostStore(final Unit unit) {
+    public UnitValorationStore(final Unit unit) {
         super();
 
         if (unit == null) {
@@ -18,7 +18,7 @@ public class UnitCostStore extends StoreModule {
         this.unit = unit;
     }
 
-    public UnitCostStore(final UnitCostStore store) {
+    public UnitValorationStore(final UnitValorationStore store) {
         super(store);
 
         if (store == null) {
@@ -32,8 +32,8 @@ public class UnitCostStore extends StoreModule {
     public final void addValue(final Integer value) {}
 
     @Override
-    public final UnitCostStore createNewInstance() {
-        return new UnitCostStore(this);
+    public final UnitValorationStore createNewInstance() {
+        return new UnitValorationStore(this);
     }
 
     @Override

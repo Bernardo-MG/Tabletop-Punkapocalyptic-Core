@@ -20,13 +20,23 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 import com.wandrell.tabletop.punkapocalyptic.faction.Faction;
+import com.wandrell.tabletop.punkapocalyptic.valuehandler.module.generator.BandValorationStore;
+import com.wandrell.tabletop.valuehandler.AbstractValueHandler;
+import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
+import com.wandrell.tabletop.valuehandler.DelegateValueHandler;
 import com.wandrell.tabletop.valuehandler.ValueHandler;
+import com.wandrell.tabletop.valuehandler.event.ValueHandlerEvent;
+import com.wandrell.tabletop.valuehandler.module.generator.DefaultGenerator;
+import com.wandrell.tabletop.valuehandler.module.interval.DefaultIntervalModule;
+import com.wandrell.tabletop.valuehandler.module.store.DefaultStore;
+import com.wandrell.tabletop.valuehandler.module.validator.IntervalValidator;
 
 public final class DefaultBand implements Band {
 
     private final ValueHandler     bullets;
     private final Faction          faction;
     private final Collection<Unit> units = new LinkedList<>();
+    private final ValueHandler     valoration;
 
     public DefaultBand(final DefaultBand band) {
         super();
@@ -41,31 +51,45 @@ public final class DefaultBand implements Band {
         for (final Unit unit : band.units) {
             units.add(unit.createNewInstance());
         }
+
+        valoration = band.valoration.createNewInstance();
+        ((BandValorationStore) ((DelegateValueHandler) valoration).getStore())
+                .setBand(this);
     }
 
-    public DefaultBand(final Faction faction, final ValueHandler bullets) {
+    public DefaultBand(final Faction faction, final Integer bulletCost) {
         super();
 
         if (faction == null) {
             throw new NullPointerException("Received a null pointer as faction");
         }
 
-        if (bullets == null) {
-            throw new NullPointerException("Received a null pointer as bullets");
-        }
-
         this.faction = faction;
-        this.bullets = bullets;
+
+        bullets = new DefaultValueHandler("bullets", new DefaultGenerator(),
+                new DefaultIntervalModule(), new DefaultStore(),
+                new IntervalValidator());
+
+        valoration = new DefaultValueHandler("band_valoration",
+                new DefaultGenerator(), new DefaultIntervalModule(),
+                new BandValorationStore(this, bulletCost),
+                new IntervalValidator());
     }
 
     @Override
     public final void addUnit(final Unit unit) {
         _getUnits().add(unit);
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     @Override
     public final void clearUnits() {
         _getUnits().clear();
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     @Override
@@ -86,6 +110,11 @@ public final class DefaultBand implements Band {
     @Override
     public final Collection<Unit> getUnits() {
         return Collections.unmodifiableCollection(_getUnits());
+    }
+
+    @Override
+    public final ValueHandler getValoration() {
+        return valoration;
     }
 
     protected final Collection<Unit> _getUnits() {

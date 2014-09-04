@@ -23,7 +23,7 @@ import com.wandrell.tabletop.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
-import com.wandrell.tabletop.punkapocalyptic.valuehandler.module.generator.UnitCostStore;
+import com.wandrell.tabletop.punkapocalyptic.valuehandler.module.generator.UnitValorationStore;
 import com.wandrell.tabletop.valuehandler.AbstractValueHandler;
 import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
 import com.wandrell.tabletop.valuehandler.ValueHandler;
@@ -88,7 +88,7 @@ public final class DefaultUnit implements Unit {
 
         valoration = new DefaultValueHandler("valoration",
                 new DefaultGenerator(), new DefaultIntervalModule(),
-                new UnitCostStore(this), new IntervalValidator());
+                new UnitValorationStore(this), new IntervalValidator());
     }
 
     public DefaultUnit(final String name, final ValueHandler actions,
@@ -158,7 +158,7 @@ public final class DefaultUnit implements Unit {
 
         valoration = new DefaultValueHandler("valoration",
                 new DefaultGenerator(), new DefaultIntervalModule(),
-                new UnitCostStore(this), new IntervalValidator());
+                new UnitValorationStore(this), new IntervalValidator());
     }
 
     @Override
