@@ -26,6 +26,7 @@ import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
 import com.wandrell.tabletop.valuehandler.DelegateValueHandler;
 import com.wandrell.tabletop.valuehandler.ValueHandler;
 import com.wandrell.tabletop.valuehandler.event.ValueHandlerEvent;
+import com.wandrell.tabletop.valuehandler.event.ValueHandlerListener;
 import com.wandrell.tabletop.valuehandler.module.generator.DefaultGenerator;
 import com.wandrell.tabletop.valuehandler.module.interval.DefaultIntervalModule;
 import com.wandrell.tabletop.valuehandler.module.store.DefaultStore;
@@ -55,6 +56,18 @@ public final class DefaultBand implements Band {
         valoration = band.valoration.createNewInstance();
         ((BandValorationStore) ((DelegateValueHandler) valoration).getStore())
                 .setBand(this);
+
+        ((AbstractValueHandler) bullets)
+                .addValueEventListener(new ValueHandlerListener() {
+
+                    @Override
+                    public final void valueChanged(final ValueHandlerEvent evt) {
+                        ((AbstractValueHandler) valoration)
+                                .fireValueChangedEvent(new ValueHandlerEvent(
+                                        valoration));
+                    }
+
+                });
     }
 
     public DefaultBand(final Faction faction, final Integer bulletCost) {
@@ -67,13 +80,25 @@ public final class DefaultBand implements Band {
         this.faction = faction;
 
         bullets = new DefaultValueHandler("bullets", new DefaultGenerator(),
-                new DefaultIntervalModule(), new DefaultStore(),
-                new IntervalValidator());
+                new DefaultIntervalModule(0, Integer.MAX_VALUE),
+                new DefaultStore(), new IntervalValidator());
 
         valoration = new DefaultValueHandler("band_valoration",
                 new DefaultGenerator(), new DefaultIntervalModule(),
                 new BandValorationStore(this, bulletCost),
                 new IntervalValidator());
+
+        ((AbstractValueHandler) bullets)
+                .addValueEventListener(new ValueHandlerListener() {
+
+                    @Override
+                    public final void valueChanged(final ValueHandlerEvent evt) {
+                        ((AbstractValueHandler) valoration)
+                                .fireValueChangedEvent(new ValueHandlerEvent(
+                                        valoration));
+                    }
+
+                });
     }
 
     @Override
