@@ -13,24 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.punkapocalyptic.inventory;
+package com.wandrell.tabletop.model.punkapocalyptic.rule;
 
-public final class DefaultEquipment implements Equipment {
+public final class DefaultSpecialRule implements SpecialRule {
 
-    public final String name;
+    private final String name;
 
-    public DefaultEquipment(final DefaultEquipment equipment) {
+    public DefaultSpecialRule(final DefaultSpecialRule rule) {
         super();
 
-        if (equipment == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as equipment");
-        }
-
-        this.name = equipment.name;
+        name = rule.name;
     }
 
-    public DefaultEquipment(final String name) {
+    public DefaultSpecialRule(final String name) {
         super();
 
         if (name == null) {
@@ -38,6 +33,7 @@ public final class DefaultEquipment implements Equipment {
         }
 
         this.name = name;
+
     }
 
     @Override
@@ -54,7 +50,7 @@ public final class DefaultEquipment implements Equipment {
             return false;
         }
 
-        DefaultEquipment other = (DefaultEquipment) obj;
+        DefaultSpecialRule other = (DefaultSpecialRule) obj;
         if (name == null) {
             if (other.name != null) {
                 return false;
@@ -75,7 +71,9 @@ public final class DefaultEquipment implements Equipment {
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
+
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+
         return result;
     }
 

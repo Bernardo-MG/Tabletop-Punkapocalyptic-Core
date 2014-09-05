@@ -13,13 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.punkapocalyptic.inventory;
+package com.wandrell.tabletop.model.punkapocalyptic.inventory;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 
-import com.wandrell.tabletop.punkapocalyptic.rule.SpecialRule;
+import com.wandrell.tabletop.model.punkapocalyptic.rule.SpecialRule;
 
 public final class DefaultArmor implements Armor {
 

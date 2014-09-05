@@ -1,7 +1,7 @@
-package com.wandrell.tabletop.punkapocalyptic.valuehandler.module.generator;
+package com.wandrell.tabletop.valuehandler.module.store.punkapocalyptic;
 
-import com.wandrell.tabletop.punkapocalyptic.unit.Band;
-import com.wandrell.tabletop.punkapocalyptic.unit.Unit;
+import com.wandrell.tabletop.model.punkapocalyptic.unit.Band;
+import com.wandrell.tabletop.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.valuehandler.module.StoreModule;
 
 public class BandValorationStore extends StoreModule {
