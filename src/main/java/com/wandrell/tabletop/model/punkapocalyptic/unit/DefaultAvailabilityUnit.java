@@ -22,16 +22,18 @@ import java.util.LinkedHashSet;
 import com.wandrell.tabletop.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.model.punkapocalyptic.inventory.Weapon;
-import com.wandrell.tabletop.model.punkapocalyptic.rule.SpecialRule;
+import com.wandrell.tabletop.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.model.punkapocalyptic.ruleset.UnitConstraint;
 import com.wandrell.tabletop.valuehandler.ValueHandler;
 
 public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
-    private final Collection<Armor>  armorOptions  = new LinkedHashSet<>();
-    private final Integer            maxWeapons;
-    private final Integer            minWeapons;
-    private final Unit               unit;
-    private final Collection<Weapon> weaponOptions = new LinkedHashSet<>();
+    private final Collection<Armor>          armorOptions  = new LinkedHashSet<>();
+    private final Collection<UnitConstraint> constraints   = new LinkedHashSet<>();
+    private final Integer                    maxWeapons;
+    private final Integer                    minWeapons;
+    private final Unit                       unit;
+    private final Collection<Weapon>         weaponOptions = new LinkedHashSet<>();
 
     public DefaultAvailabilityUnit(final DefaultAvailabilityUnit unit) {
         super();
@@ -44,6 +46,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
         armorOptions.addAll(unit.armorOptions);
         weaponOptions.addAll(unit.weaponOptions);
+        constraints.addAll(unit.constraints);
 
         minWeapons = unit.minWeapons;
         maxWeapons = unit.maxWeapons;
@@ -52,7 +55,8 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     public DefaultAvailabilityUnit(final Unit unit,
             final Collection<Armor> armorOptions,
             final Collection<Weapon> weaponOptions, final Integer minWeapons,
-            final Integer maxWeapons) {
+            final Integer maxWeapons,
+            final Collection<UnitConstraint> constraints) {
         super();
 
         if (unit == null) {
@@ -77,6 +81,11 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
                     "Received a null pointer as minimum weapons");
         }
 
+        if (constraints == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as constraints");
+        }
+
         this.unit = unit;
 
         this.maxWeapons = maxWeapons;
@@ -98,6 +107,15 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
             }
 
             this.weaponOptions.add(weapon);
+        }
+
+        for (final UnitConstraint constraint : constraints) {
+            if (constraint == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as constraint");
+            }
+
+            this.constraints.add(constraint);
         }
     }
 
@@ -182,6 +200,11 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     @Override
     public final ValueHandler getCombat() {
         return getUnit().getCombat();
+    }
+
+    @Override
+    public final Collection<UnitConstraint> getConstraints() {
+        return Collections.unmodifiableCollection(getConstraintsModifiable());
     }
 
     @Override
@@ -271,6 +294,10 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
     protected final Collection<Armor> getArmorOptionsModifiable() {
         return armorOptions;
+    }
+
+    protected final Collection<UnitConstraint> getConstraintsModifiable() {
+        return constraints;
     }
 
     protected final Unit getUnit() {

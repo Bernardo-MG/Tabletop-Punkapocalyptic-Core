@@ -17,7 +17,7 @@ package com.wandrell.tabletop.model.punkapocalyptic.inventory;
 
 import java.util.Collection;
 
-import com.wandrell.tabletop.model.punkapocalyptic.rule.SpecialRule;
+import com.wandrell.tabletop.model.punkapocalyptic.ruleset.SpecialRule;
 
 public final class DefaultMeleeWeapon extends AbstractWeapon implements
         MeleeWeapon {
