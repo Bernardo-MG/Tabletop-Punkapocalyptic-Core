@@ -5,22 +5,12 @@ import java.util.Iterator;
 import com.wandrell.tabletop.model.punkapocalyptic.unit.Band;
 import com.wandrell.tabletop.model.punkapocalyptic.unit.Unit;
 
-public final class UpToHalfPointsLimitUnitConstraint implements UnitConstraint {
-
-    private final String message;
-    private final String unit;
+public final class UpToHalfPointsLimitUnitConstraint extends
+        AbstractUnitConstraint {
 
     public UpToHalfPointsLimitUnitConstraint(final String unit,
             final String message) {
-        super();
-
-        this.unit = unit;
-        this.message = message;
-    }
-
-    @Override
-    public final String getErrorMessage() {
-        return String.format(getMessageTemplate(), getUnit());
+        super(unit, message);
     }
 
     @Override
@@ -38,15 +28,7 @@ public final class UpToHalfPointsLimitUnitConstraint implements UnitConstraint {
             }
         }
 
-        return (points <= (band.getValoration().getStoredValue()));
-    }
-
-    protected final String getMessageTemplate() {
-        return message;
-    }
-
-    protected final String getUnit() {
-        return unit;
+        return (points <= (band.getValoration().getStoredValue() / 2));
     }
 
 }

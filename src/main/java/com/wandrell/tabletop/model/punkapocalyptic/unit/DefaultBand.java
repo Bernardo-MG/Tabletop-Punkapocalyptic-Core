@@ -17,9 +17,14 @@ package com.wandrell.tabletop.model.punkapocalyptic.unit;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 
+import javax.swing.event.EventListenerList;
+
 import com.wandrell.tabletop.model.punkapocalyptic.faction.Faction;
+import com.wandrell.tabletop.model.punkapocalyptic.unit.event.BandListener;
+import com.wandrell.tabletop.model.punkapocalyptic.unit.event.UnitEvent;
 import com.wandrell.tabletop.valuehandler.AbstractValueHandler;
 import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
 import com.wandrell.tabletop.valuehandler.DelegateValueHandler;
@@ -34,10 +39,11 @@ import com.wandrell.tabletop.valuehandler.module.validator.IntervalValidator;
 
 public final class DefaultBand implements Band {
 
-    private final ValueHandler     bullets;
-    private final Faction          faction;
-    private final Collection<Unit> units = new LinkedList<>();
-    private final ValueHandler     valoration;
+    private final ValueHandler      bullets;
+    private final Faction           faction;
+    private final EventListenerList listeners = new EventListenerList();
+    private final Collection<Unit>  units     = new LinkedList<>();
+    private final ValueHandler      valoration;
 
     public DefaultBand(final DefaultBand band) {
         super();
@@ -102,8 +108,20 @@ public final class DefaultBand implements Band {
     }
 
     @Override
+    public final void addBandListener(final BandListener listener) {
+        if (listener == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as listener");
+        }
+
+        getListeners().add(BandListener.class, listener);
+    }
+
+    @Override
     public final void addUnit(final Unit unit) {
         _getUnits().add(unit);
+
+        fireUnitAddedEvent(new UnitEvent(this, unit));
 
         ((AbstractValueHandler) getValoration())
                 .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
@@ -142,8 +160,69 @@ public final class DefaultBand implements Band {
         return valoration;
     }
 
+    @Override
+    public final void removeBandListener(final BandListener listener) {
+        if (listener == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as listener");
+        }
+
+        getListeners().remove(BandListener.class, listener);
+    }
+
+    @Override
+    public final void removeUnit(final Unit unit) {
+        final Iterator<Unit> itr;
+        Boolean found;
+
+        itr = _getUnits().iterator();
+        found = false;
+        while ((itr.hasNext()) && (!found)) {
+            found = (itr.next() == unit);
+
+            if (found) {
+                itr.remove();
+            }
+        }
+
+        fireUnitRemovedEvent(new UnitEvent(this, unit));
+
+        ((AbstractValueHandler) getValoration())
+                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+    }
+
     protected final Collection<Unit> _getUnits() {
         return units;
+    }
+
+    protected final void fireUnitAddedEvent(final UnitEvent evt) {
+        final BandListener[] ls;
+
+        if (evt == null) {
+            throw new NullPointerException("Received a null pointer as event");
+        }
+
+        ls = getListeners().getListeners(BandListener.class);
+        for (final BandListener l : ls) {
+            l.unitAdded(evt);
+        }
+    }
+
+    protected final void fireUnitRemovedEvent(final UnitEvent evt) {
+        final BandListener[] ls;
+
+        if (evt == null) {
+            throw new NullPointerException("Received a null pointer as event");
+        }
+
+        ls = getListeners().getListeners(BandListener.class);
+        for (final BandListener l : ls) {
+            l.unitRemoved(evt);
+        }
+    }
+
+    protected final EventListenerList getListeners() {
+        return listeners;
     }
 
 }
