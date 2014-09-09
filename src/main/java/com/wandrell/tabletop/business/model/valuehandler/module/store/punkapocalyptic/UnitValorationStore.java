@@ -1,8 +1,8 @@
-package com.wandrell.tabletop.valuehandler.module.store.punkapocalyptic;
+package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.valuehandler.module.StoreModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.StoreModule;
 
 public class UnitValorationStore extends StoreModule {
 

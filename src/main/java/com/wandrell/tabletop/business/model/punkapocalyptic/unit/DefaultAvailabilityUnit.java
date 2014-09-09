@@ -24,7 +24,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.UnitConstraint;
-import com.wandrell.tabletop.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 
 public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 

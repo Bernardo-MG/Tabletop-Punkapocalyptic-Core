@@ -25,17 +25,17 @@ import javax.swing.event.EventListenerList;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.BandListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
-import com.wandrell.tabletop.valuehandler.AbstractValueHandler;
-import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
-import com.wandrell.tabletop.valuehandler.DelegateValueHandler;
-import com.wandrell.tabletop.valuehandler.ValueHandler;
-import com.wandrell.tabletop.valuehandler.event.ValueHandlerEvent;
-import com.wandrell.tabletop.valuehandler.event.ValueHandlerListener;
-import com.wandrell.tabletop.valuehandler.module.generator.DefaultGenerator;
-import com.wandrell.tabletop.valuehandler.module.interval.DefaultIntervalModule;
-import com.wandrell.tabletop.valuehandler.module.store.DefaultStore;
-import com.wandrell.tabletop.valuehandler.module.store.punkapocalyptic.BandValorationStore;
-import com.wandrell.tabletop.valuehandler.module.validator.IntervalValidator;
+import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.DelegateValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
+import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
+import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
+import com.wandrell.tabletop.business.model.valuehandler.module.interval.DefaultIntervalModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.DefaultStore;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.BandValorationStore;
+import com.wandrell.tabletop.business.model.valuehandler.module.validator.IntervalValidator;
 
 public final class DefaultBand implements Band {
 

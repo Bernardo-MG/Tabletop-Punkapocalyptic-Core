@@ -23,14 +23,14 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.valuehandler.AbstractValueHandler;
-import com.wandrell.tabletop.valuehandler.DefaultValueHandler;
-import com.wandrell.tabletop.valuehandler.ValueHandler;
-import com.wandrell.tabletop.valuehandler.event.ValueHandlerEvent;
-import com.wandrell.tabletop.valuehandler.module.generator.DefaultGenerator;
-import com.wandrell.tabletop.valuehandler.module.interval.DefaultIntervalModule;
-import com.wandrell.tabletop.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
-import com.wandrell.tabletop.valuehandler.module.validator.IntervalValidator;
+import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
+import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
+import com.wandrell.tabletop.business.model.valuehandler.module.interval.DefaultIntervalModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
+import com.wandrell.tabletop.business.model.valuehandler.module.validator.IntervalValidator;
 
 public final class DefaultUnit implements Unit {
 
