@@ -1,4 +1,4 @@
-package com.wandrell.tabletop.model.punkapocalyptic.ruleset;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
 
 public abstract class AbstractUnitConstraint implements UnitConstraint {
 

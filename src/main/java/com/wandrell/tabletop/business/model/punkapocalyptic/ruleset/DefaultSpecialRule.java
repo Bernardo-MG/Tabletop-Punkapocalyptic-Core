@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.model.punkapocalyptic.ruleset;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
 
 public final class DefaultSpecialRule implements SpecialRule {
 

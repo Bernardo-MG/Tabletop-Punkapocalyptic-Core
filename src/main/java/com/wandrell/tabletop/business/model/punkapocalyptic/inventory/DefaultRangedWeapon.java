@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.model.punkapocalyptic.inventory;
+package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import java.util.Collection;
 
-import com.wandrell.tabletop.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 
 public final class DefaultRangedWeapon extends AbstractWeapon implements
         RangedWeapon {

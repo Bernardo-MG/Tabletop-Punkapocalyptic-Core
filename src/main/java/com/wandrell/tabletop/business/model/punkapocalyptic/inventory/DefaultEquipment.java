@@ -13,56 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.model.punkapocalyptic.faction;
+package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
+public final class DefaultEquipment implements Equipment {
 
-import com.wandrell.tabletop.model.punkapocalyptic.unit.AvailabilityUnit;
+    public final String name;
 
-public final class DefaultFaction implements Faction {
-
-    private final String                       name;
-    private final Collection<AvailabilityUnit> units = new LinkedHashSet<>();
-
-    public DefaultFaction(final DefaultFaction faction) {
+    public DefaultEquipment(final DefaultEquipment equipment) {
         super();
 
-        if (faction == null) {
-            throw new NullPointerException("Received a null pointer as faction");
+        if (equipment == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as equipment");
         }
 
-        name = faction.name;
-
-        for (final AvailabilityUnit unit : faction.units) {
-            units.add(unit);
-        }
+        this.name = equipment.name;
     }
 
-    public DefaultFaction(final String name,
-            final Collection<AvailabilityUnit> units) {
+    public DefaultEquipment(final String name) {
         super();
 
         if (name == null) {
             throw new NullPointerException("Received a null pointer as name");
         }
 
-        if (units == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as units list");
-        }
-
         this.name = name;
-
-        for (final AvailabilityUnit unit : units) {
-            if (unit == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as unit");
-            }
-
-            this.units.add(unit);
-        }
     }
 
     @Override
@@ -79,7 +54,7 @@ public final class DefaultFaction implements Faction {
             return false;
         }
 
-        DefaultFaction other = (DefaultFaction) obj;
+        DefaultEquipment other = (DefaultEquipment) obj;
         if (name == null) {
             if (other.name != null) {
                 return false;
@@ -92,12 +67,6 @@ public final class DefaultFaction implements Faction {
     }
 
     @Override
-    public final Collection<AvailabilityUnit> getAvailableUnits() {
-        return Collections
-                .unmodifiableCollection(getAvailableUnitsModifiable());
-    }
-
-    @Override
     public final String getName() {
         return name;
     }
@@ -106,19 +75,13 @@ public final class DefaultFaction implements Faction {
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
-
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-
         return result;
     }
 
     @Override
     public final String toString() {
         return getName();
-    }
-
-    protected final Collection<AvailabilityUnit> getAvailableUnitsModifiable() {
-        return units;
     }
 
 }

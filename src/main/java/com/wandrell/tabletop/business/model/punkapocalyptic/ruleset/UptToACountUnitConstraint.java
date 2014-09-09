@@ -1,9 +1,9 @@
-package com.wandrell.tabletop.model.punkapocalyptic.ruleset;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
 
 import java.util.Iterator;
 
-import com.wandrell.tabletop.model.punkapocalyptic.unit.Band;
-import com.wandrell.tabletop.model.punkapocalyptic.unit.Unit;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Band;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 
 public final class UptToACountUnitConstraint extends AbstractUnitConstraint {
 

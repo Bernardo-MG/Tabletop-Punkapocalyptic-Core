@@ -13,50 +13,46 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.model.punkapocalyptic.inventory;
+package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 
-import com.wandrell.tabletop.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 
-class AbstractWeapon implements Weapon {
+public final class DefaultArmor implements Armor {
 
-    private final Integer                 cost;
-    private final Integer                 hands;
+    private final Integer                 armor;
+    private Integer                       cost  = 0;
     private final String                  name;
     private final Collection<SpecialRule> rules = new LinkedHashSet<>();
 
-    public AbstractWeapon(final AbstractWeapon weapon) {
+    public DefaultArmor(final DefaultArmor armor) {
         super();
 
-        if (weapon == null) {
-            throw new NullPointerException("Received a null pointer as weapon");
+        if (armor == null) {
+            throw new NullPointerException("Received a null pointer as armor");
         }
 
-        name = weapon.name;
+        this.armor = armor.armor;
+        cost = armor.cost;
 
-        cost = weapon.cost;
-        hands = weapon.hands;
+        name = armor.name;
 
-        rules.addAll(weapon.rules);
+        rules.addAll(armor.rules);
     }
 
-    public AbstractWeapon(final String name, final Integer cost,
-            final Integer hands, final Collection<SpecialRule> rules) {
+    public DefaultArmor(final String name, final Integer armor,
+            final Collection<SpecialRule> rules) {
         super();
 
         if (name == null) {
             throw new NullPointerException("Received a null pointer as name");
         }
 
-        if (cost == null) {
-            throw new NullPointerException("Received a null pointer as cost");
-        }
-
-        if (hands == null) {
-            throw new NullPointerException("Received a null pointer as hands");
+        if (armor == null) {
+            throw new NullPointerException("Received a null pointer as armor");
         }
 
         if (rules == null) {
@@ -64,9 +60,7 @@ class AbstractWeapon implements Weapon {
         }
 
         this.name = name;
-
-        this.cost = cost;
-        this.hands = hands;
+        this.armor = armor;
 
         for (final SpecialRule rule : rules) {
             if (rule == null) {
@@ -92,7 +86,7 @@ class AbstractWeapon implements Weapon {
             return false;
         }
 
-        AbstractWeapon other = (AbstractWeapon) obj;
+        DefaultArmor other = (DefaultArmor) obj;
         if (name == null) {
             if (other.name != null) {
                 return false;
@@ -105,13 +99,13 @@ class AbstractWeapon implements Weapon {
     }
 
     @Override
-    public final Integer getCost() {
-        return cost;
+    public final Integer getArmor() {
+        return armor;
     }
 
     @Override
-    public final Integer getHands() {
-        return hands;
+    public final Integer getCost() {
+        return cost;
     }
 
     @Override
@@ -128,8 +122,18 @@ class AbstractWeapon implements Weapon {
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
+
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+
         return result;
+    }
+
+    public final void setCost(final Integer cost) {
+        if (cost == null) {
+            throw new NullPointerException("Received a null pointer as cost");
+        }
+
+        this.cost = cost;
     }
 
     @Override
