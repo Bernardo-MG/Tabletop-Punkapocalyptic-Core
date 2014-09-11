@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.BandListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
@@ -34,10 +34,10 @@ import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListe
 import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
 import com.wandrell.tabletop.business.model.valuehandler.module.interval.DefaultIntervalModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.DefaultStore;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.BandValorationStore;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.GangValorationStore;
 import com.wandrell.tabletop.business.model.valuehandler.module.validator.IntervalValidator;
 
-public final class DefaultBand implements Gang {
+public final class DefaultGang implements Gang {
 
     private final ValueHandler      bullets;
     private final Faction           faction;
@@ -45,11 +45,11 @@ public final class DefaultBand implements Gang {
     private final Collection<Unit>  units     = new LinkedList<>();
     private final ValueHandler      valoration;
 
-    public DefaultBand(final DefaultBand band) {
+    public DefaultGang(final DefaultGang band) {
         super();
 
         if (band == null) {
-            throw new NullPointerException("Received a null pointer as band");
+            throw new NullPointerException("Received a null pointer as gang");
         }
 
         faction = band.faction;
@@ -60,7 +60,7 @@ public final class DefaultBand implements Gang {
         }
 
         valoration = band.valoration.createNewInstance();
-        ((BandValorationStore) ((DelegateValueHandler) valoration).getStore())
+        ((GangValorationStore) ((DelegateValueHandler) valoration).getStore())
                 .setBand(this);
 
         ((AbstractValueHandler) bullets)
@@ -68,15 +68,13 @@ public final class DefaultBand implements Gang {
 
                     @Override
                     public final void valueChanged(final ValueHandlerEvent evt) {
-                        ((AbstractValueHandler) valoration)
-                                .fireValueChangedEvent(new ValueHandlerEvent(
-                                        valoration));
+                        refreshValoration();
                     }
 
                 });
     }
 
-    public DefaultBand(final Faction faction, final Integer bulletCost) {
+    public DefaultGang(final Faction faction, final Integer bulletCost) {
         super();
 
         if (faction == null) {
@@ -91,7 +89,7 @@ public final class DefaultBand implements Gang {
 
         valoration = new DefaultValueHandler("band_valoration",
                 new DefaultGenerator(), new DefaultIntervalModule(),
-                new BandValorationStore(this, bulletCost),
+                new GangValorationStore(this, bulletCost),
                 new IntervalValidator());
 
         ((AbstractValueHandler) bullets)
@@ -99,22 +97,20 @@ public final class DefaultBand implements Gang {
 
                     @Override
                     public final void valueChanged(final ValueHandlerEvent evt) {
-                        ((AbstractValueHandler) valoration)
-                                .fireValueChangedEvent(new ValueHandlerEvent(
-                                        valoration));
+                        refreshValoration();
                     }
 
                 });
     }
 
     @Override
-    public final void addBandListener(final BandListener listener) {
+    public final void addGangListener(final GangListener listener) {
         if (listener == null) {
             throw new NullPointerException(
                     "Received a null pointer as listener");
         }
 
-        getListeners().add(BandListener.class, listener);
+        getListeners().add(GangListener.class, listener);
     }
 
     @Override
@@ -123,21 +119,27 @@ public final class DefaultBand implements Gang {
 
         fireUnitAddedEvent(new UnitEvent(this, unit));
 
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+        refreshValoration();
     }
 
     @Override
     public final void clearUnits() {
+        final Collection<Unit> units;
+
+        units = new LinkedList<>(getUnits());
+
         _getUnits().clear();
 
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+        for (final Unit unit : units) {
+            fireUnitRemovedEvent(new UnitEvent(this, unit));
+        }
+
+        refreshValoration();
     }
 
     @Override
-    public final DefaultBand createNewInstance() {
-        return new DefaultBand(this);
+    public final DefaultGang createNewInstance() {
+        return new DefaultGang(this);
     }
 
     @Override
@@ -161,13 +163,13 @@ public final class DefaultBand implements Gang {
     }
 
     @Override
-    public final void removeBandListener(final BandListener listener) {
+    public final void removeGangListener(final GangListener listener) {
         if (listener == null) {
             throw new NullPointerException(
                     "Received a null pointer as listener");
         }
 
-        getListeners().remove(BandListener.class, listener);
+        getListeners().remove(GangListener.class, listener);
     }
 
     @Override
@@ -182,11 +184,14 @@ public final class DefaultBand implements Gang {
 
             if (found) {
                 itr.remove();
+                fireUnitRemovedEvent(new UnitEvent(this, unit));
             }
         }
 
-        fireUnitRemovedEvent(new UnitEvent(this, unit));
+        refreshValoration();
+    }
 
+    private final void refreshValoration() {
         ((AbstractValueHandler) getValoration())
                 .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
@@ -196,27 +201,27 @@ public final class DefaultBand implements Gang {
     }
 
     protected final void fireUnitAddedEvent(final UnitEvent evt) {
-        final BandListener[] ls;
+        final GangListener[] ls;
 
         if (evt == null) {
             throw new NullPointerException("Received a null pointer as event");
         }
 
-        ls = getListeners().getListeners(BandListener.class);
-        for (final BandListener l : ls) {
+        ls = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : ls) {
             l.unitAdded(evt);
         }
     }
 
     protected final void fireUnitRemovedEvent(final UnitEvent evt) {
-        final BandListener[] ls;
+        final GangListener[] ls;
 
         if (evt == null) {
             throw new NullPointerException("Received a null pointer as event");
         }
 
-        ls = getListeners().getListeners(BandListener.class);
-        for (final BandListener l : ls) {
+        ls = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : ls) {
             l.unitRemoved(evt);
         }
     }

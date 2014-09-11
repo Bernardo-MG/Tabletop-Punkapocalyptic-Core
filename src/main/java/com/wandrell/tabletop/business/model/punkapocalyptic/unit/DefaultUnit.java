@@ -95,7 +95,8 @@ public final class DefaultUnit implements Unit {
             final ValueHandler agility, final ValueHandler combat,
             final ValueHandler precision, final ValueHandler strength,
             final ValueHandler tech, final ValueHandler toughness,
-            final ValueHandler weaponSlots, final Integer cost) {
+            final ValueHandler weaponSlots, final Integer cost,
+            final Collection<SpecialRule> rules) {
         super();
 
         if (name == null) {
@@ -159,6 +160,15 @@ public final class DefaultUnit implements Unit {
         valoration = new DefaultValueHandler("valoration",
                 new DefaultGenerator(), new DefaultIntervalModule(),
                 new UnitValorationStore(this), new IntervalValidator());
+
+        for (final SpecialRule rule : rules) {
+            if (rule == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as rule");
+            }
+
+            _getSpecialRules().add(rule);
+        }
     }
 
     @Override
@@ -172,15 +182,6 @@ public final class DefaultUnit implements Unit {
 
         ((AbstractValueHandler) getValoration())
                 .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
-    }
-
-    @Override
-    public final void addRule(final SpecialRule rule) {
-        if (rule == null) {
-            throw new NullPointerException("Received a null pointer as rule");
-        }
-
-        _getSpecialRules().add(rule);
     }
 
     @Override

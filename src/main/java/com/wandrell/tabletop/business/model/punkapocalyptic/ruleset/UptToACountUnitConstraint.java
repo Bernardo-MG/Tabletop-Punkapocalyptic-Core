@@ -24,7 +24,7 @@ public final class UptToACountUnitConstraint extends AbstractUnitConstraint {
         itr = band.getUnits().iterator();
         number = 0;
         while ((itr.hasNext()) && (number <= getCount())) {
-            if (!itr.next().getUnitName().equals(getUnit())) {
+            if (itr.next().getUnitName().equals(getUnit())) {
                 number++;
             }
         }

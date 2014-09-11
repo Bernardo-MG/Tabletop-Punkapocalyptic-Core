@@ -4,27 +4,16 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.valuehandler.module.StoreModule;
 
-public class BandValorationStore extends StoreModule {
+public class GangValorationStore extends StoreModule {
 
-    private Gang          band;
     private final Integer bulletCost;
+    private Gang          gang;
 
-    public BandValorationStore(final BandValorationStore store) {
-        super(store);
-
-        if (store == null) {
-            throw new NullPointerException("Received a null pointer as store");
-        }
-
-        band = store.band;
-        bulletCost = store.bulletCost;
-    }
-
-    public BandValorationStore(final Gang band, final Integer bulletCost) {
+    public GangValorationStore(final Gang gang, final Integer bulletCost) {
         super();
 
-        if (band == null) {
-            throw new NullPointerException("Received a null pointer as band");
+        if (gang == null) {
+            throw new NullPointerException("Received a null pointer as gang");
         }
 
         if (bulletCost == null) {
@@ -32,16 +21,27 @@ public class BandValorationStore extends StoreModule {
                     "Received a null pointer as bullet cost");
         }
 
-        this.band = band;
+        this.gang = gang;
         this.bulletCost = bulletCost;
+    }
+
+    public GangValorationStore(final GangValorationStore store) {
+        super(store);
+
+        if (store == null) {
+            throw new NullPointerException("Received a null pointer as store");
+        }
+
+        gang = store.gang;
+        bulletCost = store.bulletCost;
     }
 
     @Override
     public final void addValue(final Integer value) {}
 
     @Override
-    public final BandValorationStore createNewInstance() {
-        return new BandValorationStore(this);
+    public final GangValorationStore createNewInstance() {
+        return new GangValorationStore(this);
     }
 
     @Override
@@ -59,14 +59,14 @@ public class BandValorationStore extends StoreModule {
     }
 
     public final void setBand(final Gang band) {
-        this.band = band;
+        this.gang = band;
     }
 
     @Override
     public final void setValue(final Integer value) {}
 
     protected final Gang getBand() {
-        return band;
+        return gang;
     }
 
     protected final Integer getBulletCost() {

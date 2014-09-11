@@ -1,6 +1,7 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
 
-public abstract class AbstractUnitConstraint implements UnitConstraint {
+public abstract class AbstractUnitConstraint implements
+        ArmyBuilderUnitConstraint {
 
     private final String message;
     private final String unit;
