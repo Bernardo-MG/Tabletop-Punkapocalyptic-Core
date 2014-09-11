@@ -1,15 +1,26 @@
 package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Band;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.valuehandler.module.StoreModule;
 
 public class BandValorationStore extends StoreModule {
 
-    private Band          band;
+    private Gang          band;
     private final Integer bulletCost;
 
-    public BandValorationStore(final Band band, final Integer bulletCost) {
+    public BandValorationStore(final BandValorationStore store) {
+        super(store);
+
+        if (store == null) {
+            throw new NullPointerException("Received a null pointer as store");
+        }
+
+        band = store.band;
+        bulletCost = store.bulletCost;
+    }
+
+    public BandValorationStore(final Gang band, final Integer bulletCost) {
         super();
 
         if (band == null) {
@@ -23,17 +34,6 @@ public class BandValorationStore extends StoreModule {
 
         this.band = band;
         this.bulletCost = bulletCost;
-    }
-
-    public BandValorationStore(final BandValorationStore store) {
-        super(store);
-
-        if (store == null) {
-            throw new NullPointerException("Received a null pointer as store");
-        }
-
-        band = store.band;
-        bulletCost = store.bulletCost;
     }
 
     @Override
@@ -58,14 +58,14 @@ public class BandValorationStore extends StoreModule {
         return cost;
     }
 
-    public final void setBand(final Band band) {
+    public final void setBand(final Gang band) {
         this.band = band;
     }
 
     @Override
     public final void setValue(final Integer value) {}
 
-    protected final Band getBand() {
+    protected final Gang getBand() {
         return band;
     }
 

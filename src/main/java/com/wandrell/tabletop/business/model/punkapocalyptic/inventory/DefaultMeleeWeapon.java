@@ -64,7 +64,7 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
     }
 
     @Override
-    public final Integer getCombatModifier() {
+    public final Integer getCombat() {
         return combat;
     }
 

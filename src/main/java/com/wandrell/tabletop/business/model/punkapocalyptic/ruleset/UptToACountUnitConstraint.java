@@ -2,7 +2,7 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
 
 import java.util.Iterator;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Band;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 
 public final class UptToACountUnitConstraint extends AbstractUnitConstraint {
@@ -17,7 +17,7 @@ public final class UptToACountUnitConstraint extends AbstractUnitConstraint {
     }
 
     @Override
-    public final Boolean isValid(final Band band) {
+    public final Boolean isValid(final Gang band) {
         final Iterator<Unit> itr;
         Integer number;
 

@@ -37,7 +37,7 @@ import com.wandrell.tabletop.business.model.valuehandler.module.store.DefaultSto
 import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.BandValorationStore;
 import com.wandrell.tabletop.business.model.valuehandler.module.validator.IntervalValidator;
 
-public final class DefaultBand implements Band {
+public final class DefaultBand implements Gang {
 
     private final ValueHandler      bullets;
     private final Faction           faction;
