@@ -2,9 +2,9 @@ package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapoca
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.valuehandler.module.StoreModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.EditableStoreModule;
 
-public class UnitValorationStore extends StoreModule {
+public class UnitValorationStore extends EditableStoreModule {
 
     private final Unit unit;
 

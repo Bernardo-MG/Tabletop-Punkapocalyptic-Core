@@ -27,8 +27,8 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListe
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.DelegateValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.DelegateEditableValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
 import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
@@ -39,11 +39,11 @@ import com.wandrell.tabletop.business.model.valuehandler.module.validator.Interv
 
 public final class DefaultGang implements Gang {
 
-    private final ValueHandler      bullets;
-    private final Faction           faction;
-    private final EventListenerList listeners = new EventListenerList();
-    private final Collection<Unit>  units     = new LinkedList<>();
-    private final ValueHandler      valoration;
+    private final EditableValueHandler bullets;
+    private final Faction              faction;
+    private final EventListenerList    listeners = new EventListenerList();
+    private final Collection<Unit>     units     = new LinkedList<>();
+    private final EditableValueHandler valoration;
 
     public DefaultGang(final DefaultGang band) {
         super();
@@ -60,8 +60,8 @@ public final class DefaultGang implements Gang {
         }
 
         valoration = band.valoration.createNewInstance();
-        ((GangValorationStore) ((DelegateValueHandler) valoration).getStore())
-                .setBand(this);
+        ((GangValorationStore) ((DelegateEditableValueHandler) valoration)
+                .getStore()).setBand(this);
 
         ((AbstractValueHandler) bullets)
                 .addValueEventListener(new ValueHandlerListener() {
@@ -143,7 +143,7 @@ public final class DefaultGang implements Gang {
     }
 
     @Override
-    public final ValueHandler getBullets() {
+    public final EditableValueHandler getBullets() {
         return bullets;
     }
 
@@ -158,7 +158,7 @@ public final class DefaultGang implements Gang {
     }
 
     @Override
-    public final ValueHandler getValoration() {
+    public final EditableValueHandler getValoration() {
         return valoration;
     }
 

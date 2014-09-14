@@ -24,7 +24,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.ArmyBuilderUnitConstraint;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 
 public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
@@ -164,12 +164,12 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final ValueHandler getActions() {
+    public final EditableValueHandler getActions() {
         return getUnit().getActions();
     }
 
     @Override
-    public final ValueHandler getAgility() {
+    public final EditableValueHandler getAgility() {
         return getUnit().getAgility();
     }
 
@@ -189,7 +189,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final ValueHandler getCombat() {
+    public final EditableValueHandler getCombat() {
         return getUnit().getCombat();
     }
 
@@ -204,7 +204,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final ValueHandler getFreeWeaponSlots() {
+    public final EditableValueHandler getFreeWeaponSlots() {
         return getUnit().getFreeWeaponSlots();
     }
 
@@ -224,7 +224,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final ValueHandler getPrecision() {
+    public final EditableValueHandler getPrecision() {
         return getUnit().getPrecision();
     }
 
@@ -234,17 +234,17 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final ValueHandler getStrength() {
+    public final EditableValueHandler getStrength() {
         return getUnit().getStrength();
     }
 
     @Override
-    public final ValueHandler getTech() {
+    public final EditableValueHandler getTech() {
         return getUnit().getTech();
     }
 
     @Override
-    public final ValueHandler getToughness() {
+    public final EditableValueHandler getToughness() {
         return getUnit().getToughness();
     }
 
@@ -254,7 +254,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final ValueHandler getValoration() {
+    public final EditableValueHandler getValoration() {
         return getUnit().getValoration();
     }
 

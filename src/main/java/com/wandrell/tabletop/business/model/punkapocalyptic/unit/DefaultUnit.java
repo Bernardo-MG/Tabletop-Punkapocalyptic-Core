@@ -25,7 +25,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
 import com.wandrell.tabletop.business.model.valuehandler.module.interval.DefaultIntervalModule;
@@ -34,22 +34,22 @@ import com.wandrell.tabletop.business.model.valuehandler.module.validator.Interv
 
 public final class DefaultUnit implements Unit {
 
-    private final ValueHandler            actions;
-    private final ValueHandler            agility;
+    private final EditableValueHandler    actions;
+    private final EditableValueHandler    agility;
     private Armor                         armor;
-    private final ValueHandler            combat;
+    private final EditableValueHandler    combat;
     private final Integer                 cost;
     private final Collection<Equipment>   equipment      = new LinkedHashSet<>();
     private Integer                       maxWeaponSlots = 2;
     private final String                  name;
-    private final ValueHandler            precision;
+    private final EditableValueHandler    precision;
     private final Collection<SpecialRule> rules          = new LinkedHashSet<>();
-    private final ValueHandler            strength;
-    private final ValueHandler            tech;
-    private final ValueHandler            toughness;
-    private final ValueHandler            valoration;
+    private final EditableValueHandler    strength;
+    private final EditableValueHandler    tech;
+    private final EditableValueHandler    toughness;
+    private final EditableValueHandler    valoration;
     private final Collection<Weapon>      weapons        = new LinkedHashSet<>();
-    private final ValueHandler            weaponSlots;
+    private final EditableValueHandler    weaponSlots;
 
     public DefaultUnit(final DefaultUnit unit) {
         super();
@@ -91,11 +91,14 @@ public final class DefaultUnit implements Unit {
                 new UnitValorationStore(this), new IntervalValidator());
     }
 
-    public DefaultUnit(final String name, final ValueHandler actions,
-            final ValueHandler agility, final ValueHandler combat,
-            final ValueHandler precision, final ValueHandler strength,
-            final ValueHandler tech, final ValueHandler toughness,
-            final ValueHandler weaponSlots, final Integer cost,
+    public DefaultUnit(final String name, final EditableValueHandler actions,
+            final EditableValueHandler agility,
+            final EditableValueHandler combat,
+            final EditableValueHandler precision,
+            final EditableValueHandler strength,
+            final EditableValueHandler tech,
+            final EditableValueHandler toughness,
+            final EditableValueHandler weaponSlots, final Integer cost,
             final Collection<SpecialRule> rules) {
         super();
 
@@ -229,12 +232,12 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final ValueHandler getActions() {
+    public final EditableValueHandler getActions() {
         return actions;
     }
 
     @Override
-    public final ValueHandler getAgility() {
+    public final EditableValueHandler getAgility() {
         return agility;
     }
 
@@ -249,7 +252,7 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final ValueHandler getCombat() {
+    public final EditableValueHandler getCombat() {
         return combat;
     }
 
@@ -259,7 +262,7 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final ValueHandler getFreeWeaponSlots() {
+    public final EditableValueHandler getFreeWeaponSlots() {
         return weaponSlots;
     }
 
@@ -269,7 +272,7 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final ValueHandler getPrecision() {
+    public final EditableValueHandler getPrecision() {
         return precision;
     }
 
@@ -279,17 +282,17 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final ValueHandler getStrength() {
+    public final EditableValueHandler getStrength() {
         return strength;
     }
 
     @Override
-    public final ValueHandler getTech() {
+    public final EditableValueHandler getTech() {
         return tech;
     }
 
     @Override
-    public final ValueHandler getToughness() {
+    public final EditableValueHandler getToughness() {
         return toughness;
     }
 
@@ -299,7 +302,7 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final ValueHandler getValoration() {
+    public final EditableValueHandler getValoration() {
         return valoration;
     }
 
