@@ -49,7 +49,7 @@ public final class DefaultUnit implements Unit {
     private final EditableValueHandler    toughness;
     private final EditableValueHandler    valoration;
     private final Collection<Weapon>      weapons        = new LinkedHashSet<>();
-    private final EditableValueHandler    weaponSlots;
+    private Integer                       weaponSlots;
 
     public DefaultUnit(final DefaultUnit unit) {
         super();
@@ -68,7 +68,7 @@ public final class DefaultUnit implements Unit {
         tech = unit.tech.createNewInstance();
         toughness = unit.toughness.createNewInstance();
 
-        weaponSlots = unit.weaponSlots.createNewInstance();
+        weaponSlots = unit.weaponSlots;
 
         cost = unit.cost;
 
@@ -97,8 +97,7 @@ public final class DefaultUnit implements Unit {
             final EditableValueHandler precision,
             final EditableValueHandler strength,
             final EditableValueHandler tech,
-            final EditableValueHandler toughness,
-            final EditableValueHandler weaponSlots, final Integer cost,
+            final EditableValueHandler toughness, final Integer cost,
             final Collection<SpecialRule> rules) {
         super();
 
@@ -137,11 +136,6 @@ public final class DefaultUnit implements Unit {
                     "Received a null pointer as toughness");
         }
 
-        if (weaponSlots == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as weaponSlots");
-        }
-
         if (cost == null) {
             throw new NullPointerException("Received a null pointer as cost");
         }
@@ -156,7 +150,7 @@ public final class DefaultUnit implements Unit {
         this.tech = tech;
         this.toughness = toughness;
 
-        this.weaponSlots = weaponSlots;
+        weaponSlots = maxWeaponSlots;
 
         this.cost = cost;
 
@@ -193,9 +187,9 @@ public final class DefaultUnit implements Unit {
             throw new NullPointerException("Received a null pointer as weapon");
         }
 
-        if (getFreeWeaponSlots().getStoredValue() >= weapon.getHands()) {
+        if (getFreeWeaponSlots() >= weapon.getHands()) {
             _getWeapons().add(weapon);
-            getFreeWeaponSlots().addValue(-weapon.getHands());
+            weaponSlots -= weapon.getHands();
 
             ((AbstractValueHandler) getValoration())
                     .fireValueChangedEvent(new ValueHandlerEvent(
@@ -220,7 +214,7 @@ public final class DefaultUnit implements Unit {
     public final void clearWeapons() {
         _getWeapons().clear();
 
-        getFreeWeaponSlots().setValue(getMaxWeaponSlots());
+        weaponSlots = maxWeaponSlots;
 
         ((AbstractValueHandler) getValoration())
                 .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
@@ -262,7 +256,7 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final EditableValueHandler getFreeWeaponSlots() {
+    public final Integer getFreeWeaponSlots() {
         return weaponSlots;
     }
 

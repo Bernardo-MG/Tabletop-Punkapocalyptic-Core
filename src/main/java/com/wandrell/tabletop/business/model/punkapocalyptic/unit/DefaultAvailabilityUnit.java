@@ -204,7 +204,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final EditableValueHandler getFreeWeaponSlots() {
+    public final Integer getFreeWeaponSlots() {
         return getUnit().getFreeWeaponSlots();
     }
 
