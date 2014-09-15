@@ -17,17 +17,19 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.unit;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EventObject;
 import java.util.LinkedHashSet;
+
+import javax.swing.event.EventListenerList;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuehandler.DelegateDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
 
 public final class DefaultUnit implements Unit {
@@ -38,6 +40,7 @@ public final class DefaultUnit implements Unit {
     private final ValueHandler            combat;
     private final Integer                 cost;
     private final Collection<Equipment>   equipment      = new LinkedHashSet<>();
+    private final EventListenerList       listeners      = new EventListenerList();
     private final Integer                 maxWeaponSlots = 2;
     private final String                  name;
     private final ValueHandler            precision;
@@ -173,8 +176,17 @@ public final class DefaultUnit implements Unit {
 
         _getEquipment().add(equipment);
 
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+        fireStatusChangedEvent(new EventObject(this));
+    }
+
+    @Override
+    public final void addUnitListener(final UnitListener listener) {
+        if (listener == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as listener");
+        }
+
+        getListeners().add(UnitListener.class, listener);
     }
 
     @Override
@@ -187,9 +199,7 @@ public final class DefaultUnit implements Unit {
             _getWeapons().add(weapon);
             weaponSlots -= weapon.getHands();
 
-            ((AbstractValueHandler) getValoration())
-                    .fireValueChangedEvent(new ValueHandlerEvent(
-                            getValoration()));
+            fireStatusChangedEvent(new EventObject(this));
         }
     }
 
@@ -197,8 +207,7 @@ public final class DefaultUnit implements Unit {
     public final void clearEquipment() {
         _getEquipment().clear();
 
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -207,8 +216,7 @@ public final class DefaultUnit implements Unit {
 
         weaponSlots = maxWeaponSlots;
 
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -297,11 +305,20 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
+    public final void removeUnitListener(final UnitListener listener) {
+        if (listener == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as listener");
+        }
+
+        getListeners().remove(UnitListener.class, listener);
+    }
+
+    @Override
     public final void setArmor(final Armor armor) {
         this.armor = armor;
 
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -319,6 +336,23 @@ public final class DefaultUnit implements Unit {
 
     protected final Collection<Weapon> _getWeapons() {
         return weapons;
+    }
+
+    protected final void fireStatusChangedEvent(final EventObject evt) {
+        final UnitListener[] ls;
+
+        if (evt == null) {
+            throw new NullPointerException("Received a null pointer as event");
+        }
+
+        ls = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : ls) {
+            l.statusChanged(evt);
+        }
+    }
+
+    protected final EventListenerList getListeners() {
+        return listeners;
     }
 
 }

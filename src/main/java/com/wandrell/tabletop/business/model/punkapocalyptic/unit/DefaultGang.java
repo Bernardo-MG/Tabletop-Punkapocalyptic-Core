@@ -17,6 +17,7 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.unit;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EventObject;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -69,7 +70,7 @@ public final class DefaultGang implements Gang {
 
                     @Override
                     public final void valueChanged(final ValueHandlerEvent evt) {
-                        refreshValoration();
+                        fireStatusChangedEvent(new EventObject(this));
                     }
 
                 });
@@ -95,7 +96,7 @@ public final class DefaultGang implements Gang {
 
                     @Override
                     public final void valueChanged(final ValueHandlerEvent evt) {
-                        refreshValoration();
+                        fireStatusChangedEvent(new EventObject(this));
                     }
 
                 });
@@ -117,7 +118,7 @@ public final class DefaultGang implements Gang {
 
         fireUnitAddedEvent(new UnitEvent(this, unit));
 
-        refreshValoration();
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -132,7 +133,7 @@ public final class DefaultGang implements Gang {
             fireUnitRemovedEvent(new UnitEvent(this, unit));
         }
 
-        refreshValoration();
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -183,19 +184,27 @@ public final class DefaultGang implements Gang {
             if (found) {
                 itr.remove();
                 fireUnitRemovedEvent(new UnitEvent(this, unit));
+                fireStatusChangedEvent(new EventObject(this));
             }
         }
 
-        refreshValoration();
-    }
-
-    private final void refreshValoration() {
-        ((AbstractValueHandler) getValoration())
-                .fireValueChangedEvent(new ValueHandlerEvent(getValoration()));
     }
 
     protected final Collection<Unit> _getUnits() {
         return units;
+    }
+
+    protected final void fireStatusChangedEvent(final EventObject evt) {
+        final GangListener[] ls;
+
+        if (evt == null) {
+            throw new NullPointerException("Received a null pointer as event");
+        }
+
+        ls = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : ls) {
+            l.statusChanged(evt);
+        }
     }
 
     protected final void fireUnitAddedEvent(final UnitEvent evt) {

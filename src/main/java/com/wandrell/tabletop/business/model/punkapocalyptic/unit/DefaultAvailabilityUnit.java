@@ -24,6 +24,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.ArmyBuilderUnitConstraint;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 
 public final class DefaultAvailabilityUnit implements AvailabilityUnit {
@@ -127,6 +128,11 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
         }
 
         getUnit().addEquipment(equipment);
+    }
+
+    @Override
+    public final void addUnitListener(final UnitListener listener) {
+        getUnit().addUnitListener(listener);
     }
 
     @Override
@@ -266,6 +272,11 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     @Override
     public final int hashCode() {
         return getUnit().hashCode();
+    }
+
+    @Override
+    public final void removeUnitListener(final UnitListener listener) {
+        getUnit().removeUnitListener(listener);
     }
 
     @Override
