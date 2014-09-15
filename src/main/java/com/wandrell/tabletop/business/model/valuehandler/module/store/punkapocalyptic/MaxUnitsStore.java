@@ -4,12 +4,12 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
-public class GangValorationStore extends StoreModule {
+public final class MaxUnitsStore extends StoreModule {
 
-    private Gang                 gang;
+    private final Gang           gang;
     private final RulesetService serviceRuleset;
 
-    public GangValorationStore(final Gang gang, final RulesetService service) {
+    public MaxUnitsStore(final Gang gang, final RulesetService service) {
         super();
 
         if (gang == null) {
@@ -25,40 +25,21 @@ public class GangValorationStore extends StoreModule {
         serviceRuleset = service;
     }
 
-    public GangValorationStore(final GangValorationStore store) {
+    public MaxUnitsStore(final MaxUnitsStore store) {
         super(store);
-
-        if (store == null) {
-            throw new NullPointerException("Received a null pointer as store");
-        }
 
         gang = store.gang;
         serviceRuleset = store.serviceRuleset;
     }
 
-    public GangValorationStore(final RulesetService service) {
-        super();
-
-        if (service == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as ruleset service");
-        }
-
-        serviceRuleset = service;
-    }
-
     @Override
-    public final GangValorationStore createNewInstance() {
-        return new GangValorationStore(this);
+    public MaxUnitsStore createNewInstance() {
+        return new MaxUnitsStore(this);
     }
 
     @Override
     public final Integer getValue() {
-        return getRulesetService().getGangValoration(getGang());
-    }
-
-    public final void setGang(final Gang gang) {
-        this.gang = gang;
+        return getRulesetService().getMaxAllowedUnits(getGang());
     }
 
     protected final Gang getGang() {

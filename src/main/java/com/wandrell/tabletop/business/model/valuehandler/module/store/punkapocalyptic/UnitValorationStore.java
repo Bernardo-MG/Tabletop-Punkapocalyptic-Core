@@ -1,21 +1,39 @@
 package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
+import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
 public class UnitValorationStore extends StoreModule {
 
-    private final Unit unit;
+    private final RulesetService serviceRuleset;
+    private Unit                 unit;
 
-    public UnitValorationStore(final Unit unit) {
+    public UnitValorationStore(final RulesetService service) {
+        super();
+
+        if (service == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as ruleset service");
+        }
+
+        serviceRuleset = service;
+    }
+
+    public UnitValorationStore(final Unit unit, final RulesetService service) {
         super();
 
         if (unit == null) {
             throw new NullPointerException("Received a null pointer as unit");
         }
 
+        if (service == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as ruleset service");
+        }
+
         this.unit = unit;
+        serviceRuleset = service;
     }
 
     public UnitValorationStore(final UnitValorationStore store) {
@@ -26,6 +44,7 @@ public class UnitValorationStore extends StoreModule {
         }
 
         unit = store.unit;
+        serviceRuleset = store.serviceRuleset;
     }
 
     @Override
@@ -35,19 +54,15 @@ public class UnitValorationStore extends StoreModule {
 
     @Override
     public final Integer getValue() {
-        Integer cost;
+        return getRulesetService().getUnitValoration(getUnit());
+    }
 
-        cost = getUnit().getBaseCost();
+    public final void setUnit(final Unit unit) {
+        this.unit = unit;
+    }
 
-        for (final Weapon weapon : getUnit().getWeapons()) {
-            cost += weapon.getCost();
-        }
-
-        if (getUnit().getArmor() != null) {
-            cost += getUnit().getArmor().getCost();
-        }
-
-        return cost;
+    protected final RulesetService getRulesetService() {
+        return serviceRuleset;
     }
 
     protected final Unit getUnit() {

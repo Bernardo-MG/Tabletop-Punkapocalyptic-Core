@@ -24,7 +24,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.DefaultDerivedValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.DelegateDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
@@ -32,22 +32,21 @@ import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocal
 
 public final class DefaultUnit implements Unit {
 
-    private static final String           VALORATION_NAME = "valoration";
     private final ValueHandler            actions;
     private final ValueHandler            agility;
     private Armor                         armor;
     private final ValueHandler            combat;
     private final Integer                 cost;
-    private final Collection<Equipment>   equipment       = new LinkedHashSet<>();
-    private final Integer                 maxWeaponSlots  = 2;
+    private final Collection<Equipment>   equipment      = new LinkedHashSet<>();
+    private final Integer                 maxWeaponSlots = 2;
     private final String                  name;
     private final ValueHandler            precision;
-    private final Collection<SpecialRule> rules           = new LinkedHashSet<>();
+    private final Collection<SpecialRule> rules          = new LinkedHashSet<>();
     private final ValueHandler            strength;
     private final ValueHandler            tech;
     private final ValueHandler            toughness;
     private final ValueHandler            valoration;
-    private final Collection<Weapon>      weapons         = new LinkedHashSet<>();
+    private final Collection<Weapon>      weapons        = new LinkedHashSet<>();
     private Integer                       weaponSlots;
 
     public DefaultUnit(final DefaultUnit unit) {
@@ -85,7 +84,9 @@ public final class DefaultUnit implements Unit {
             rules.add(r);
         }
 
-        valoration = buildValoration();
+        valoration = unit.valoration.createNewInstance();
+        ((UnitValorationStore) ((DelegateDerivedValueHandler) valoration)
+                .getStore()).setUnit(this);
     }
 
     public DefaultUnit(final String name, final EditableValueHandler actions,
@@ -95,7 +96,7 @@ public final class DefaultUnit implements Unit {
             final EditableValueHandler strength,
             final EditableValueHandler tech,
             final EditableValueHandler toughness, final Integer cost,
-            final Collection<SpecialRule> rules) {
+            final Collection<SpecialRule> rules, final ValueHandler valoration) {
         super();
 
         if (name == null) {
@@ -151,7 +152,7 @@ public final class DefaultUnit implements Unit {
 
         this.cost = cost;
 
-        valoration = buildValoration();
+        this.valoration = valoration;
 
         for (final SpecialRule rule : rules) {
             if (rule == null) {
@@ -306,11 +307,6 @@ public final class DefaultUnit implements Unit {
     @Override
     public final String toString() {
         return getUnitName();
-    }
-
-    private final ValueHandler buildValoration() {
-        return new DefaultDerivedValueHandler(VALORATION_NAME,
-                new UnitValorationStore(this));
     }
 
     protected final Collection<Equipment> _getEquipment() {

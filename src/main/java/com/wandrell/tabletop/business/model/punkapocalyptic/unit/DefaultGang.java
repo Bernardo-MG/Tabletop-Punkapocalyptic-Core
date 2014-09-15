@@ -26,7 +26,6 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.DefaultDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.DelegateDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
@@ -41,11 +40,10 @@ import com.wandrell.tabletop.business.model.valuehandler.module.validator.Interv
 
 public final class DefaultGang implements Gang {
 
-    private static final String        VALORATION_NAME = "valoration";
     private final EditableValueHandler bullets;
     private final Faction              faction;
-    private final EventListenerList    listeners       = new EventListenerList();
-    private final Collection<Unit>     units           = new LinkedList<>();
+    private final EventListenerList    listeners = new EventListenerList();
+    private final Collection<Unit>     units     = new LinkedList<>();
     private final ValueHandler         valoration;
 
     public DefaultGang(final DefaultGang band) {
@@ -64,7 +62,7 @@ public final class DefaultGang implements Gang {
 
         valoration = band.valoration.createNewInstance();
         ((GangValorationStore) ((DelegateDerivedValueHandler) valoration)
-                .getStore()).setBand(this);
+                .getStore()).setGang(this);
 
         ((AbstractValueHandler) bullets)
                 .addValueEventListener(new ValueHandlerListener() {
@@ -77,7 +75,7 @@ public final class DefaultGang implements Gang {
                 });
     }
 
-    public DefaultGang(final Faction faction, final Integer bulletCost) {
+    public DefaultGang(final Faction faction, final ValueHandler valoration) {
         super();
 
         if (faction == null) {
@@ -90,8 +88,7 @@ public final class DefaultGang implements Gang {
                 new DefaultIntervalModule(0, Integer.MAX_VALUE),
                 new DefaultStore(), new IntervalValidator());
 
-        valoration = new DefaultDerivedValueHandler(VALORATION_NAME,
-                new GangValorationStore(this, bulletCost));
+        this.valoration = valoration;
 
         ((AbstractValueHandler) bullets)
                 .addValueEventListener(new ValueHandlerListener() {
