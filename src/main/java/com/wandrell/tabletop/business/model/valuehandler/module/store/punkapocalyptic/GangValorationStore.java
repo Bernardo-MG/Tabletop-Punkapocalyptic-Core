@@ -2,9 +2,9 @@ package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapoca
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.EditableStoreModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 
-public class GangValorationStore extends EditableStoreModule {
+public class GangValorationStore extends StoreModule {
 
     private final Integer bulletCost;
     private Gang          gang;
@@ -37,9 +37,6 @@ public class GangValorationStore extends EditableStoreModule {
     }
 
     @Override
-    public final void addValue(final Integer value) {}
-
-    @Override
     public final GangValorationStore createNewInstance() {
         return new GangValorationStore(this);
     }
@@ -61,9 +58,6 @@ public class GangValorationStore extends EditableStoreModule {
     public final void setBand(final Gang band) {
         this.gang = band;
     }
-
-    @Override
-    public final void setValue(final Integer value) {}
 
     protected final Gang getBand() {
         return gang;

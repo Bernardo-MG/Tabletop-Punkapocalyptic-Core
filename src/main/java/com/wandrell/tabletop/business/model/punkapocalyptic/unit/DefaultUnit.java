@@ -33,14 +33,13 @@ import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocal
 public final class DefaultUnit implements Unit {
 
     private static final String           VALORATION_NAME = "valoration";
-
     private final ValueHandler            actions;
     private final ValueHandler            agility;
     private Armor                         armor;
     private final ValueHandler            combat;
     private final Integer                 cost;
     private final Collection<Equipment>   equipment       = new LinkedHashSet<>();
-    private Integer                       maxWeaponSlots  = 2;
+    private final Integer                 maxWeaponSlots  = 2;
     private final String                  name;
     private final ValueHandler            precision;
     private final Collection<SpecialRule> rules           = new LinkedHashSet<>();
@@ -55,7 +54,7 @@ public final class DefaultUnit implements Unit {
         super();
 
         if (unit == null) {
-            throw new NullPointerException("Received a null pointer as band");
+            throw new NullPointerException("Received a null pointer as unit");
         }
 
         name = unit.name;
