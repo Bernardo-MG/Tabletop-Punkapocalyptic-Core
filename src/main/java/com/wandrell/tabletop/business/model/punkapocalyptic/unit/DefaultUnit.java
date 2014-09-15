@@ -24,31 +24,31 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.DefaultDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
-import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
-import com.wandrell.tabletop.business.model.valuehandler.module.interval.DefaultIntervalModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
-import com.wandrell.tabletop.business.model.valuehandler.module.validator.IntervalValidator;
 
 public final class DefaultUnit implements Unit {
 
-    private final EditableValueHandler    actions;
-    private final EditableValueHandler    agility;
+    private static final String           VALORATION_NAME = "valoration";
+
+    private final ValueHandler            actions;
+    private final ValueHandler            agility;
     private Armor                         armor;
-    private final EditableValueHandler    combat;
+    private final ValueHandler            combat;
     private final Integer                 cost;
-    private final Collection<Equipment>   equipment      = new LinkedHashSet<>();
-    private Integer                       maxWeaponSlots = 2;
+    private final Collection<Equipment>   equipment       = new LinkedHashSet<>();
+    private Integer                       maxWeaponSlots  = 2;
     private final String                  name;
-    private final EditableValueHandler    precision;
-    private final Collection<SpecialRule> rules          = new LinkedHashSet<>();
-    private final EditableValueHandler    strength;
-    private final EditableValueHandler    tech;
-    private final EditableValueHandler    toughness;
-    private final EditableValueHandler    valoration;
-    private final Collection<Weapon>      weapons        = new LinkedHashSet<>();
+    private final ValueHandler            precision;
+    private final Collection<SpecialRule> rules           = new LinkedHashSet<>();
+    private final ValueHandler            strength;
+    private final ValueHandler            tech;
+    private final ValueHandler            toughness;
+    private final ValueHandler            valoration;
+    private final Collection<Weapon>      weapons         = new LinkedHashSet<>();
     private Integer                       weaponSlots;
 
     public DefaultUnit(final DefaultUnit unit) {
@@ -86,9 +86,7 @@ public final class DefaultUnit implements Unit {
             rules.add(r);
         }
 
-        valoration = new DefaultValueHandler("valoration",
-                new DefaultGenerator(), new DefaultIntervalModule(),
-                new UnitValorationStore(this), new IntervalValidator());
+        valoration = buildValoration();
     }
 
     public DefaultUnit(final String name, final EditableValueHandler actions,
@@ -154,9 +152,7 @@ public final class DefaultUnit implements Unit {
 
         this.cost = cost;
 
-        valoration = new DefaultValueHandler("valoration",
-                new DefaultGenerator(), new DefaultIntervalModule(),
-                new UnitValorationStore(this), new IntervalValidator());
+        valoration = buildValoration();
 
         for (final SpecialRule rule : rules) {
             if (rule == null) {
@@ -206,11 +202,6 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final void clearRules() {
-        _getSpecialRules().clear();
-    }
-
-    @Override
     public final void clearWeapons() {
         _getWeapons().clear();
 
@@ -226,13 +217,13 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final EditableValueHandler getActions() {
-        return actions;
+    public final Integer getActions() {
+        return actions.getStoredValue();
     }
 
     @Override
-    public final EditableValueHandler getAgility() {
-        return agility;
+    public final Integer getAgility() {
+        return agility.getStoredValue();
     }
 
     @Override
@@ -246,8 +237,8 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final EditableValueHandler getCombat() {
-        return combat;
+    public final Integer getCombat() {
+        return combat.getStoredValue();
     }
 
     @Override
@@ -266,8 +257,8 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final EditableValueHandler getPrecision() {
-        return precision;
+    public final Integer getPrecision() {
+        return precision.getStoredValue();
     }
 
     @Override
@@ -276,18 +267,18 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final EditableValueHandler getStrength() {
-        return strength;
+    public final Integer getStrength() {
+        return strength.getStoredValue();
     }
 
     @Override
-    public final EditableValueHandler getTech() {
-        return tech;
+    public final Integer getTech() {
+        return tech.getStoredValue();
     }
 
     @Override
-    public final EditableValueHandler getToughness() {
-        return toughness;
+    public final Integer getToughness() {
+        return toughness.getStoredValue();
     }
 
     @Override
@@ -296,7 +287,7 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final EditableValueHandler getValoration() {
+    public final ValueHandler getValoration() {
         return valoration;
     }
 
@@ -316,6 +307,11 @@ public final class DefaultUnit implements Unit {
     @Override
     public final String toString() {
         return getUnitName();
+    }
+
+    private final ValueHandler buildValoration() {
+        return new DefaultDerivedValueHandler(VALORATION_NAME,
+                new UnitValorationStore(this));
     }
 
     protected final Collection<Equipment> _getEquipment() {

@@ -2,9 +2,9 @@ package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapoca
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.EditableStoreModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 
-public class UnitValorationStore extends EditableStoreModule {
+public class UnitValorationStore extends StoreModule {
 
     private final Unit unit;
 
@@ -29,9 +29,6 @@ public class UnitValorationStore extends EditableStoreModule {
     }
 
     @Override
-    public final void addValue(final Integer value) {}
-
-    @Override
     public final UnitValorationStore createNewInstance() {
         return new UnitValorationStore(this);
     }
@@ -52,9 +49,6 @@ public class UnitValorationStore extends EditableStoreModule {
 
         return cost;
     }
-
-    @Override
-    public final void setValue(final Integer value) {}
 
     protected final Unit getUnit() {
         return unit;
