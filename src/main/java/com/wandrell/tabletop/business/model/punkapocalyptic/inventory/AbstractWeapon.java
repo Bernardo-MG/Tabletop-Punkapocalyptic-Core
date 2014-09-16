@@ -20,13 +20,18 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.WeaponModifier;
 
-class AbstractWeapon implements Weapon {
+abstract class AbstractWeapon implements Weapon {
 
     private final Integer                 cost;
-    private final Integer                 hands;
+    private Integer                       hands;
     private final String                  name;
     private final Collection<SpecialRule> rules = new LinkedHashSet<>();
+
+    {
+        hands = 1;
+    }
 
     public AbstractWeapon(final AbstractWeapon weapon) {
         super();
@@ -41,10 +46,15 @@ class AbstractWeapon implements Weapon {
         hands = weapon.hands;
 
         rules.addAll(weapon.rules);
+        for (final SpecialRule rule : rules) {
+            if (rule instanceof WeaponModifier) {
+                ((WeaponModifier) rule).applyToWeapon(this);
+            }
+        }
     }
 
     public AbstractWeapon(final String name, final Integer cost,
-            final Integer hands, final Collection<SpecialRule> rules) {
+            final Collection<SpecialRule> rules) {
         super();
 
         if (name == null) {
@@ -66,7 +76,6 @@ class AbstractWeapon implements Weapon {
         this.name = name;
 
         this.cost = cost;
-        this.hands = hands;
 
         for (final SpecialRule rule : rules) {
             if (rule == null) {
@@ -75,6 +84,10 @@ class AbstractWeapon implements Weapon {
             }
 
             this.rules.add(rule);
+
+            if (rule instanceof WeaponModifier) {
+                ((WeaponModifier) rule).applyToWeapon(this);
+            }
         }
     }
 
@@ -130,6 +143,11 @@ class AbstractWeapon implements Weapon {
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
+    }
+
+    @Override
+    public final void setHands(final Integer hands) {
+        this.hands = hands;
     }
 
     @Override
