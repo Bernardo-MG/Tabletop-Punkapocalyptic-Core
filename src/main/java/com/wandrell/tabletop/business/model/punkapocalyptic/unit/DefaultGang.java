@@ -47,21 +47,21 @@ public final class DefaultGang implements Gang {
     private final Collection<Unit>     units     = new LinkedList<>();
     private final ValueHandler         valoration;
 
-    public DefaultGang(final DefaultGang band) {
+    public DefaultGang(final DefaultGang gang) {
         super();
 
-        if (band == null) {
+        if (gang == null) {
             throw new NullPointerException("Received a null pointer as gang");
         }
 
-        faction = band.faction;
-        bullets = band.bullets.createNewInstance();
+        faction = gang.faction;
+        bullets = gang.bullets.createNewInstance();
 
-        for (final Unit unit : band.units) {
+        for (final Unit unit : gang.units) {
             units.add(unit.createNewInstance());
         }
 
-        valoration = band.valoration.createNewInstance();
+        valoration = gang.valoration.createNewInstance();
         ((GangValorationStore) ((DelegateDerivedValueHandler) valoration)
                 .getStore()).setGang(this);
 

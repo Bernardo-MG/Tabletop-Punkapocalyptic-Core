@@ -19,18 +19,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.WeaponModifier;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.WeaponModifierSpecialRule;
 
 abstract class AbstractWeapon implements Weapon {
 
     private final Integer                 cost;
     private Integer                       hands;
     private final String                  name;
-    private final Collection<SpecialRule> rules = new LinkedHashSet<>();
+    private final Collection<SpecialRule> rules;
 
     {
         hands = 1;
+
+        rules = new LinkedHashSet<>();
     }
 
     public AbstractWeapon(final AbstractWeapon weapon) {
@@ -47,8 +49,8 @@ abstract class AbstractWeapon implements Weapon {
 
         rules.addAll(weapon.rules);
         for (final SpecialRule rule : rules) {
-            if (rule instanceof WeaponModifier) {
-                ((WeaponModifier) rule).applyToWeapon(this);
+            if (rule instanceof WeaponModifierSpecialRule) {
+                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
             }
         }
     }
@@ -85,8 +87,8 @@ abstract class AbstractWeapon implements Weapon {
 
             this.rules.add(rule);
 
-            if (rule instanceof WeaponModifier) {
-                ((WeaponModifier) rule).applyToWeapon(this);
+            if (rule instanceof WeaponModifierSpecialRule) {
+                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
             }
         }
     }

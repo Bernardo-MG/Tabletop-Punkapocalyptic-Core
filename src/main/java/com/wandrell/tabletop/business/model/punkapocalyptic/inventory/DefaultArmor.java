@@ -19,14 +19,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 
 public final class DefaultArmor implements Armor {
 
     private final Integer                 armor;
-    private Integer                       cost  = 0;
+    private Integer                       cost;
     private final String                  name;
-    private final Collection<SpecialRule> rules = new LinkedHashSet<>();
+    private final Collection<SpecialRule> rules;
+
+    {
+        cost = 0;
+
+        rules = new LinkedHashSet<>();
+    }
 
     public DefaultArmor(final DefaultArmor armor) {
         super();

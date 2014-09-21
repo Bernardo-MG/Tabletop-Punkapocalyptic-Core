@@ -25,7 +25,7 @@ import javax.swing.event.EventListenerList;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuehandler.DelegateDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
@@ -305,6 +305,11 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
+    public final void removeEquipment(final Equipment equipment) {
+        _getEquipment().remove(equipment);
+    }
+
+    @Override
     public final void removeUnitListener(final UnitListener listener) {
         if (listener == null) {
             throw new NullPointerException(
@@ -312,6 +317,11 @@ public final class DefaultUnit implements Unit {
         }
 
         getListeners().remove(UnitListener.class, listener);
+    }
+
+    @Override
+    public final void removeWeapon(final Weapon weapon) {
+        _getWeapons().remove(weapon);
     }
 
     @Override

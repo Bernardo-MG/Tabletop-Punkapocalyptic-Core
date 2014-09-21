@@ -17,7 +17,7 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import java.util.Collection;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 
 public final class DefaultRangedWeapon extends AbstractWeapon implements
         RangedWeapon {
@@ -71,6 +71,7 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     private final RangedDistance distancesCM;
     private final RangedDistance distancesInches;
+    private MeleeWeapon          melee;
     private final Integer        penetrationLong;
     private final Integer        penetrationMedium;
     private final Integer        penetrationShort;
@@ -95,6 +96,8 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
         strengthShort = weapon.strengthShort;
         strengthMedium = weapon.strengthMedium;
         strengthLong = weapon.strengthLong;
+
+        melee = weapon.melee;
     }
 
     public DefaultRangedWeapon(final String name, final Integer cost,
@@ -105,7 +108,7 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
             final Integer distanceLongCM, final Integer distanceShortInches,
             final Integer distanceMediumInches,
             final Integer distanceLongInches,
-            final Collection<SpecialRule> rules) {
+            final Collection<SpecialRule> rules, final MeleeWeapon weaponMelee) {
         super(name, cost, rules);
 
         if (distanceShortCM == null) {
@@ -168,6 +171,11 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
                     "Received a null pointer as long range strength");
         }
 
+        if (weaponMelee == null) {
+            throw new NullPointerException(
+                    "Received a null pointer as melee equivalent");
+        }
+
         this.distancesCM = new DefaultRangedDistance(distanceShortCM,
                 distanceMediumCM, distanceLongCM);
         this.distancesInches = new DefaultRangedDistance(distanceShortInches,
@@ -180,6 +188,8 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
         this.strengthShort = strengthShort;
         this.strengthMedium = strengthMedium;
         this.strengthLong = strengthLong;
+
+        melee = weaponMelee;
     }
 
     @Override
@@ -213,6 +223,11 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     @Override
+    public final MeleeWeapon getMeleeEquivalent() {
+        return melee;
+    }
+
+    @Override
     public final Integer getShortPenetration() {
         return penetrationShort;
     }
@@ -220,6 +235,11 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     @Override
     public final Integer getShortStrength() {
         return strengthShort;
+    }
+
+    @Override
+    public final void setMeleeEquivalent(final MeleeWeapon weapon) {
+        melee = weapon;
     }
 
 }

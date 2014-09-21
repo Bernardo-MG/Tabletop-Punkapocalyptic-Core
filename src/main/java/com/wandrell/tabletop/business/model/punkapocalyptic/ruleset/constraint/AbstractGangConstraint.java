@@ -1,12 +1,11 @@
-package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 
-public abstract class AbstractUnitConstraint implements
-        ArmyBuilderUnitConstraint {
+abstract class AbstractGangConstraint implements GangConstraint {
 
     private final String message;
     private final String unit;
 
-    public AbstractUnitConstraint(final String unit, final String message) {
+    public AbstractGangConstraint(final String unit, final String message) {
         super();
 
         this.unit = unit;

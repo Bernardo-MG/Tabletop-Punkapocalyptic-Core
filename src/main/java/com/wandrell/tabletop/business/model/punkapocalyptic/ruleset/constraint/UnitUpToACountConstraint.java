@@ -1,15 +1,15 @@
-package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 
 import java.util.Iterator;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 
-public final class UptToACountUnitConstraint extends AbstractUnitConstraint {
+public final class UnitUpToACountConstraint extends AbstractGangConstraint {
 
     private final Integer count;
 
-    public UptToACountUnitConstraint(final String unit, final String message,
+    public UnitUpToACountConstraint(final String unit, final String message,
             final Integer count) {
         super(unit, message);
 

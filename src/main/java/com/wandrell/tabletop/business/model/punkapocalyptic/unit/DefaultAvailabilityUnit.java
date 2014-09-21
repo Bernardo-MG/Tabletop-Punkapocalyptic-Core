@@ -22,19 +22,19 @@ import java.util.LinkedHashSet;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.ArmyBuilderUnitConstraint;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint.GangConstraint;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 
 public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
-    private final Collection<Armor>                     armorOptions  = new LinkedHashSet<>();
-    private final Collection<ArmyBuilderUnitConstraint> constraints   = new LinkedHashSet<>();
-    private final Integer                               maxWeapons;
-    private final Integer                               minWeapons;
-    private final Unit                                  unit;
-    private final Collection<Weapon>                    weaponOptions = new LinkedHashSet<>();
+    private final Collection<Armor>          armorOptions  = new LinkedHashSet<>();
+    private final Collection<GangConstraint> constraints   = new LinkedHashSet<>();
+    private final Integer                    maxWeapons;
+    private final Integer                    minWeapons;
+    private final Unit                       unit;
+    private final Collection<Weapon>         weaponOptions = new LinkedHashSet<>();
 
     public DefaultAvailabilityUnit(final DefaultAvailabilityUnit unit) {
         super();
@@ -57,7 +57,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
             final Collection<Armor> armorOptions,
             final Collection<Weapon> weaponOptions, final Integer minWeapons,
             final Integer maxWeapons,
-            final Collection<ArmyBuilderUnitConstraint> constraints) {
+            final Collection<GangConstraint> constraints) {
         super();
 
         if (unit == null) {
@@ -110,7 +110,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
             this.weaponOptions.add(weapon);
         }
 
-        for (final ArmyBuilderUnitConstraint constraint : constraints) {
+        for (final GangConstraint constraint : constraints) {
             if (constraint == null) {
                 throw new NullPointerException(
                         "Received a null pointer as constraint");
@@ -160,8 +160,20 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final boolean equals(final Object obj) {
-        return getUnit().equals(obj);
+    public final boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        DefaultAvailabilityUnit other = (DefaultAvailabilityUnit) obj;
+        if (unit.getUnitName() == null) {
+            if (other.unit.getUnitName() != null)
+                return false;
+        } else if (!unit.getUnitName().equals(other.unit.getUnitName()))
+            return false;
+        return true;
     }
 
     @Override
@@ -195,7 +207,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final Collection<ArmyBuilderUnitConstraint> getConstraints() {
+    public final Collection<GangConstraint> getConstraints() {
         return Collections.unmodifiableCollection(getConstraintsModifiable());
     }
 
@@ -271,12 +283,28 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
 
     @Override
     public final int hashCode() {
-        return getUnit().hashCode();
+        final int prime = 31;
+        int result = 1;
+        result = prime
+                * result
+                + ((unit.getUnitName() == null) ? 0 : unit.getUnitName()
+                        .hashCode());
+        return result;
+    }
+
+    @Override
+    public final void removeEquipment(final Equipment equipment) {
+        getUnit().removeEquipment(equipment);
     }
 
     @Override
     public final void removeUnitListener(final UnitListener listener) {
         getUnit().removeUnitListener(listener);
+    }
+
+    @Override
+    public final void removeWeapon(final Weapon weapon) {
+        getUnit().removeWeapon(weapon);
     }
 
     @Override
@@ -293,8 +321,7 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
         return armorOptions;
     }
 
-    protected final Collection<ArmyBuilderUnitConstraint>
-            getConstraintsModifiable() {
+    protected final Collection<GangConstraint> getConstraintsModifiable() {
         return constraints;
     }
 

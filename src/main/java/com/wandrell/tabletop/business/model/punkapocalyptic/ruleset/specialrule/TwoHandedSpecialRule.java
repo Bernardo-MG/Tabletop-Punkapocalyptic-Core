@@ -1,21 +1,29 @@
-package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule;
 
-import com.wandrell.tabletop.business.conf.SpecialRuleNameConf;
+import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.MeleeWeapon;
+import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.RangedWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 
-public final class TwoHandedSpecialRule implements SpecialRule, WeaponModifier {
+public final class TwoHandedSpecialRule implements SpecialRule,
+        WeaponModifierSpecialRule {
 
     private final SpecialRule rule;
+    private final MeleeWeapon weapon;
 
-    public TwoHandedSpecialRule() {
+    public TwoHandedSpecialRule(final String name, final MeleeWeapon weapon) {
         super();
 
-        rule = new DefaultSpecialRule(SpecialRuleNameConf.TWO_HANDED);
+        rule = new DefaultSpecialRule(name);
+        this.weapon = weapon;
     }
 
     @Override
     public final void applyToWeapon(final Weapon weapon) {
         weapon.setHands(2);
+
+        if (weapon instanceof RangedWeapon) {
+            ((RangedWeapon) weapon).setMeleeEquivalent(getEquivalentWeapon());
+        }
     }
 
     @Override
@@ -50,6 +58,10 @@ public final class TwoHandedSpecialRule implements SpecialRule, WeaponModifier {
 
     protected final SpecialRule getBaseRule() {
         return rule;
+    }
+
+    protected final MeleeWeapon getEquivalentWeapon() {
+        return weapon;
     }
 
 }

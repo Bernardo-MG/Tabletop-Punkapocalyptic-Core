@@ -24,7 +24,11 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.AvailabilityUni
 public final class DefaultFaction implements Faction {
 
     private final String                       name;
-    private final Collection<AvailabilityUnit> units = new LinkedHashSet<>();
+    private final Collection<AvailabilityUnit> units;
+
+    {
+        units = new LinkedHashSet<>();
+    }
 
     public DefaultFaction(final DefaultFaction faction) {
         super();
