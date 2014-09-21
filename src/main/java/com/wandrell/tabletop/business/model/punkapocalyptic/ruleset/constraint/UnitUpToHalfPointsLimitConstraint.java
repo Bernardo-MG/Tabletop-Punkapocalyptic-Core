@@ -2,15 +2,47 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 
 import java.util.Iterator;
 
+import com.wandrell.tabletop.business.conf.punkapocalyptic.MessageBundleKey;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
+import com.wandrell.tabletop.business.service.punkapocalyptic.LocalizationService;
 
-public final class UnitUpToHalfPointsLimitConstraint extends
-        AbstractGangConstraint {
+public final class UnitUpToHalfPointsLimitConstraint implements
+        UnitGangConstraint {
 
-    public UnitUpToHalfPointsLimitConstraint(final String unit,
-            final String message) {
-        super(unit, message);
+    private String                    message;
+    private final LocalizationService serviceLocalization;
+    private String                    unit;
+
+    public UnitUpToHalfPointsLimitConstraint(
+            final LocalizationService serviceLocalization) {
+        super();
+
+        this.serviceLocalization = serviceLocalization;
+    }
+
+    public UnitUpToHalfPointsLimitConstraint(
+            final UnitUpToHalfPointsLimitConstraint constraint) {
+        super();
+
+        serviceLocalization = constraint.serviceLocalization;
+    }
+
+    @Override
+    public final UnitUpToHalfPointsLimitConstraint createNewInstance() {
+        return new UnitUpToHalfPointsLimitConstraint(this);
+    }
+
+    @Override
+    public final String getErrorMessage() {
+        if (message == null) {
+            message = String.format(
+                    getLocalizationService().getMessageString(
+                            MessageBundleKey.UNIT_SHOULD_BE_UP_TO_HALF_POINTS),
+                    getLocalizationService().getUnitNameString(getUnit()));
+        }
+
+        return message;
     }
 
     @Override
@@ -29,6 +61,19 @@ public final class UnitUpToHalfPointsLimitConstraint extends
         }
 
         return (points <= (gang.getValoration().getStoredValue() / 2));
+    }
+
+    @Override
+    public final void setUnit(final String unit) {
+        this.unit = unit;
+    }
+
+    protected final LocalizationService getLocalizationService() {
+        return serviceLocalization;
+    }
+
+    protected final String getUnit() {
+        return unit;
     }
 
 }

@@ -2,18 +2,50 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 
 import java.util.Iterator;
 
+import com.wandrell.tabletop.business.conf.punkapocalyptic.MessageBundleKey;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
+import com.wandrell.tabletop.business.service.punkapocalyptic.LocalizationService;
 
-public final class UnitUpToACountConstraint extends AbstractGangConstraint {
+public final class UnitUpToACountConstraint implements UnitGangConstraint {
 
-    private final Integer count;
+    private final Integer             count;
+    private String                    message;
+    private final LocalizationService serviceLocalization;
+    private String                    unit;
 
-    public UnitUpToACountConstraint(final String unit, final String message,
-            final Integer count) {
-        super(unit, message);
+    public UnitUpToACountConstraint(final Integer count,
+            final LocalizationService serviceLocalization) {
+        super();
 
         this.count = count;
+
+        this.serviceLocalization = serviceLocalization;
+    }
+
+    public UnitUpToACountConstraint(final UnitUpToACountConstraint constraint) {
+        super();
+
+        count = constraint.count;
+
+        serviceLocalization = constraint.serviceLocalization;
+    }
+
+    @Override
+    public final UnitUpToACountConstraint createNewInstance() {
+        return new UnitUpToACountConstraint(this);
+    }
+
+    @Override
+    public final String getErrorMessage() {
+        if (message == null) {
+            message = String.format(
+                    getLocalizationService().getMessageString(
+                            MessageBundleKey.UNIT_SHOULD_BE_UNIQUE),
+                    getLocalizationService().getUnitNameString(getUnit()));
+        }
+
+        return message;
     }
 
     @Override
@@ -32,8 +64,21 @@ public final class UnitUpToACountConstraint extends AbstractGangConstraint {
         return (number <= getCount());
     }
 
+    @Override
+    public final void setUnit(final String unit) {
+        this.unit = unit;
+    }
+
     protected final Integer getCount() {
         return count;
+    }
+
+    protected final LocalizationService getLocalizationService() {
+        return serviceLocalization;
+    }
+
+    protected final String getUnit() {
+        return unit;
     }
 
 }

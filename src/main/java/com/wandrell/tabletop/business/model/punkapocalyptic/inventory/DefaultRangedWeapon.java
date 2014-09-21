@@ -15,10 +15,6 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
-import java.util.Collection;
-
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
-
 public final class DefaultRangedWeapon extends AbstractWeapon implements
         RangedWeapon {
 
@@ -107,9 +103,8 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
             final Integer distanceShortCM, final Integer distanceMediumCM,
             final Integer distanceLongCM, final Integer distanceShortInches,
             final Integer distanceMediumInches,
-            final Integer distanceLongInches,
-            final Collection<SpecialRule> rules, final MeleeWeapon weaponMelee) {
-        super(name, cost, rules);
+            final Integer distanceLongInches, final MeleeWeapon weaponMelee) {
+        super(name, cost);
 
         if (distanceShortCM == null) {
             throw new NullPointerException(

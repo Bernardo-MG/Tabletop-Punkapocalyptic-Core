@@ -15,10 +15,6 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
-import java.util.Collection;
-
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
-
 public final class DefaultMeleeWeapon extends AbstractWeapon implements
         MeleeWeapon {
 
@@ -40,8 +36,8 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
 
     public DefaultMeleeWeapon(final String name, final Integer cost,
             final Integer strength, final Integer penetration,
-            final Integer combat, final Collection<SpecialRule> rules) {
-        super(name, cost, rules);
+            final Integer combat) {
+        super(name, cost);
 
         if (combat == null) {
             throw new NullPointerException("Received a null pointer as combat");

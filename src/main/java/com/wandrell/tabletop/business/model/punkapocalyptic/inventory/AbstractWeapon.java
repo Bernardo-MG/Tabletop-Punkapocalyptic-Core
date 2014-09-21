@@ -22,7 +22,7 @@ import java.util.LinkedHashSet;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.WeaponModifierSpecialRule;
 
-abstract class AbstractWeapon implements Weapon {
+public abstract class AbstractWeapon implements Weapon {
 
     private final Integer                 cost;
     private Integer                       hands;
@@ -55,8 +55,7 @@ abstract class AbstractWeapon implements Weapon {
         }
     }
 
-    public AbstractWeapon(final String name, final Integer cost,
-            final Collection<SpecialRule> rules) {
+    public AbstractWeapon(final String name, final Integer cost) {
         super();
 
         if (name == null) {
@@ -71,26 +70,9 @@ abstract class AbstractWeapon implements Weapon {
             throw new NullPointerException("Received a null pointer as hands");
         }
 
-        if (rules == null) {
-            throw new NullPointerException("Received a null pointer as rules");
-        }
-
         this.name = name;
 
         this.cost = cost;
-
-        for (final SpecialRule rule : rules) {
-            if (rule == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as rule");
-            }
-
-            this.rules.add(rule);
-
-            if (rule instanceof WeaponModifierSpecialRule) {
-                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
-            }
-        }
     }
 
     @Override
@@ -150,6 +132,25 @@ abstract class AbstractWeapon implements Weapon {
     @Override
     public final void setHands(final Integer hands) {
         this.hands = hands;
+    }
+
+    public final void setRules(final Collection<SpecialRule> rules) {
+        if (rules == null) {
+            throw new NullPointerException("Received a null pointer as rules");
+        }
+
+        for (final SpecialRule rule : rules) {
+            if (rule == null) {
+                throw new NullPointerException(
+                        "Received a null pointer as rule");
+            }
+
+            this.rules.add(rule);
+
+            if (rule instanceof WeaponModifierSpecialRule) {
+                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
+            }
+        }
     }
 
     @Override
