@@ -56,6 +56,11 @@ public final class TwoHandedSpecialRule implements SpecialRule,
         return result;
     }
 
+    @Override
+    public final String toString() {
+        return "two-handed";
+    }
+
     private final SpecialRule getBaseRule() {
         return rule;
     }
