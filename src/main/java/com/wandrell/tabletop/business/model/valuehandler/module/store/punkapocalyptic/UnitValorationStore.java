@@ -8,7 +8,7 @@ import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
-public class UnitValorationStore extends StoreModule {
+public final class UnitValorationStore extends StoreModule {
 
     private final UnitListener   listener;
     private final RulesetService serviceRuleset;
@@ -87,15 +87,15 @@ public class UnitValorationStore extends StoreModule {
         unit.addUnitListener(getListener());
     }
 
-    protected final UnitListener getListener() {
+    private final UnitListener getListener() {
         return listener;
     }
 
-    protected final RulesetService getRulesetService() {
+    private final RulesetService getRulesetService() {
         return serviceRuleset;
     }
 
-    protected final Unit getUnit() {
+    private final Unit getUnit() {
         return unit;
     }
 

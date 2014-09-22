@@ -118,7 +118,7 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final Collection<SpecialRule> getSpecialRules() {
-        return Collections.unmodifiableCollection(_getSpecialRules());
+        return Collections.unmodifiableCollection(getSpecialRulesModifiable());
     }
 
     @Override
@@ -158,7 +158,7 @@ public abstract class AbstractWeapon implements Weapon {
         return getName();
     }
 
-    protected final Collection<SpecialRule> _getSpecialRules() {
+    protected final Collection<SpecialRule> getSpecialRulesModifiable() {
         return rules;
     }
 

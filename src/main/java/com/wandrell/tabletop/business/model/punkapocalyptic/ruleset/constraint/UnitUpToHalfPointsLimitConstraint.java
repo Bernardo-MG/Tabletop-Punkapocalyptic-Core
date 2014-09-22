@@ -65,14 +65,15 @@ public final class UnitUpToHalfPointsLimitConstraint implements
 
     @Override
     public final void setUnit(final String unit) {
+        message = null;
         this.unit = unit;
     }
 
-    protected final LocalizationService getLocalizationService() {
+    private final LocalizationService getLocalizationService() {
         return serviceLocalization;
     }
 
-    protected final String getUnit() {
+    private final String getUnit() {
         return unit;
     }
 

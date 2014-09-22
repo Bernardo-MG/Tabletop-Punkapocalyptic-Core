@@ -56,11 +56,11 @@ public final class TwoHandedSpecialRule implements SpecialRule,
         return result;
     }
 
-    protected final SpecialRule getBaseRule() {
+    private final SpecialRule getBaseRule() {
         return rule;
     }
 
-    protected final MeleeWeapon getEquivalentWeapon() {
+    private final MeleeWeapon getEquivalentWeapon() {
         return weapon;
     }
 

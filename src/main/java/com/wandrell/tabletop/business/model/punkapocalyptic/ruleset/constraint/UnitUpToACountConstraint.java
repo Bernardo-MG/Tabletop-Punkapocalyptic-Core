@@ -66,18 +66,19 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
 
     @Override
     public final void setUnit(final String unit) {
+        message = null;
         this.unit = unit;
     }
 
-    protected final Integer getCount() {
+    private final Integer getCount() {
         return count;
     }
 
-    protected final LocalizationService getLocalizationService() {
+    private final LocalizationService getLocalizationService() {
         return serviceLocalization;
     }
 
-    protected final String getUnit() {
+    private final String getUnit() {
         return unit;
     }
 

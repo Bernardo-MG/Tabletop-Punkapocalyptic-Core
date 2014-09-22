@@ -126,7 +126,7 @@ public final class DefaultArmor implements Armor {
 
     @Override
     public final Collection<SpecialRule> getSpecialRules() {
-        return Collections.unmodifiableCollection(_getSpecialRules());
+        return Collections.unmodifiableCollection(getSpecialRulesModifiable());
     }
 
     @Override
@@ -152,7 +152,7 @@ public final class DefaultArmor implements Armor {
         return getName();
     }
 
-    protected final Collection<SpecialRule> _getSpecialRules() {
+    private final Collection<SpecialRule> getSpecialRulesModifiable() {
         return rules;
     }
 

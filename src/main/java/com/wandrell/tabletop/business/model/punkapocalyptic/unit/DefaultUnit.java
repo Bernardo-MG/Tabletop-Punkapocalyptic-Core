@@ -163,7 +163,7 @@ public final class DefaultUnit implements Unit {
                         "Received a null pointer as rule");
             }
 
-            _getSpecialRules().add(rule);
+            getSpecialRulesModifiable().add(rule);
         }
     }
 
@@ -174,7 +174,7 @@ public final class DefaultUnit implements Unit {
                     "Received a null pointer as equipment");
         }
 
-        _getEquipment().add(equipment);
+        getEquipmentModifiable().add(equipment);
 
         fireStatusChangedEvent(new EventObject(this));
     }
@@ -196,7 +196,7 @@ public final class DefaultUnit implements Unit {
         }
 
         if (getFreeWeaponSlots() >= weapon.getHands()) {
-            _getWeapons().add(weapon);
+            getWeaponsModifiable().add(weapon);
             weaponSlots -= weapon.getHands();
 
             fireStatusChangedEvent(new EventObject(this));
@@ -205,14 +205,14 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void clearEquipment() {
-        _getEquipment().clear();
+        getEquipmentModifiable().clear();
 
         fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
     public final void clearWeapons() {
-        _getWeapons().clear();
+        getWeaponsModifiable().clear();
 
         weaponSlots = maxWeaponSlots;
 
@@ -251,7 +251,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Collection<Equipment> getEquipment() {
-        return Collections.unmodifiableCollection(_getEquipment());
+        return Collections.unmodifiableCollection(getEquipmentModifiable());
     }
 
     @Override
@@ -271,7 +271,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Collection<SpecialRule> getSpecialRules() {
-        return Collections.unmodifiableCollection(_getSpecialRules());
+        return Collections.unmodifiableCollection(getSpecialRulesModifiable());
     }
 
     @Override
@@ -301,12 +301,12 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Collection<Weapon> getWeapons() {
-        return Collections.unmodifiableCollection(_getWeapons());
+        return Collections.unmodifiableCollection(getWeaponsModifiable());
     }
 
     @Override
     public final void removeEquipment(final Equipment equipment) {
-        _getEquipment().remove(equipment);
+        getEquipmentModifiable().remove(equipment);
     }
 
     @Override
@@ -321,7 +321,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void removeWeapon(final Weapon weapon) {
-        _getWeapons().remove(weapon);
+        getWeaponsModifiable().remove(weapon);
     }
 
     @Override
@@ -336,19 +336,7 @@ public final class DefaultUnit implements Unit {
         return getUnitName();
     }
 
-    protected final Collection<Equipment> _getEquipment() {
-        return equipment;
-    }
-
-    protected final Collection<SpecialRule> _getSpecialRules() {
-        return rules;
-    }
-
-    protected final Collection<Weapon> _getWeapons() {
-        return weapons;
-    }
-
-    protected final void fireStatusChangedEvent(final EventObject evt) {
+    private final void fireStatusChangedEvent(final EventObject evt) {
         final UnitListener[] ls;
 
         if (evt == null) {
@@ -361,8 +349,20 @@ public final class DefaultUnit implements Unit {
         }
     }
 
-    protected final EventListenerList getListeners() {
+    private final Collection<Equipment> getEquipmentModifiable() {
+        return equipment;
+    }
+
+    private final EventListenerList getListeners() {
         return listeners;
+    }
+
+    private final Collection<SpecialRule> getSpecialRulesModifiable() {
+        return rules;
+    }
+
+    private final Collection<Weapon> getWeaponsModifiable() {
+        return weapons;
     }
 
 }

@@ -317,19 +317,19 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
         return getUnit().toString();
     }
 
-    protected final Collection<Armor> getArmorOptionsModifiable() {
+    private final Collection<Armor> getArmorOptionsModifiable() {
         return armorOptions;
     }
 
-    protected final Collection<GangConstraint> getConstraintsModifiable() {
+    private final Collection<GangConstraint> getConstraintsModifiable() {
         return constraints;
     }
 
-    protected final Unit getUnit() {
+    private final Unit getUnit() {
         return unit;
     }
 
-    protected final Collection<Weapon> getWeaponOptionsModifiable() {
+    private final Collection<Weapon> getWeaponOptionsModifiable() {
         return weaponOptions;
     }
 

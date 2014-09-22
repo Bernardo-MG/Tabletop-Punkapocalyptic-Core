@@ -114,7 +114,7 @@ public final class DefaultGang implements Gang {
 
     @Override
     public final void addUnit(final Unit unit) {
-        _getUnits().add(unit);
+        getUnitsModifiable().add(unit);
 
         fireUnitAddedEvent(new UnitEvent(this, unit));
 
@@ -127,7 +127,7 @@ public final class DefaultGang implements Gang {
 
         units = new LinkedList<>(getUnits());
 
-        _getUnits().clear();
+        getUnitsModifiable().clear();
 
         for (final Unit unit : units) {
             fireUnitRemovedEvent(new UnitEvent(this, unit));
@@ -153,7 +153,7 @@ public final class DefaultGang implements Gang {
 
     @Override
     public final Collection<Unit> getUnits() {
-        return Collections.unmodifiableCollection(_getUnits());
+        return Collections.unmodifiableCollection(getUnitsModifiable());
     }
 
     @Override
@@ -176,7 +176,7 @@ public final class DefaultGang implements Gang {
         final Iterator<Unit> itr;
         Boolean found;
 
-        itr = _getUnits().iterator();
+        itr = getUnitsModifiable().iterator();
         found = false;
         while ((itr.hasNext()) && (!found)) {
             found = (itr.next() == unit);
@@ -190,11 +190,7 @@ public final class DefaultGang implements Gang {
 
     }
 
-    protected final Collection<Unit> _getUnits() {
-        return units;
-    }
-
-    protected final void fireStatusChangedEvent(final EventObject evt) {
+    private final void fireStatusChangedEvent(final EventObject evt) {
         final GangListener[] ls;
 
         if (evt == null) {
@@ -207,7 +203,7 @@ public final class DefaultGang implements Gang {
         }
     }
 
-    protected final void fireUnitAddedEvent(final UnitEvent evt) {
+    private final void fireUnitAddedEvent(final UnitEvent evt) {
         final GangListener[] ls;
 
         if (evt == null) {
@@ -220,7 +216,7 @@ public final class DefaultGang implements Gang {
         }
     }
 
-    protected final void fireUnitRemovedEvent(final UnitEvent evt) {
+    private final void fireUnitRemovedEvent(final UnitEvent evt) {
         final GangListener[] ls;
 
         if (evt == null) {
@@ -233,8 +229,12 @@ public final class DefaultGang implements Gang {
         }
     }
 
-    protected final EventListenerList getListeners() {
+    private final EventListenerList getListeners() {
         return listeners;
+    }
+
+    private final Collection<Unit> getUnitsModifiable() {
+        return units;
     }
 
 }

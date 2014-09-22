@@ -9,7 +9,7 @@ import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
-public class GangValorationStore extends StoreModule {
+public final class GangValorationStore extends StoreModule {
 
     private Gang                      gang;
     private final GangListenerAdapter listener;
@@ -88,15 +88,15 @@ public class GangValorationStore extends StoreModule {
         gang.addGangListener(getListener());
     }
 
-    protected final Gang getGang() {
+    private final Gang getGang() {
         return gang;
     }
 
-    protected final GangListener getListener() {
+    private final GangListener getListener() {
         return listener;
     }
 
-    protected final RulesetService getRulesetService() {
+    private final RulesetService getRulesetService() {
         return serviceRuleset;
     }
 

@@ -121,7 +121,7 @@ public final class DefaultFaction implements Faction {
         return getName();
     }
 
-    protected final Collection<AvailabilityUnit> getAvailableUnitsModifiable() {
+    private final Collection<AvailabilityUnit> getAvailableUnitsModifiable() {
         return units;
     }
 

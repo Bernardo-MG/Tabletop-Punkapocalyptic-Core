@@ -53,11 +53,11 @@ public final class MaxUnitsStore extends StoreModule {
         return getRulesetService().getMaxAllowedUnits(getGang());
     }
 
-    protected final Gang getGang() {
+    private final Gang getGang() {
         return gang;
     }
 
-    protected final RulesetService getRulesetService() {
+    private final RulesetService getRulesetService() {
         return serviceRuleset;
     }
 
