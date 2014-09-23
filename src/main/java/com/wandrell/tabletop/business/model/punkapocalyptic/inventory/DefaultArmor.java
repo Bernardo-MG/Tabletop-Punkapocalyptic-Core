@@ -139,6 +139,7 @@ public final class DefaultArmor implements Armor {
         return result;
     }
 
+    @Override
     public final void setCost(final Integer cost) {
         if (cost == null) {
             throw new NullPointerException("Received a null pointer as cost");

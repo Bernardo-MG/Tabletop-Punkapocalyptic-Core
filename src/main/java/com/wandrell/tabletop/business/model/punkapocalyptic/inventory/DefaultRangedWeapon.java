@@ -15,65 +15,21 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import com.wandrell.tabletop.business.model.punkapocalyptic.DefaultRangedValue;
+import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
+
 public final class DefaultRangedWeapon extends AbstractWeapon implements
         RangedWeapon {
 
-    private final class DefaultRangedDistance implements RangedDistance {
-
-        private final Integer distanceLong;
-        private final Integer distanceMedium;
-        private final Integer distanceShort;
-
-        public DefaultRangedDistance(final Integer distanceShort,
-                final Integer distanceMedium, final Integer distanceLong) {
-            super();
-
-            if (distanceShort == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as short distance");
-            }
-
-            if (distanceMedium == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as medium distance");
-            }
-
-            if (distanceLong == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as long distance");
-            }
-
-            this.distanceShort = distanceShort;
-            this.distanceMedium = distanceMedium;
-            this.distanceLong = distanceLong;
-        }
-
-        @Override
-        public final Integer getLongDistance() {
-            return distanceLong;
-        }
-
-        @Override
-        public final Integer getMediumDistance() {
-            return distanceMedium;
-        }
-
-        @Override
-        public final Integer getShortDistance() {
-            return distanceShort;
-        }
-
-    }
-
-    private final RangedDistance distancesCM;
-    private final RangedDistance distancesInches;
-    private MeleeWeapon          melee;
-    private final Integer        penetrationLong;
-    private final Integer        penetrationMedium;
-    private final Integer        penetrationShort;
-    private final Integer        strengthLong;
-    private final Integer        strengthMedium;
-    private final Integer        strengthShort;
+    private final RangedValue distancesCM;
+    private final RangedValue distancesInches;
+    private MeleeWeapon       melee;
+    private final Integer     penetrationLong;
+    private final Integer     penetrationMedium;
+    private final Integer     penetrationShort;
+    private final Integer     strengthLong;
+    private final Integer     strengthMedium;
+    private final Integer     strengthShort;
 
     public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
         super(weapon);
@@ -171,9 +127,9 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
                     "Received a null pointer as melee equivalent");
         }
 
-        this.distancesCM = new DefaultRangedDistance(distanceShortCM,
+        this.distancesCM = new DefaultRangedValue(distanceShortCM,
                 distanceMediumCM, distanceLongCM);
-        this.distancesInches = new DefaultRangedDistance(distanceShortInches,
+        this.distancesInches = new DefaultRangedValue(distanceShortInches,
                 distanceMediumInches, distanceLongInches);
 
         this.penetrationShort = penetrationShort;
@@ -188,12 +144,12 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     @Override
-    public final RangedDistance getDistancesImperialUnits() {
+    public final RangedValue getDistancesImperialUnits() {
         return distancesInches;
     }
 
     @Override
-    public final RangedDistance getDistancesMetricSystem() {
+    public final RangedValue getDistancesMetricSystem() {
         return distancesCM;
     }
 
