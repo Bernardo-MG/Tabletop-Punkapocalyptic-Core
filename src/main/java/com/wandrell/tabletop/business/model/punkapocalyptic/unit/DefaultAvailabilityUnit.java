@@ -217,18 +217,8 @@ public final class DefaultAvailabilityUnit implements AvailabilityUnit {
     }
 
     @Override
-    public final Integer getFreeWeaponSlots() {
-        return getUnit().getFreeWeaponSlots();
-    }
-
-    @Override
     public final Integer getMaxWeapons() {
         return maxWeapons;
-    }
-
-    @Override
-    public final Integer getMaxWeaponSlots() {
-        return getUnit().getMaxWeaponSlots();
     }
 
     @Override

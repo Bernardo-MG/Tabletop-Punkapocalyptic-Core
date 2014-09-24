@@ -39,18 +39,16 @@ public final class DefaultUnit implements Unit {
     private Armor                         armor;
     private final ValueHandler            combat;
     private final Integer                 cost;
-    private final Collection<Equipment>   equipment      = new LinkedHashSet<>();
-    private final EventListenerList       listeners      = new EventListenerList();
-    private final Integer                 maxWeaponSlots = 2;
+    private final Collection<Equipment>   equipment = new LinkedHashSet<>();
+    private final EventListenerList       listeners = new EventListenerList();
     private final String                  name;
     private final ValueHandler            precision;
-    private final Collection<SpecialRule> rules          = new LinkedHashSet<>();
+    private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
     private final ValueHandler            strength;
     private final ValueHandler            tech;
     private final ValueHandler            toughness;
     private final ValueHandler            valoration;
-    private final Collection<Weapon>      weapons        = new LinkedHashSet<>();
-    private Integer                       weaponSlots;
+    private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
 
     public DefaultUnit(final DefaultUnit unit) {
         super();
@@ -68,8 +66,6 @@ public final class DefaultUnit implements Unit {
         strength = unit.strength.createNewInstance();
         tech = unit.tech.createNewInstance();
         toughness = unit.toughness.createNewInstance();
-
-        weaponSlots = unit.weaponSlots;
 
         cost = unit.cost;
 
@@ -151,8 +147,6 @@ public final class DefaultUnit implements Unit {
         this.tech = tech;
         this.toughness = toughness;
 
-        weaponSlots = maxWeaponSlots;
-
         this.cost = cost;
 
         this.valoration = valoration;
@@ -195,12 +189,8 @@ public final class DefaultUnit implements Unit {
             throw new NullPointerException("Received a null pointer as weapon");
         }
 
-        if (getFreeWeaponSlots() >= weapon.getHands()) {
-            getWeaponsModifiable().add(weapon);
-            weaponSlots -= weapon.getHands();
-
-            fireStatusChangedEvent(new EventObject(this));
-        }
+        getWeaponsModifiable().add(weapon);
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -213,8 +203,6 @@ public final class DefaultUnit implements Unit {
     @Override
     public final void clearWeapons() {
         getWeaponsModifiable().clear();
-
-        weaponSlots = maxWeaponSlots;
 
         fireStatusChangedEvent(new EventObject(this));
     }
@@ -252,16 +240,6 @@ public final class DefaultUnit implements Unit {
     @Override
     public final Collection<Equipment> getEquipment() {
         return Collections.unmodifiableCollection(getEquipmentModifiable());
-    }
-
-    @Override
-    public final Integer getFreeWeaponSlots() {
-        return weaponSlots;
-    }
-
-    @Override
-    public final Integer getMaxWeaponSlots() {
-        return maxWeaponSlots;
     }
 
     @Override

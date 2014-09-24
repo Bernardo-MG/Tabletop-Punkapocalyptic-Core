@@ -19,7 +19,7 @@ public final class TwoHandedSpecialRule implements SpecialRule,
 
     @Override
     public final void applyToWeapon(final Weapon weapon) {
-        weapon.setHands(2);
+        weapon.setTwoHanded(true);
 
         if (weapon instanceof RangedWeapon) {
             ((RangedWeapon) weapon).setMeleeEquivalent(getEquivalentWeapon());

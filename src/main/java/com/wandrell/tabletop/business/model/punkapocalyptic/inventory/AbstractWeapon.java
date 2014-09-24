@@ -18,21 +18,24 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.WeaponModifierSpecialRule;
 
 public abstract class AbstractWeapon implements Weapon {
 
-    private final Integer                 cost;
-    private Integer                       hands;
-    private final String                  name;
-    private final Collection<SpecialRule> rules;
+    private final Integer                       cost;
+    private final Collection<WeaponEnhancement> enhancements;
+    private final String                        name;
+    private final Collection<SpecialRule>       rules;
+    private Boolean                             twoHanded;
 
     {
-        hands = 1;
+        twoHanded = false;
 
         rules = new LinkedHashSet<>();
+        enhancements = new LinkedList<>();
     }
 
     public AbstractWeapon(final AbstractWeapon weapon) {
@@ -45,7 +48,7 @@ public abstract class AbstractWeapon implements Weapon {
         name = weapon.name;
 
         cost = weapon.cost;
-        hands = weapon.hands;
+        twoHanded = weapon.twoHanded;
 
         rules.addAll(weapon.rules);
         for (final SpecialRule rule : rules) {
@@ -64,10 +67,6 @@ public abstract class AbstractWeapon implements Weapon {
 
         if (cost == null) {
             throw new NullPointerException("Received a null pointer as cost");
-        }
-
-        if (hands == null) {
-            throw new NullPointerException("Received a null pointer as hands");
         }
 
         this.name = name;
@@ -107,8 +106,8 @@ public abstract class AbstractWeapon implements Weapon {
     }
 
     @Override
-    public final Integer getHands() {
-        return hands;
+    public final Collection<WeaponEnhancement> getEnhacements() {
+        return Collections.unmodifiableCollection(getEnhacementsModifiable());
     }
 
     @Override
@@ -125,13 +124,15 @@ public abstract class AbstractWeapon implements Weapon {
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
+
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+
         return result;
     }
 
     @Override
-    public final void setHands(final Integer hands) {
-        this.hands = hands;
+    public final Boolean isTwoHanded() {
+        return twoHanded;
     }
 
     public final void setRules(final Collection<SpecialRule> rules) {
@@ -154,8 +155,17 @@ public abstract class AbstractWeapon implements Weapon {
     }
 
     @Override
+    public final void setTwoHanded(final Boolean twoHanded) {
+        this.twoHanded = twoHanded;
+    }
+
+    @Override
     public final String toString() {
         return getName();
+    }
+
+    protected final Collection<WeaponEnhancement> getEnhacementsModifiable() {
+        return enhancements;
     }
 
     protected final Collection<SpecialRule> getSpecialRulesModifiable() {

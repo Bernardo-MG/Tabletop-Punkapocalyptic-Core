@@ -23,6 +23,7 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     private final RangedValue distancesCM;
     private final RangedValue distancesInches;
+    private Boolean           firearm;
     private MeleeWeapon       melee;
     private final Integer     penetrationLong;
     private final Integer     penetrationMedium;
@@ -30,6 +31,10 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     private final Integer     strengthLong;
     private final Integer     strengthMedium;
     private final Integer     strengthShort;
+
+    {
+        firearm = false;
+    }
 
     public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
         super(weapon);
@@ -186,6 +191,11 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     @Override
     public final Integer getShortStrength() {
         return strengthShort;
+    }
+
+    @Override
+    public final Boolean isFirearm() {
+        return firearm;
     }
 
     @Override
