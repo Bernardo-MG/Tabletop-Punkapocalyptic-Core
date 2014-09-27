@@ -15,20 +15,9 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.faction;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.AvailabilityUnit;
-
 public final class DefaultFaction implements Faction {
 
-    private final String                       name;
-    private final Collection<AvailabilityUnit> units;
-
-    {
-        units = new LinkedHashSet<>();
-    }
+    private final String name;
 
     public DefaultFaction(final DefaultFaction faction) {
         super();
@@ -38,35 +27,16 @@ public final class DefaultFaction implements Faction {
         }
 
         name = faction.name;
-
-        for (final AvailabilityUnit unit : faction.units) {
-            units.add(unit);
-        }
     }
 
-    public DefaultFaction(final String name,
-            final Collection<AvailabilityUnit> units) {
+    public DefaultFaction(final String name) {
         super();
 
         if (name == null) {
             throw new NullPointerException("Received a null pointer as name");
         }
 
-        if (units == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as units list");
-        }
-
         this.name = name;
-
-        for (final AvailabilityUnit unit : units) {
-            if (unit == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as unit");
-            }
-
-            this.units.add(unit);
-        }
     }
 
     @Override
@@ -96,12 +66,6 @@ public final class DefaultFaction implements Faction {
     }
 
     @Override
-    public final Collection<AvailabilityUnit> getAvailableUnits() {
-        return Collections
-                .unmodifiableCollection(getAvailableUnitsModifiable());
-    }
-
-    @Override
     public final String getName() {
         return name;
     }
@@ -119,10 +83,6 @@ public final class DefaultFaction implements Faction {
     @Override
     public final String toString() {
         return getName();
-    }
-
-    private final Collection<AvailabilityUnit> getAvailableUnitsModifiable() {
-        return units;
     }
 
 }
