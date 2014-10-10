@@ -27,7 +27,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
-import com.wandrell.tabletop.business.model.valuehandler.DelegateDerivedValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.AbstractModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
@@ -84,7 +84,7 @@ public final class DefaultUnit implements Unit {
         }
 
         valoration = unit.valoration.createNewInstance();
-        ((UnitValorationStore) ((DelegateDerivedValueHandler) valoration)
+        ((UnitValorationStore) ((AbstractModularDerivedValueHandler) valoration)
                 .getStore()).setUnit(this);
     }
 
@@ -214,12 +214,12 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getActions() {
-        return actions.getStoredValue();
+        return actions.getValue();
     }
 
     @Override
     public final Integer getAgility() {
-        return agility.getStoredValue();
+        return agility.getValue();
     }
 
     @Override
@@ -234,7 +234,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getCombat() {
-        return combat.getStoredValue();
+        return combat.getValue();
     }
 
     @Override
@@ -244,7 +244,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getPrecision() {
-        return precision.getStoredValue();
+        return precision.getValue();
     }
 
     @Override
@@ -254,17 +254,17 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getStrength() {
-        return strength.getStoredValue();
+        return strength.getValue();
     }
 
     @Override
     public final Integer getTech() {
-        return tech.getStoredValue();
+        return tech.getValue();
     }
 
     @Override
     public final Integer getToughness() {
-        return toughness.getStoredValue();
+        return toughness.getValue();
     }
 
     @Override

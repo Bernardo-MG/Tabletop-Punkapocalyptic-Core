@@ -5,23 +5,24 @@ import java.util.EventObject;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.AbstractStoreModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
-public final class UnitValorationStore extends StoreModule {
+public final class UnitValorationStore extends AbstractStoreModule {
 
     private final UnitListener   listener;
     private final RulesetService serviceRuleset;
     private Unit                 unit;
 
     {
+        final StoreModule source = this;
         listener = new UnitListener() {
 
             @Override
             public final void statusChanged(final EventObject e) {
-                if (getParent() != null) {
-                    fireValueChangedEvent(new ValueHandlerEvent(getParent()));
-                }
+                fireValueChangedEvent(new ValueHandlerEvent(source,
+                        source.getValue(), source.getValue()));
             }
 
         };

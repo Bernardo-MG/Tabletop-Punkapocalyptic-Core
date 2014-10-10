@@ -6,23 +6,24 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListenerAdapter;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.AbstractStoreModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
-public final class GangValorationStore extends StoreModule {
+public final class GangValorationStore extends AbstractStoreModule {
 
     private Gang                      gang;
     private final GangListenerAdapter listener;
     private final RulesetService      serviceRuleset;
 
     {
+        final StoreModule source = this;
         listener = new GangListenerAdapter() {
 
             @Override
             public final void statusChanged(final EventObject e) {
-                if (getParent() != null) {
-                    fireValueChangedEvent(new ValueHandlerEvent(getParent()));
-                }
+                fireValueChangedEvent(new ValueHandlerEvent(source,
+                        source.getValue(), source.getValue()));
             }
 
         };

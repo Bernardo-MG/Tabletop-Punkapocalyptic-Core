@@ -3,10 +3,10 @@ package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapoca
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.AbstractStoreModule;
 import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
-public final class MaxUnitsStore extends StoreModule {
+public final class MaxUnitsStore extends AbstractStoreModule {
 
     private final Gang           gang;
     private final RulesetService serviceRuleset;

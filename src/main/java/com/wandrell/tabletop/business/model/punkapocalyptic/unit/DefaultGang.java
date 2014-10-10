@@ -26,9 +26,9 @@ import javax.swing.event.EventListenerList;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
+import com.wandrell.tabletop.business.model.valuehandler.AbstractModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.DelegateDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
@@ -62,7 +62,7 @@ public final class DefaultGang implements Gang {
         }
 
         valoration = gang.valoration.createNewInstance();
-        ((GangValorationStore) ((DelegateDerivedValueHandler) valoration)
+        ((GangValorationStore) ((AbstractModularDerivedValueHandler) valoration)
                 .getStore()).setGang(this);
 
         ((AbstractValueHandler) bullets)
