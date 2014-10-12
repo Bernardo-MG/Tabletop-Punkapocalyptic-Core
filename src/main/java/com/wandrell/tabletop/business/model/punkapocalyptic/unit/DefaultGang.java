@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.unit;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
@@ -26,10 +28,10 @@ import javax.swing.event.EventListenerList;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
-import com.wandrell.tabletop.business.model.valuehandler.AbstractModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.DefaultValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.ModularEditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
@@ -50,9 +52,7 @@ public final class DefaultGang implements Gang {
     public DefaultGang(final DefaultGang gang) {
         super();
 
-        if (gang == null) {
-            throw new NullPointerException("Received a null pointer as gang");
-        }
+        checkNotNull(gang, "Received a null pointer as gang");
 
         faction = gang.faction;
         bullets = gang.bullets.createNewInstance();
@@ -62,7 +62,7 @@ public final class DefaultGang implements Gang {
         }
 
         valoration = gang.valoration.createNewInstance();
-        ((GangValorationStore) ((AbstractModularDerivedValueHandler) valoration)
+        ((GangValorationStore) ((ModularDerivedValueHandler) valoration)
                 .getStore()).setGang(this);
 
         ((AbstractValueHandler) bullets)
@@ -79,15 +79,15 @@ public final class DefaultGang implements Gang {
     public DefaultGang(final Faction faction, final ValueHandler valoration) {
         super();
 
-        if (faction == null) {
-            throw new NullPointerException("Received a null pointer as faction");
-        }
+        checkNotNull(faction, "Received a null pointer as faction");
+        checkNotNull(valoration, "Received a null pointer as valoration");
 
         this.faction = faction;
 
-        bullets = new DefaultValueHandler("bullets", new DefaultGenerator(),
-                new DefaultIntervalModule(0, Integer.MAX_VALUE),
-                new DefaultStore(), new IntervalValidator());
+        bullets = new ModularEditableValueHandler("bullets",
+                new DefaultGenerator(), new DefaultIntervalModule(0,
+                        Integer.MAX_VALUE), new DefaultStore(),
+                new IntervalValidator());
 
         this.valoration = valoration;
 
@@ -104,16 +104,15 @@ public final class DefaultGang implements Gang {
 
     @Override
     public final void addGangListener(final GangListener listener) {
-        if (listener == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as listener");
-        }
+        checkNotNull(listener, "Received a null pointer as listener");
 
         getListeners().add(GangListener.class, listener);
     }
 
     @Override
     public final void addUnit(final Unit unit) {
+        checkNotNull(unit, "Received a null pointer as unit");
+
         getUnitsModifiable().add(unit);
 
         fireUnitAddedEvent(new UnitEvent(this, unit));

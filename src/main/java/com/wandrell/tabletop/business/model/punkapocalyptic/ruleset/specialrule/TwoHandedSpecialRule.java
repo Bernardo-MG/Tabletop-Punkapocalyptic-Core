@@ -1,5 +1,10 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Objects;
+
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.MeleeWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.RangedWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
@@ -13,12 +18,17 @@ public final class TwoHandedSpecialRule implements SpecialRule,
     public TwoHandedSpecialRule(final String name, final MeleeWeapon weapon) {
         super();
 
+        checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(weapon, "Received a null pointer as weapon");
+
         rule = new DefaultSpecialRule(name);
         this.weapon = weapon;
     }
 
     @Override
     public final void applyToWeapon(final Weapon weapon) {
+        checkNotNull(weapon, "Received a null pointer as weapon");
+
         weapon.setTwoHanded(true);
 
         if (weapon instanceof RangedWeapon) {
@@ -35,12 +45,8 @@ public final class TwoHandedSpecialRule implements SpecialRule,
         if (getClass() != obj.getClass())
             return false;
         TwoHandedSpecialRule other = (TwoHandedSpecialRule) obj;
-        if (rule == null) {
-            if (other.rule != null)
-                return false;
-        } else if (!rule.equals(other.rule))
-            return false;
-        return true;
+
+        return Objects.equals(rule, other.rule);
     }
 
     @Override
@@ -50,15 +56,12 @@ public final class TwoHandedSpecialRule implements SpecialRule,
 
     @Override
     public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((rule == null) ? 0 : rule.hashCode());
-        return result;
+        return Objects.hashCode(rule);
     }
 
     @Override
     public final String toString() {
-        return "two-handed";
+        return MoreObjects.toStringHelper(this).toString();
     }
 
     private final SpecialRule getBaseRule() {

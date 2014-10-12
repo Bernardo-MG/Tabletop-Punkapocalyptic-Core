@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.EventObject;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
@@ -32,14 +34,8 @@ public final class GangValorationStore extends AbstractStoreModule {
     public GangValorationStore(final Gang gang, final RulesetService service) {
         super();
 
-        if (gang == null) {
-            throw new NullPointerException("Received a null pointer as gang");
-        }
-
-        if (service == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as ruleset service");
-        }
+        checkNotNull(gang, "Received a null pointer as gang");
+        checkNotNull(service, "Received a null pointer as service");
 
         this.gang = gang;
         serviceRuleset = service;
@@ -50,9 +46,7 @@ public final class GangValorationStore extends AbstractStoreModule {
     public GangValorationStore(final GangValorationStore store) {
         super(store);
 
-        if (store == null) {
-            throw new NullPointerException("Received a null pointer as store");
-        }
+        checkNotNull(store, "Received a null pointer as store");
 
         gang = store.gang;
         serviceRuleset = store.serviceRuleset;
@@ -80,9 +74,7 @@ public final class GangValorationStore extends AbstractStoreModule {
     }
 
     public final void setGang(final Gang gang) {
-        if (this.gang != null) {
-            this.gang.removeGangListener(getListener());
-        }
+        checkNotNull(gang, "Received a null pointer as gang");
 
         this.gang = gang;
 

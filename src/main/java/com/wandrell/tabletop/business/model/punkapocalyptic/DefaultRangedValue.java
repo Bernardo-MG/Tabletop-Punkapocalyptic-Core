@@ -1,5 +1,9 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.base.MoreObjects;
+
 public class DefaultRangedValue implements RangedValue {
 
     private final Integer distanceLong;
@@ -10,20 +14,10 @@ public class DefaultRangedValue implements RangedValue {
             final Integer distanceMedium, final Integer distanceLong) {
         super();
 
-        if (distanceShort == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as short distance");
-        }
-
-        if (distanceMedium == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as medium distance");
-        }
-
-        if (distanceLong == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as long distance");
-        }
+        checkNotNull(distanceShort, "Received a null pointer as short distance");
+        checkNotNull(distanceMedium,
+                "Received a null pointer as medium distance");
+        checkNotNull(distanceLong, "Received a null pointer as long distance");
 
         this.distanceShort = distanceShort;
         this.distanceMedium = distanceMedium;
@@ -43,6 +37,13 @@ public class DefaultRangedValue implements RangedValue {
     @Override
     public final Integer getShortValue() {
         return distanceShort;
+    }
+
+    @Override
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("short", distanceShort)
+                .add("medium", distanceMedium).add("long", distanceLong)
+                .toString();
     }
 
 }

@@ -15,6 +15,12 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Objects;
+
+import com.google.common.base.MoreObjects;
+
 public final class DefaultEquipment implements Equipment {
 
     public final String name;
@@ -22,10 +28,7 @@ public final class DefaultEquipment implements Equipment {
     public DefaultEquipment(final DefaultEquipment equipment) {
         super();
 
-        if (equipment == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as equipment");
-        }
+        checkNotNull(equipment, "Received a null pointer as equipment");
 
         this.name = equipment.name;
     }
@@ -33,9 +36,7 @@ public final class DefaultEquipment implements Equipment {
     public DefaultEquipment(final String name) {
         super();
 
-        if (name == null) {
-            throw new NullPointerException("Received a null pointer as name");
-        }
+        checkNotNull(name, "Received a null pointer as name");
 
         this.name = name;
     }
@@ -55,15 +56,8 @@ public final class DefaultEquipment implements Equipment {
         }
 
         DefaultEquipment other = (DefaultEquipment) obj;
-        if (name == null) {
-            if (other.name != null) {
-                return false;
-            }
-        } else if (!name.equals(other.name)) {
-            return false;
-        }
 
-        return true;
+        return Objects.equals(name, other.name);
     }
 
     @Override
@@ -73,15 +67,12 @@ public final class DefaultEquipment implements Equipment {
 
     @Override
     public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+        return Objects.hashCode(name);
     }
 
     @Override
     public final String toString() {
-        return getName();
+        return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
 }

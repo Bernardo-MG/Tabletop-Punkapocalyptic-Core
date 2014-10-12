@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.unit;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
@@ -22,13 +24,14 @@ import java.util.LinkedHashSet;
 
 import javax.swing.event.EventListenerList;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
-import com.wandrell.tabletop.business.model.valuehandler.AbstractModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
 
@@ -53,9 +56,7 @@ public final class DefaultUnit implements Unit {
     public DefaultUnit(final DefaultUnit unit) {
         super();
 
-        if (unit == null) {
-            throw new NullPointerException("Received a null pointer as unit");
-        }
+        checkNotNull(unit, "Received a null pointer as unit");
 
         name = unit.name;
 
@@ -84,7 +85,7 @@ public final class DefaultUnit implements Unit {
         }
 
         valoration = unit.valoration.createNewInstance();
-        ((UnitValorationStore) ((AbstractModularDerivedValueHandler) valoration)
+        ((UnitValorationStore) ((ModularDerivedValueHandler) valoration)
                 .getStore()).setUnit(this);
     }
 
@@ -98,44 +99,17 @@ public final class DefaultUnit implements Unit {
             final Collection<SpecialRule> rules, final ValueHandler valoration) {
         super();
 
-        if (name == null) {
-            throw new NullPointerException("Received a null pointer as name");
-        }
+        checkNotNull(name, "Received a null pointer as name");
 
-        if (actions == null) {
-            throw new NullPointerException("Received a null pointer as actions");
-        }
+        checkNotNull(actions, "Received a null pointer as actions");
+        checkNotNull(agility, "Received a null pointer as agility");
+        checkNotNull(combat, "Received a null pointer as combat");
+        checkNotNull(precision, "Received a null pointer as precision");
+        checkNotNull(strength, "Received a null pointer as strength");
+        checkNotNull(tech, "Received a null pointer as tech");
+        checkNotNull(toughness, "Received a null pointer as toughness");
 
-        if (agility == null) {
-            throw new NullPointerException("Received a null pointer as agility");
-        }
-
-        if (combat == null) {
-            throw new NullPointerException("Received a null pointer as agility");
-        }
-
-        if (precision == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as precision");
-        }
-
-        if (strength == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as strength");
-        }
-
-        if (tech == null) {
-            throw new NullPointerException("Received a null pointer as tech");
-        }
-
-        if (toughness == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as toughness");
-        }
-
-        if (cost == null) {
-            throw new NullPointerException("Received a null pointer as cost");
-        }
+        checkNotNull(cost, "Received a null pointer as cost");
 
         this.name = name;
 
@@ -152,10 +126,7 @@ public final class DefaultUnit implements Unit {
         this.valoration = valoration;
 
         for (final SpecialRule rule : rules) {
-            if (rule == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as rule");
-            }
+            checkNotNull(rule, "Received a null pointer as rule");
 
             getSpecialRulesModifiable().add(rule);
         }
@@ -163,10 +134,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void addEquipment(final Equipment equipment) {
-        if (equipment == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as equipment");
-        }
+        checkNotNull(equipment, "Received a null pointer as equipment");
 
         getEquipmentModifiable().add(equipment);
 
@@ -175,19 +143,14 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void addUnitListener(final UnitListener listener) {
-        if (listener == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as listener");
-        }
+        checkNotNull(listener, "Received a null pointer as listener");
 
         getListeners().add(UnitListener.class, listener);
     }
 
     @Override
     public final void addWeapon(final Weapon weapon) {
-        if (weapon == null) {
-            throw new NullPointerException("Received a null pointer as weapon");
-        }
+        checkNotNull(weapon, "Received a null pointer as weapon");
 
         getWeaponsModifiable().add(weapon);
         fireStatusChangedEvent(new EventObject(this));
@@ -289,11 +252,6 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void removeUnitListener(final UnitListener listener) {
-        if (listener == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as listener");
-        }
-
         getListeners().remove(UnitListener.class, listener);
     }
 
@@ -304,6 +262,8 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void setArmor(final Armor armor) {
+        checkNotNull(armor, "Received a null pointer as armor");
+
         this.armor = armor;
 
         fireStatusChangedEvent(new EventObject(this));
@@ -311,7 +271,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final String toString() {
-        return getUnitName();
+        return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
     private final void fireStatusChangedEvent(final EventObject evt) {

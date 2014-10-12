@@ -15,11 +15,15 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Objects;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.WeaponModifierSpecialRule;
 
@@ -41,9 +45,7 @@ public abstract class AbstractWeapon implements Weapon {
     public AbstractWeapon(final AbstractWeapon weapon) {
         super();
 
-        if (weapon == null) {
-            throw new NullPointerException("Received a null pointer as weapon");
-        }
+        checkNotNull(weapon, "Received a null pointer as weapon");
 
         name = weapon.name;
 
@@ -61,13 +63,8 @@ public abstract class AbstractWeapon implements Weapon {
     public AbstractWeapon(final String name, final Integer cost) {
         super();
 
-        if (name == null) {
-            throw new NullPointerException("Received a null pointer as name");
-        }
-
-        if (cost == null) {
-            throw new NullPointerException("Received a null pointer as cost");
-        }
+        checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(cost, "Received a null pointer as cost");
 
         this.name = name;
 
@@ -89,15 +86,8 @@ public abstract class AbstractWeapon implements Weapon {
         }
 
         AbstractWeapon other = (AbstractWeapon) obj;
-        if (name == null) {
-            if (other.name != null) {
-                return false;
-            }
-        } else if (!name.equals(other.name)) {
-            return false;
-        }
 
-        return true;
+        return Objects.equals(name, other.name);
     }
 
     @Override
@@ -122,12 +112,7 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-
-        return result;
+        return Objects.hashCode(name);
     }
 
     @Override
@@ -136,15 +121,10 @@ public abstract class AbstractWeapon implements Weapon {
     }
 
     public final void setRules(final Collection<SpecialRule> rules) {
-        if (rules == null) {
-            throw new NullPointerException("Received a null pointer as rules");
-        }
+        checkNotNull(rules, "Received a null pointer as rules");
 
         for (final SpecialRule rule : rules) {
-            if (rule == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as rule");
-            }
+            checkNotNull(rule, "Received a null pointer as rule");
 
             this.rules.add(rule);
 
@@ -156,12 +136,15 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final void setTwoHanded(final Boolean twoHanded) {
+        checkNotNull(twoHanded,
+                "Received a null pointer as the two handed status");
+
         this.twoHanded = twoHanded;
     }
 
     @Override
     public final String toString() {
-        return getName();
+        return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
     protected final Collection<WeaponEnhancement> getEnhacementsModifiable() {

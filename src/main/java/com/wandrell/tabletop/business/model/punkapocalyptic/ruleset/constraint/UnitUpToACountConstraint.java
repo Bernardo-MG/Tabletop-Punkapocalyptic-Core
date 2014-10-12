@@ -1,7 +1,10 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Iterator;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.conf.punkapocalyptic.MessageBundleKey;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
@@ -18,6 +21,10 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
             final LocalizationService serviceLocalization) {
         super();
 
+        checkNotNull(count, "Received a null pointer as count");
+        checkNotNull(serviceLocalization,
+                "Received a null pointer as localization service");
+
         this.count = count;
 
         this.serviceLocalization = serviceLocalization;
@@ -25,6 +32,8 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
 
     public UnitUpToACountConstraint(final UnitUpToACountConstraint constraint) {
         super();
+
+        checkNotNull(constraint, "Received a null pointer as constraint");
 
         count = constraint.count;
 
@@ -49,11 +58,13 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
     }
 
     @Override
-    public final Boolean isValid(final Gang band) {
+    public final Boolean isValid(final Gang gang) {
         final Iterator<Unit> itr;
         Integer number;
 
-        itr = band.getUnits().iterator();
+        checkNotNull(gang, "Received a null pointer as gang");
+
+        itr = gang.getUnits().iterator();
         number = 0;
         while ((itr.hasNext()) && (number <= getCount())) {
             if (itr.next().getUnitName().equals(getUnit())) {
@@ -66,8 +77,16 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
 
     @Override
     public final void setUnit(final String unit) {
+        checkNotNull(unit, "Received a null pointer as unit");
+
         message = null;
         this.unit = unit;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("unit", unit)
+                .add("count", count).toString();
     }
 
     private final Integer getCount() {

@@ -15,10 +15,14 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 
 public final class DefaultArmor implements Armor {
@@ -37,9 +41,7 @@ public final class DefaultArmor implements Armor {
     public DefaultArmor(final DefaultArmor armor) {
         super();
 
-        if (armor == null) {
-            throw new NullPointerException("Received a null pointer as armor");
-        }
+        checkNotNull(armor, "Received a null pointer as armor");
 
         this.armor = armor.armor;
         cost = armor.cost;
@@ -53,26 +55,15 @@ public final class DefaultArmor implements Armor {
             final Collection<SpecialRule> rules) {
         super();
 
-        if (name == null) {
-            throw new NullPointerException("Received a null pointer as name");
-        }
-
-        if (armor == null) {
-            throw new NullPointerException("Received a null pointer as armor");
-        }
-
-        if (rules == null) {
-            throw new NullPointerException("Received a null pointer as rules");
-        }
+        checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(armor, "Received a null pointer as armor");
+        checkNotNull(rules, "Received a null pointer as rules");
 
         this.name = name;
         this.armor = armor;
 
         for (final SpecialRule rule : rules) {
-            if (rule == null) {
-                throw new NullPointerException(
-                        "Received a null pointer as rule");
-            }
+            checkNotNull(rule, "Received a null pointer as rule");
 
             this.rules.add(rule);
         }
@@ -98,15 +89,8 @@ public final class DefaultArmor implements Armor {
         }
 
         DefaultArmor other = (DefaultArmor) obj;
-        if (name == null) {
-            if (other.name != null) {
-                return false;
-            }
-        } else if (!name.equals(other.name)) {
-            return false;
-        }
 
-        return true;
+        return Objects.equals(name, other.name);
     }
 
     @Override
@@ -131,26 +115,19 @@ public final class DefaultArmor implements Armor {
 
     @Override
     public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-
-        return result;
+        return Objects.hashCode(name);
     }
 
     @Override
     public final void setCost(final Integer cost) {
-        if (cost == null) {
-            throw new NullPointerException("Received a null pointer as cost");
-        }
+        checkNotNull(cost, "Received a null pointer as cost");
 
         this.cost = cost;
     }
 
     @Override
     public final String toString() {
-        return getName();
+        return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
     private final Collection<SpecialRule> getSpecialRulesModifiable() {

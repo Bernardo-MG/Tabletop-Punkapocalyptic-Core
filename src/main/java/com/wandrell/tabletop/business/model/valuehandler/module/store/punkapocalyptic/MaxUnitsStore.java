@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
@@ -14,14 +16,8 @@ public final class MaxUnitsStore extends AbstractStoreModule {
     public MaxUnitsStore(final Gang gang, final RulesetService service) {
         super();
 
-        if (gang == null) {
-            throw new NullPointerException("Received a null pointer as gang");
-        }
-
-        if (service == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as ruleset service");
-        }
+        checkNotNull(gang, "Received a null pointer as gang");
+        checkNotNull(service, "Received a null pointer as ruleset service");
 
         this.gang = gang;
         serviceRuleset = service;

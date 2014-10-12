@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.wandrell.tabletop.business.model.punkapocalyptic.DefaultRangedValue;
 import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
 
@@ -39,9 +41,7 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
         super(weapon);
 
-        if (weapon == null) {
-            throw new NullPointerException("Received a null pointer as weapon");
-        }
+        checkNotNull(weapon, "Received a null pointer as weapon");
 
         distancesCM = weapon.distancesCM;
         distancesInches = weapon.distancesInches;
@@ -67,70 +67,35 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
             final Integer distanceLongInches, final MeleeWeapon weaponMelee) {
         super(name, cost);
 
-        if (distanceShortCM == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as short distance in cm");
-        }
+        checkNotNull(distanceShortCM,
+                "Received a null pointer as short distance in cm");
+        checkNotNull(distanceMediumCM,
+                "Received a null pointer as medium distance in cm");
+        checkNotNull(distanceLongCM,
+                "Received a null pointer as long distance in cm");
 
-        if (distanceMediumCM == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as medium distance in cm");
-        }
+        checkNotNull(distanceShortInches,
+                "Received a null pointer as short distance in inches");
+        checkNotNull(distanceMediumInches,
+                "Received a null pointer as medium distance in inches");
+        checkNotNull(distanceLongInches,
+                "Received a null pointer as long distance in inches");
 
-        if (distanceLongCM == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as long distance in cm");
-        }
+        checkNotNull(penetrationShort,
+                "Received a null pointer as short range penetration");
+        checkNotNull(penetrationMedium,
+                "Received a null pointer as medium range penetration");
+        checkNotNull(penetrationLong,
+                "Received a null pointer as long range penetration");
 
-        if (distanceShortInches == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as short distance in inches");
-        }
+        checkNotNull(strengthShort,
+                "Received a null pointer as short range strength");
+        checkNotNull(strengthMedium,
+                "Received a null pointer as medium range strength");
+        checkNotNull(strengthLong,
+                "Received a null pointer as long range strength");
 
-        if (distanceMediumInches == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as medium distance in inches");
-        }
-
-        if (distanceLongInches == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as long distance in inches");
-        }
-
-        if (penetrationShort == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as short range penetration");
-        }
-
-        if (penetrationMedium == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as medium range penetration");
-        }
-
-        if (penetrationLong == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as long range penetration");
-        }
-
-        if (strengthShort == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as short range strength");
-        }
-
-        if (strengthMedium == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as medium range strength");
-        }
-
-        if (strengthLong == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as long range strength");
-        }
-
-        if (weaponMelee == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as melee equivalent");
-        }
+        checkNotNull(weaponMelee, "Received a null pointer as melee equivalent");
 
         this.distancesCM = new DefaultRangedValue(distanceShortCM,
                 distanceMediumCM, distanceLongCM);
@@ -200,6 +165,8 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     @Override
     public final void setMeleeEquivalent(final MeleeWeapon weapon) {
+        checkNotNull(weapon, "Received a null pointer as melee equivalent");
+
         melee = weapon;
     }
 

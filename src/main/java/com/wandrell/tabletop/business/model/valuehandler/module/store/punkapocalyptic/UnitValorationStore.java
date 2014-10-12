@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.EventObject;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
@@ -31,10 +33,7 @@ public final class UnitValorationStore extends AbstractStoreModule {
     public UnitValorationStore(final RulesetService service) {
         super();
 
-        if (service == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as ruleset service");
-        }
+        checkNotNull(service, "Received a null pointer as ruleset service");
 
         serviceRuleset = service;
     }
@@ -42,14 +41,8 @@ public final class UnitValorationStore extends AbstractStoreModule {
     public UnitValorationStore(final Unit unit, final RulesetService service) {
         super();
 
-        if (unit == null) {
-            throw new NullPointerException("Received a null pointer as unit");
-        }
-
-        if (service == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as ruleset service");
-        }
+        checkNotNull(unit, "Received a null pointer as unit");
+        checkNotNull(service, "Received a null pointer as ruleset service");
 
         this.unit = unit;
         serviceRuleset = service;
@@ -60,9 +53,7 @@ public final class UnitValorationStore extends AbstractStoreModule {
     public UnitValorationStore(final UnitValorationStore store) {
         super(store);
 
-        if (store == null) {
-            throw new NullPointerException("Received a null pointer as store");
-        }
+        checkNotNull(store, "Received a null pointer as store");
 
         unit = store.unit;
         serviceRuleset = store.serviceRuleset;
@@ -79,9 +70,7 @@ public final class UnitValorationStore extends AbstractStoreModule {
     }
 
     public final void setUnit(final Unit unit) {
-        if (this.unit != null) {
-            this.unit.removeUnitListener(getListener());
-        }
+        checkNotNull(unit, "Received a null pointer as unit");
 
         this.unit = unit;
 

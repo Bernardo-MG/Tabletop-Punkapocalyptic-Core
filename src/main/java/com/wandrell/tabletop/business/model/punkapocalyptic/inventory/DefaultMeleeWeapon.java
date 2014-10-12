@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public final class DefaultMeleeWeapon extends AbstractWeapon implements
         MeleeWeapon {
 
@@ -25,9 +27,7 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
     public DefaultMeleeWeapon(final DefaultMeleeWeapon weapon) {
         super(weapon);
 
-        if (weapon == null) {
-            throw new NullPointerException("Received a null pointer as weapon");
-        }
+        checkNotNull(weapon, "Received a null pointer as weapon");
 
         combat = weapon.combat;
         penetration = weapon.penetration;
@@ -39,19 +39,9 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
             final Integer combat) {
         super(name, cost);
 
-        if (combat == null) {
-            throw new NullPointerException("Received a null pointer as combat");
-        }
-
-        if (penetration == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as penetration");
-        }
-
-        if (strength == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as strength");
-        }
+        checkNotNull(combat, "Received a null pointer as combat");
+        checkNotNull(penetration, "Received a null pointer as penetration");
+        checkNotNull(strength, "Received a null pointer as strength");
 
         this.combat = combat;
         this.penetration = penetration;

@@ -15,6 +15,12 @@
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.faction;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Objects;
+
+import com.google.common.base.MoreObjects;
+
 public final class DefaultFaction implements Faction {
 
     private final String name;
@@ -22,9 +28,7 @@ public final class DefaultFaction implements Faction {
     public DefaultFaction(final DefaultFaction faction) {
         super();
 
-        if (faction == null) {
-            throw new NullPointerException("Received a null pointer as faction");
-        }
+        checkNotNull(faction, "Received a null pointer as faction");
 
         name = faction.name;
     }
@@ -32,9 +36,7 @@ public final class DefaultFaction implements Faction {
     public DefaultFaction(final String name) {
         super();
 
-        if (name == null) {
-            throw new NullPointerException("Received a null pointer as name");
-        }
+        checkNotNull(name, "Received a null pointer as name");
 
         this.name = name;
     }
@@ -54,15 +56,8 @@ public final class DefaultFaction implements Faction {
         }
 
         DefaultFaction other = (DefaultFaction) obj;
-        if (name == null) {
-            if (other.name != null) {
-                return false;
-            }
-        } else if (!name.equals(other.name)) {
-            return false;
-        }
 
-        return true;
+        return Objects.equals(name, other.name);
     }
 
     @Override
@@ -72,17 +67,12 @@ public final class DefaultFaction implements Faction {
 
     @Override
     public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-
-        return result;
+        return Objects.hashCode(name);
     }
 
     @Override
     public final String toString() {
-        return getName();
+        return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
 }
