@@ -275,14 +275,10 @@ public final class DefaultUnit implements Unit {
     }
 
     private final void fireStatusChangedEvent(final EventObject evt) {
-        final UnitListener[] ls;
+        final UnitListener[] listnrs;
 
-        if (evt == null) {
-            throw new NullPointerException("Received a null pointer as event");
-        }
-
-        ls = getListeners().getListeners(UnitListener.class);
-        for (final UnitListener l : ls) {
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
             l.statusChanged(evt);
         }
     }

@@ -5,12 +5,12 @@ import java.util.EventObject;
 public class GangListenerAdapter implements GangListener {
 
     @Override
-    public void statusChanged(EventObject e) {}
+    public void statusChanged(final EventObject event) {}
 
     @Override
-    public void unitAdded(UnitEvent e) {}
+    public void unitAdded(final UnitEvent event) {}
 
     @Override
-    public void unitRemoved(UnitEvent e) {}
+    public void unitRemoved(final UnitEvent event) {}
 
 }

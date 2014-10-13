@@ -190,40 +190,28 @@ public final class DefaultGang implements Gang {
     }
 
     private final void fireStatusChangedEvent(final EventObject evt) {
-        final GangListener[] ls;
+        final GangListener[] listnrs;
 
-        if (evt == null) {
-            throw new NullPointerException("Received a null pointer as event");
-        }
-
-        ls = getListeners().getListeners(GangListener.class);
-        for (final GangListener l : ls) {
+        listnrs = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : listnrs) {
             l.statusChanged(evt);
         }
     }
 
     private final void fireUnitAddedEvent(final UnitEvent evt) {
-        final GangListener[] ls;
+        final GangListener[] listnrs;
 
-        if (evt == null) {
-            throw new NullPointerException("Received a null pointer as event");
-        }
-
-        ls = getListeners().getListeners(GangListener.class);
-        for (final GangListener l : ls) {
+        listnrs = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : listnrs) {
             l.unitAdded(evt);
         }
     }
 
     private final void fireUnitRemovedEvent(final UnitEvent evt) {
-        final GangListener[] ls;
+        final GangListener[] listnrs;
 
-        if (evt == null) {
-            throw new NullPointerException("Received a null pointer as event");
-        }
-
-        ls = getListeners().getListeners(GangListener.class);
-        for (final GangListener l : ls) {
+        listnrs = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : listnrs) {
             l.unitRemoved(evt);
         }
     }

@@ -55,8 +55,9 @@ public final class DefaultEquipment implements Equipment {
             return false;
         }
 
-        DefaultEquipment other = (DefaultEquipment) obj;
+        final DefaultEquipment other;
 
+        other = (DefaultEquipment) obj;
         return Objects.equals(name, other.name);
     }
 

@@ -30,17 +30,10 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.
 public abstract class AbstractWeapon implements Weapon {
 
     private final Integer                       cost;
-    private final Collection<WeaponEnhancement> enhancements;
+    private final Collection<WeaponEnhancement> enhancements = new LinkedList<>();
     private final String                        name;
-    private final Collection<SpecialRule>       rules;
-    private Boolean                             twoHanded;
-
-    {
-        twoHanded = false;
-
-        rules = new LinkedHashSet<>();
-        enhancements = new LinkedList<>();
-    }
+    private final Collection<SpecialRule>       rules        = new LinkedHashSet<>();
+    private Boolean                             twoHanded    = false;
 
     public AbstractWeapon(final AbstractWeapon weapon) {
         super();
@@ -85,8 +78,9 @@ public abstract class AbstractWeapon implements Weapon {
             return false;
         }
 
-        AbstractWeapon other = (AbstractWeapon) obj;
+        final AbstractWeapon other;
 
+        other = (AbstractWeapon) obj;
         return Objects.equals(name, other.name);
     }
 

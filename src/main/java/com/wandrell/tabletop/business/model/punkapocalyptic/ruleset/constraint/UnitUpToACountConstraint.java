@@ -13,21 +13,20 @@ import com.wandrell.tabletop.business.service.punkapocalyptic.LocalizationServic
 public final class UnitUpToACountConstraint implements UnitGangConstraint {
 
     private final Integer             count;
+    private final LocalizationService localization;
     private String                    message;
-    private final LocalizationService serviceLocalization;
     private String                    unit;
 
     public UnitUpToACountConstraint(final Integer count,
-            final LocalizationService serviceLocalization) {
+            final LocalizationService service) {
         super();
 
         checkNotNull(count, "Received a null pointer as count");
-        checkNotNull(serviceLocalization,
-                "Received a null pointer as localization service");
+        checkNotNull(service, "Received a null pointer as localization service");
 
         this.count = count;
 
-        this.serviceLocalization = serviceLocalization;
+        localization = service;
     }
 
     public UnitUpToACountConstraint(final UnitUpToACountConstraint constraint) {
@@ -37,7 +36,7 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
 
         count = constraint.count;
 
-        serviceLocalization = constraint.serviceLocalization;
+        localization = constraint.localization;
     }
 
     @Override
@@ -50,8 +49,8 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
         if (message == null) {
             message = String.format(
                     getLocalizationService().getMessageString(
-                            MessageBundleKey.UNIT_SHOULD_BE_UNIQUE),
-                    getLocalizationService().getUnitNameString(getUnit()));
+                            MessageBundleKey.UNIQUE), getLocalizationService()
+                            .getUnitNameString(getUnit()));
         }
 
         return message;
@@ -94,7 +93,7 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
     }
 
     private final LocalizationService getLocalizationService() {
-        return serviceLocalization;
+        return localization;
     }
 
     private final String getUnit() {

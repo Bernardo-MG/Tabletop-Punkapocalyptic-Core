@@ -22,7 +22,7 @@ public final class UnitValorationStore extends AbstractStoreModule {
         listener = new UnitListener() {
 
             @Override
-            public final void statusChanged(final EventObject e) {
+            public final void statusChanged(final EventObject event) {
                 fireValueChangedEvent(new ValueHandlerEvent(source,
                         source.getValue(), source.getValue()));
             }

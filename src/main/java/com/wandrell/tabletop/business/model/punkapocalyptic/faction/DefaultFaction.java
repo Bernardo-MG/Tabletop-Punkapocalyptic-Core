@@ -55,8 +55,9 @@ public final class DefaultFaction implements Faction {
             return false;
         }
 
-        DefaultFaction other = (DefaultFaction) obj;
+        final DefaultFaction other;
 
+        other = (DefaultFaction) obj;
         return Objects.equals(name, other.name);
     }
 

@@ -13,18 +13,16 @@ import com.wandrell.tabletop.business.service.punkapocalyptic.LocalizationServic
 public final class UnitUpToHalfGangLimitConstraint implements
         UnitGangConstraint {
 
+    private final LocalizationService localization;
     private String                    message;
-    private final LocalizationService serviceLocalization;
     private String                    unit;
 
-    public UnitUpToHalfGangLimitConstraint(
-            final LocalizationService serviceLocalization) {
+    public UnitUpToHalfGangLimitConstraint(final LocalizationService service) {
         super();
 
-        checkNotNull(serviceLocalization,
-                "Received a null pointer as localization service");
+        checkNotNull(service, "Received a null pointer as localization service");
 
-        this.serviceLocalization = serviceLocalization;
+        localization = service;
     }
 
     public UnitUpToHalfGangLimitConstraint(
@@ -33,7 +31,7 @@ public final class UnitUpToHalfGangLimitConstraint implements
 
         checkNotNull(constraint, "Received a null pointer as constraint");
 
-        serviceLocalization = constraint.serviceLocalization;
+        localization = constraint.localization;
     }
 
     @Override
@@ -46,7 +44,7 @@ public final class UnitUpToHalfGangLimitConstraint implements
         if (message == null) {
             message = String.format(
                     getLocalizationService().getMessageString(
-                            MessageBundleKey.UNIT_SHOULD_BE_UP_TO_HALF_GANG),
+                            MessageBundleKey.HALF_GANG),
                     getLocalizationService().getUnitNameString(getUnit()));
         }
 
@@ -87,7 +85,7 @@ public final class UnitUpToHalfGangLimitConstraint implements
     }
 
     private final LocalizationService getLocalizationService() {
-        return serviceLocalization;
+        return localization;
     }
 
     private final String getUnit() {

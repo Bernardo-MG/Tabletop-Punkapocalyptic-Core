@@ -53,8 +53,9 @@ public final class DefaultSpecialRule implements SpecialRule {
             return false;
         }
 
-        DefaultSpecialRule other = (DefaultSpecialRule) obj;
+        final DefaultSpecialRule other;
 
+        other = (DefaultSpecialRule) obj;
         return Objects.equals(name, other.name);
     }
 

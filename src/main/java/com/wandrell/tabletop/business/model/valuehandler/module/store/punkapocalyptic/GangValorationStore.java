@@ -23,7 +23,7 @@ public final class GangValorationStore extends AbstractStoreModule {
         listener = new GangListenerAdapter() {
 
             @Override
-            public final void statusChanged(final EventObject e) {
+            public final void statusChanged(final EventObject event) {
                 fireValueChangedEvent(new ValueHandlerEvent(source,
                         source.getValue(), source.getValue()));
             }

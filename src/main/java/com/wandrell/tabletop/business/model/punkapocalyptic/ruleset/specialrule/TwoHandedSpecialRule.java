@@ -38,14 +38,21 @@ public final class TwoHandedSpecialRule implements SpecialRule,
 
     @Override
     public final boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TwoHandedSpecialRule other = (TwoHandedSpecialRule) obj;
+        }
 
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final TwoHandedSpecialRule other;
+
+        other = (TwoHandedSpecialRule) obj;
         return Objects.equals(rule, other.rule);
     }
 

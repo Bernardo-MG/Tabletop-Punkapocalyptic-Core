@@ -28,15 +28,9 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.
 public final class DefaultArmor implements Armor {
 
     private final Integer                 armor;
-    private Integer                       cost;
+    private Integer                       cost  = 0;
     private final String                  name;
-    private final Collection<SpecialRule> rules;
-
-    {
-        cost = 0;
-
-        rules = new LinkedHashSet<>();
-    }
+    private final Collection<SpecialRule> rules = new LinkedHashSet<>();
 
     public DefaultArmor(final DefaultArmor armor) {
         super();
@@ -88,8 +82,9 @@ public final class DefaultArmor implements Armor {
             return false;
         }
 
-        DefaultArmor other = (DefaultArmor) obj;
+        final DefaultArmor other;
 
+        other = (DefaultArmor) obj;
         return Objects.equals(name, other.name);
     }
 

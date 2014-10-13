@@ -41,13 +41,21 @@ public final class RangedArmorWrapper implements RangedArmor {
 
     @Override
     public final boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+
+        if (getClass() != obj.getClass()) {
             return false;
-        RangedArmorWrapper other = (RangedArmorWrapper) obj;
+        }
+
+        final RangedArmorWrapper other;
+
+        other = (RangedArmorWrapper) obj;
         return Objects.equals(armor, other.armor);
     }
 

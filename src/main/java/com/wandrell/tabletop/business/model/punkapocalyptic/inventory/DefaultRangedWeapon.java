@@ -17,7 +17,6 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.DefaultRangedValue;
 import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
 
 public final class DefaultRangedWeapon extends AbstractWeapon implements
@@ -25,18 +24,10 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     private final RangedValue distancesCM;
     private final RangedValue distancesInches;
-    private Boolean           firearm;
+    private Boolean           firearm = false;
     private MeleeWeapon       melee;
-    private final Integer     penetrationLong;
-    private final Integer     penetrationMedium;
-    private final Integer     penetrationShort;
-    private final Integer     strengthLong;
-    private final Integer     strengthMedium;
-    private final Integer     strengthShort;
-
-    {
-        firearm = false;
-    }
+    private final RangedValue penetrationRanges;
+    private final RangedValue strengthRanges;
 
     public DefaultRangedWeapon(final DefaultRangedWeapon weapon) {
         super(weapon);
@@ -46,69 +37,34 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
         distancesCM = weapon.distancesCM;
         distancesInches = weapon.distancesInches;
 
-        penetrationShort = weapon.penetrationShort;
-        penetrationMedium = weapon.penetrationMedium;
-        penetrationLong = weapon.penetrationLong;
-
-        strengthShort = weapon.strengthShort;
-        strengthMedium = weapon.strengthMedium;
-        strengthLong = weapon.strengthLong;
+        penetrationRanges = weapon.penetrationRanges;
+        strengthRanges = weapon.strengthRanges;
 
         melee = weapon.melee;
     }
 
     public DefaultRangedWeapon(final String name, final Integer cost,
-            final Integer penetrationShort, final Integer penetrationMedium,
-            final Integer penetrationLong, final Integer strengthShort,
-            final Integer strengthMedium, final Integer strengthLong,
-            final Integer distanceShortCM, final Integer distanceMediumCM,
-            final Integer distanceLongCM, final Integer distanceShortInches,
-            final Integer distanceMediumInches,
-            final Integer distanceLongInches, final MeleeWeapon weaponMelee) {
+            final RangedValue penetration, final RangedValue strength,
+            final RangedValue distanceCM, final RangedValue distanceInches,
+            final MeleeWeapon weaponMelee) {
         super(name, cost);
 
-        checkNotNull(distanceShortCM,
-                "Received a null pointer as short distance in cm");
-        checkNotNull(distanceMediumCM,
-                "Received a null pointer as medium distance in cm");
-        checkNotNull(distanceLongCM,
-                "Received a null pointer as long distance in cm");
+        checkNotNull(distanceCM,
+                "Received a null pointer as the distances in cm");
+        checkNotNull(distanceInches,
+                "Received a null pointer as the distances in inches");
 
-        checkNotNull(distanceShortInches,
-                "Received a null pointer as short distance in inches");
-        checkNotNull(distanceMediumInches,
-                "Received a null pointer as medium distance in inches");
-        checkNotNull(distanceLongInches,
-                "Received a null pointer as long distance in inches");
-
-        checkNotNull(penetrationShort,
-                "Received a null pointer as short range penetration");
-        checkNotNull(penetrationMedium,
-                "Received a null pointer as medium range penetration");
-        checkNotNull(penetrationLong,
-                "Received a null pointer as long range penetration");
-
-        checkNotNull(strengthShort,
-                "Received a null pointer as short range strength");
-        checkNotNull(strengthMedium,
-                "Received a null pointer as medium range strength");
-        checkNotNull(strengthLong,
-                "Received a null pointer as long range strength");
+        checkNotNull(penetration,
+                "Received a null pointer as penetration ranges");
+        checkNotNull(strength, "Received a null pointer as strength ranges");
 
         checkNotNull(weaponMelee, "Received a null pointer as melee equivalent");
 
-        this.distancesCM = new DefaultRangedValue(distanceShortCM,
-                distanceMediumCM, distanceLongCM);
-        this.distancesInches = new DefaultRangedValue(distanceShortInches,
-                distanceMediumInches, distanceLongInches);
+        distancesCM = distanceCM;
+        distancesInches = distanceInches;
 
-        this.penetrationShort = penetrationShort;
-        this.penetrationMedium = penetrationMedium;
-        this.penetrationLong = penetrationLong;
-
-        this.strengthShort = strengthShort;
-        this.strengthMedium = strengthMedium;
-        this.strengthLong = strengthLong;
+        penetrationRanges = penetration;
+        strengthRanges = strength;
 
         melee = weaponMelee;
     }
@@ -125,22 +81,22 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     @Override
     public final Integer getLongPenetration() {
-        return penetrationLong;
+        return getPenetrationRanges().getLongValue();
     }
 
     @Override
     public final Integer getLongStrength() {
-        return strengthLong;
+        return getStrengthRanges().getLongValue();
     }
 
     @Override
     public final Integer getMediumPenetration() {
-        return penetrationMedium;
+        return getPenetrationRanges().getMediumValue();
     }
 
     @Override
     public final Integer getMediumStrength() {
-        return strengthMedium;
+        return getStrengthRanges().getMediumValue();
     }
 
     @Override
@@ -150,12 +106,12 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     @Override
     public final Integer getShortPenetration() {
-        return penetrationShort;
+        return getPenetrationRanges().getShortValue();
     }
 
     @Override
     public final Integer getShortStrength() {
-        return strengthShort;
+        return getStrengthRanges().getShortValue();
     }
 
     @Override
@@ -164,10 +120,23 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     @Override
+    public final void setFirearm(final Boolean firearm) {
+        this.firearm = firearm;
+    }
+
+    @Override
     public final void setMeleeEquivalent(final MeleeWeapon weapon) {
         checkNotNull(weapon, "Received a null pointer as melee equivalent");
 
         melee = weapon;
+    }
+
+    private final RangedValue getPenetrationRanges() {
+        return penetrationRanges;
+    }
+
+    private final RangedValue getStrengthRanges() {
+        return strengthRanges;
     }
 
 }
