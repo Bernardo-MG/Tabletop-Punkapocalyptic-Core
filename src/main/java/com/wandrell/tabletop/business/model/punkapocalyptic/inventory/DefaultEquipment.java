@@ -23,22 +23,26 @@ import com.google.common.base.MoreObjects;
 
 public final class DefaultEquipment implements Equipment {
 
-    public final String name;
+    private final Integer cost;
+    private final String  name;
 
     public DefaultEquipment(final DefaultEquipment equipment) {
         super();
 
         checkNotNull(equipment, "Received a null pointer as equipment");
 
-        this.name = equipment.name;
+        name = equipment.name;
+        cost = equipment.cost;
     }
 
-    public DefaultEquipment(final String name) {
+    public DefaultEquipment(final String name, final Integer cost) {
         super();
 
         checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(cost, "Received a null pointer as cost");
 
         this.name = name;
+        this.cost = cost;
     }
 
     @Override
@@ -59,6 +63,11 @@ public final class DefaultEquipment implements Equipment {
 
         other = (DefaultEquipment) obj;
         return Objects.equals(name, other.name);
+    }
+
+    @Override
+    public final Integer getCost() {
+        return cost;
     }
 
     @Override
