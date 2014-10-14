@@ -1,13 +1,14 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
-public final class BayonetWeaponEnhancement implements WeaponEnhancement {
+public final class FirearmWeaponEnhancement implements WeaponEnhancement {
 
     private final Integer cost;
     private final String  name;
 
-    public BayonetWeaponEnhancement(final Integer cost) {
+    public FirearmWeaponEnhancement(final String name, final Integer cost) {
         super();
-        name = "bayonet";
+
+        this.name = name;
         this.cost = cost;
     }
 
