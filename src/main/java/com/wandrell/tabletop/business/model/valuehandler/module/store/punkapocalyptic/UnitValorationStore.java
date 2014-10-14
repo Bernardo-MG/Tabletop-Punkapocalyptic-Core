@@ -51,7 +51,7 @@ public final class UnitValorationStore extends AbstractStoreModule {
     }
 
     public UnitValorationStore(final UnitValorationStore store) {
-        super(store);
+        super();
 
         checkNotNull(store, "Received a null pointer as store");
 

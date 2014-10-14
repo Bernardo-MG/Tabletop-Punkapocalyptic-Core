@@ -44,7 +44,7 @@ public final class GangValorationStore extends AbstractStoreModule {
     }
 
     public GangValorationStore(final GangValorationStore store) {
-        super(store);
+        super();
 
         checkNotNull(store, "Received a null pointer as store");
 

@@ -33,7 +33,7 @@ public final class MaxUnitsStore extends AbstractStoreModule {
     }
 
     public MaxUnitsStore(final MaxUnitsStore store) {
-        super(store);
+        super();
 
         gang = store.gang;
         serviceRuleset = store.serviceRuleset;
