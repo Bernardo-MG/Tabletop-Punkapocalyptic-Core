@@ -3,6 +3,7 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.conf.punkapocalyptic.MessageBundleKey;
@@ -15,15 +16,18 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
     private final Integer             count;
     private final LocalizationService localization;
     private String                    message;
+    private final String              name;
     private String                    unit;
 
-    public UnitUpToACountConstraint(final Integer count,
+    public UnitUpToACountConstraint(final String name, final Integer count,
             final LocalizationService service) {
         super();
 
+        checkNotNull(name, "Received a null pointer as name");
         checkNotNull(count, "Received a null pointer as count");
         checkNotNull(service, "Received a null pointer as localization service");
 
+        this.name = name;
         this.count = count;
 
         localization = service;
@@ -34,6 +38,7 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
 
         checkNotNull(constraint, "Received a null pointer as constraint");
 
+        name = constraint.name;
         count = constraint.count;
 
         localization = constraint.localization;
@@ -42,6 +47,28 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
     @Override
     public final UnitUpToACountConstraint createNewInstance() {
         return new UnitUpToACountConstraint(this);
+    }
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final UnitUpToACountConstraint other;
+
+        other = (UnitUpToACountConstraint) obj;
+        return Objects.equals(name, other.name)
+                && Objects.equals(unit, other.unit)
+                && Objects.equals(count, other.count);
     }
 
     @Override
@@ -54,6 +81,16 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
         }
 
         return message;
+    }
+
+    @Override
+    public final String getName() {
+        return name;
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(name, unit, count);
     }
 
     @Override
@@ -83,9 +120,9 @@ public final class UnitUpToACountConstraint implements UnitGangConstraint {
     }
 
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit)
-                .add("count", count).toString();
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("name", name)
+                .add("unit", unit).add("count", count).toString();
     }
 
     private final Integer getCount() {

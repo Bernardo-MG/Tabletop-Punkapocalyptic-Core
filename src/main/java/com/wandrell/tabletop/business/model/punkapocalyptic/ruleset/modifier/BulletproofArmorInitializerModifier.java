@@ -16,6 +16,11 @@ public final class BulletproofArmorInitializerModifier implements
     }
 
     @Override
+    public final String getName() {
+        return "firearms_protection";
+    }
+
+    @Override
     public final Armor modify(final Armor armor) {
         final RangedValue rangedArmor;
 
@@ -29,7 +34,8 @@ public final class BulletproofArmorInitializerModifier implements
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).toString();
+        return MoreObjects.toStringHelper(this).add("name", getName())
+                .toString();
     }
 
 }

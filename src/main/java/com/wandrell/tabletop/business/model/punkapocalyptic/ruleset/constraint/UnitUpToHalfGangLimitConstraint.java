@@ -3,6 +3,7 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.conf.punkapocalyptic.MessageBundleKey;
@@ -40,6 +41,26 @@ public final class UnitUpToHalfGangLimitConstraint implements
     }
 
     @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final UnitUpToHalfGangLimitConstraint other;
+
+        other = (UnitUpToHalfGangLimitConstraint) obj;
+        return Objects.equals(unit, other.unit);
+    }
+
+    @Override
     public final String getErrorMessage() {
         if (message == null) {
             message = String.format(
@@ -49,6 +70,16 @@ public final class UnitUpToHalfGangLimitConstraint implements
         }
 
         return message;
+    }
+
+    @Override
+    public final String getName() {
+        return "up_to_half_points";
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(unit);
     }
 
     @Override
