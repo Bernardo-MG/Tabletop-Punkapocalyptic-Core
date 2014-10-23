@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 
 public final class DefaultUnitWeaponAvailability implements
@@ -24,8 +26,8 @@ public final class DefaultUnitWeaponAvailability implements
         checkNotNull(minWeapons, "Received a null pointer as min weapons");
         checkNotNull(maxWeapons, "Received a null pointer as max weapons");
 
-        this.maxWeapons = maxWeapons;
         this.minWeapons = minWeapons;
+        this.maxWeapons = maxWeapons;
 
         for (final Weapon weapon : weaponOptions) {
             checkNotNull(weapon, "Received a null pointer as weapon");
@@ -49,6 +51,28 @@ public final class DefaultUnitWeaponAvailability implements
     }
 
     @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        DefaultUnitWeaponAvailability other;
+
+        other = (DefaultUnitWeaponAvailability) obj;
+        return Objects.equal(minWeapons, other.minWeapons)
+                && Objects.equal(maxWeapons, other.maxWeapons)
+                && Objects.equal(weaponOptions, other.weaponOptions);
+    }
+
+    @Override
     public final Integer getMaxWeapons() {
         return maxWeapons;
     }
@@ -61,6 +85,18 @@ public final class DefaultUnitWeaponAvailability implements
     @Override
     public final Collection<Weapon> getWeaponOptions() {
         return Collections.unmodifiableCollection(getWeaponOptionsModifiable());
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hashCode(minWeapons, maxWeapons, weaponOptions);
+    }
+
+    @Override
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("min", minWeapons)
+                .add("max", maxWeapons).add("weapons", weaponOptions)
+                .toString();
     }
 
     private final Collection<Weapon> getWeaponOptionsModifiable() {
