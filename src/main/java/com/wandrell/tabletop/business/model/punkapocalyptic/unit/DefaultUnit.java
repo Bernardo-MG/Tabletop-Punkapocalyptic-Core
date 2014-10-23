@@ -27,6 +27,7 @@ import javax.swing.event.EventListenerList;
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
+import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnarmoredArmor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
@@ -39,7 +40,7 @@ public final class DefaultUnit implements Unit {
 
     private final ValueHandler            actions;
     private final ValueHandler            agility;
-    private Armor                         armor;
+    private Armor                         armor     = new UnarmoredArmor();
     private final ValueHandler            combat;
     private final Integer                 cost;
     private final Collection<Equipment>   equipment = new LinkedHashSet<>();
