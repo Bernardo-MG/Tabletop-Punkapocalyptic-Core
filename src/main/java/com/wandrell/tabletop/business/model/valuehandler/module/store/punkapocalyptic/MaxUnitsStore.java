@@ -6,6 +6,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.AbstractStoreModule;
+import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
 import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
 public final class MaxUnitsStore extends AbstractStoreModule {
@@ -22,11 +23,13 @@ public final class MaxUnitsStore extends AbstractStoreModule {
         this.gang = gang;
         serviceRuleset = service;
 
+        final StoreModule source = this;
         gang.getValoration().addValueEventListener(new ValueHandlerListener() {
 
             @Override
             public final void valueChanged(final ValueHandlerEvent evt) {
-                fireValueChangedEvent(evt);
+                fireValueChangedEvent(new ValueHandlerEvent(source, source
+                        .getValue(), source.getValue()));
             }
 
         });
