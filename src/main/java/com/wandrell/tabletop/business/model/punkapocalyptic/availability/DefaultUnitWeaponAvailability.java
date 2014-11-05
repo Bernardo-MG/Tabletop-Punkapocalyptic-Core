@@ -8,18 +8,17 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 
 public final class DefaultUnitWeaponAvailability implements
         UnitWeaponAvailability {
 
-    private final Integer            maxWeapons;
-    private final Integer            minWeapons;
-    private final Collection<Weapon> weaponOptions = new LinkedHashSet<>();
+    private final Integer                  maxWeapons;
+    private final Integer                  minWeapons;
+    private final Collection<WeaponOption> weaponOptions = new LinkedHashSet<>();
 
     public DefaultUnitWeaponAvailability(
-            final Collection<Weapon> weaponOptions, final Integer minWeapons,
-            final Integer maxWeapons) {
+            final Collection<WeaponOption> weaponOptions,
+            final Integer minWeapons, final Integer maxWeapons) {
         super();
 
         checkNotNull(weaponOptions, "Received a null pointer as weapon options");
@@ -29,7 +28,7 @@ public final class DefaultUnitWeaponAvailability implements
         this.minWeapons = minWeapons;
         this.maxWeapons = maxWeapons;
 
-        for (final Weapon weapon : weaponOptions) {
+        for (final WeaponOption weapon : weaponOptions) {
             checkNotNull(weapon, "Received a null pointer as weapon");
 
             this.weaponOptions.add(weapon);
@@ -83,7 +82,7 @@ public final class DefaultUnitWeaponAvailability implements
     }
 
     @Override
-    public final Collection<Weapon> getWeaponOptions() {
+    public final Collection<WeaponOption> getWeaponOptions() {
         return Collections.unmodifiableCollection(getWeaponOptionsModifiable());
     }
 
@@ -99,7 +98,7 @@ public final class DefaultUnitWeaponAvailability implements
                 .toString();
     }
 
-    private final Collection<Weapon> getWeaponOptionsModifiable() {
+    private final Collection<WeaponOption> getWeaponOptionsModifiable() {
         return weaponOptions;
     }
 
