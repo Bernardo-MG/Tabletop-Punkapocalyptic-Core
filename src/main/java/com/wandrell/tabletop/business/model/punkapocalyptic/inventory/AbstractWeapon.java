@@ -19,18 +19,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EventObject;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Objects;
 
+import javax.swing.event.EventListenerList;
+
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.WeaponModifierSpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
 
 public abstract class AbstractWeapon implements Weapon {
 
     private final Integer                       cost;
     private final Collection<WeaponEnhancement> enhancements = new LinkedList<>();
+    private final EventListenerList             listeners    = new EventListenerList();
     private final String                        name;
     private final Collection<SpecialRule>       rules        = new LinkedHashSet<>();
     private Boolean                             twoHanded    = false;
@@ -67,6 +72,20 @@ public abstract class AbstractWeapon implements Weapon {
     }
 
     @Override
+    public final void addEnhancement(final WeaponEnhancement enhancement) {
+        getEnhancementsModifiable().add(enhancement);
+
+        fireStatusChangedEvent(new EventObject(this));
+    }
+
+    @Override
+    public final void addStatusListener(final StatusListener listener) {
+        checkNotNull(listener, "Received a null pointer as listener");
+
+        getListeners().add(StatusListener.class, listener);
+    }
+
+    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
@@ -88,12 +107,19 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final Integer getCost() {
-        return cost;
+        Integer costEnhance;
+
+        costEnhance = 0;
+        for (final WeaponEnhancement enhance : getEnhancementsModifiable()) {
+            costEnhance += enhance.getCost();
+        }
+
+        return cost + costEnhance;
     }
 
     @Override
-    public final Collection<WeaponEnhancement> getEnhacements() {
-        return Collections.unmodifiableCollection(getEnhacementsModifiable());
+    public final Collection<WeaponEnhancement> getEnhancements() {
+        return Collections.unmodifiableCollection(getEnhancementsModifiable());
     }
 
     @Override
@@ -114,6 +140,18 @@ public abstract class AbstractWeapon implements Weapon {
     @Override
     public final Boolean isTwoHanded() {
         return twoHanded;
+    }
+
+    @Override
+    public final void removeEnhancement(final WeaponEnhancement enhancement) {
+        getEnhancementsModifiable().remove(enhancement);
+
+        fireStatusChangedEvent(new EventObject(this));
+    }
+
+    @Override
+    public final void removeStatusListener(final StatusListener listener) {
+        getListeners().remove(StatusListener.class, listener);
     }
 
     public final void setRules(final Collection<SpecialRule> rules) {
@@ -145,7 +183,20 @@ public abstract class AbstractWeapon implements Weapon {
                 .add("enhancements", enhancements).toString();
     }
 
-    protected final Collection<WeaponEnhancement> getEnhacementsModifiable() {
+    private final void fireStatusChangedEvent(final EventObject evt) {
+        final StatusListener[] listnrs;
+
+        listnrs = getListeners().getListeners(StatusListener.class);
+        for (final StatusListener l : listnrs) {
+            l.statusChanged(evt);
+        }
+    }
+
+    private final EventListenerList getListeners() {
+        return listeners;
+    }
+
+    protected final Collection<WeaponEnhancement> getEnhancementsModifiable() {
         return enhancements;
     }
 

@@ -49,6 +49,11 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
     }
 
     @Override
+    public final DefaultMeleeWeapon createNewInstance() {
+        return new DefaultMeleeWeapon(this);
+    }
+
+    @Override
     public final Integer getCombat() {
         return combat;
     }

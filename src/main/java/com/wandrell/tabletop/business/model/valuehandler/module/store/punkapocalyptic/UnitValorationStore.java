@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.EventObject;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.AbstractStoreModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
@@ -13,13 +13,13 @@ import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
 public final class UnitValorationStore extends AbstractStoreModule {
 
-    private final UnitListener   listener;
+    private final StatusListener listener;
     private final RulesetService serviceRuleset;
     private Unit                 unit;
 
     {
         final StoreModule source = this;
-        listener = new UnitListener() {
+        listener = new StatusListener() {
 
             @Override
             public final void statusChanged(final EventObject event) {
@@ -47,7 +47,7 @@ public final class UnitValorationStore extends AbstractStoreModule {
         this.unit = unit;
         serviceRuleset = service;
 
-        unit.addUnitListener(getListener());
+        unit.addStatusListener(getListener());
     }
 
     public UnitValorationStore(final UnitValorationStore store) {
@@ -74,10 +74,10 @@ public final class UnitValorationStore extends AbstractStoreModule {
 
         this.unit = unit;
 
-        unit.addUnitListener(getListener());
+        unit.addStatusListener(getListener());
     }
 
-    private final UnitListener getListener() {
+    private final StatusListener getListener() {
         return listener;
     }
 

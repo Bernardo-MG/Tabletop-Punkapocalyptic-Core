@@ -30,7 +30,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnarmoredArmor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
@@ -45,6 +45,7 @@ public final class DefaultUnit implements Unit {
     private final Integer                 cost;
     private final Collection<Equipment>   equipment = new LinkedHashSet<>();
     private final EventListenerList       listeners = new EventListenerList();
+    private final StatusListener          listenerStatus;
     private final String                  name;
     private final ValueHandler            precision;
     private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
@@ -53,6 +54,17 @@ public final class DefaultUnit implements Unit {
     private final ValueHandler            toughness;
     private final ValueHandler            valoration;
     private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
+
+    {
+        listenerStatus = new StatusListener() {
+
+            @Override
+            public void statusChanged(final EventObject e) {
+                fireStatusChangedEvent(new EventObject(this));
+            }
+
+        };
+    }
 
     public DefaultUnit(final DefaultUnit unit) {
         super();
@@ -143,10 +155,10 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final void addUnitListener(final UnitListener listener) {
+    public final void addStatusListener(final StatusListener listener) {
         checkNotNull(listener, "Received a null pointer as listener");
 
-        getListeners().add(UnitListener.class, listener);
+        getListeners().add(StatusListener.class, listener);
     }
 
     @Override
@@ -154,6 +166,9 @@ public final class DefaultUnit implements Unit {
         checkNotNull(weapon, "Received a null pointer as weapon");
 
         getWeaponsModifiable().add(weapon);
+
+        weapon.addStatusListener(getStatusListener());
+
         fireStatusChangedEvent(new EventObject(this));
     }
 
@@ -252,13 +267,17 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final void removeUnitListener(final UnitListener listener) {
-        getListeners().remove(UnitListener.class, listener);
+    public final void removeStatusListener(final StatusListener listener) {
+        getListeners().remove(StatusListener.class, listener);
     }
 
     @Override
     public final void removeWeapon(final Weapon weapon) {
         getWeaponsModifiable().remove(weapon);
+
+        weapon.removeStatusListener(getStatusListener());
+
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -276,10 +295,10 @@ public final class DefaultUnit implements Unit {
     }
 
     private final void fireStatusChangedEvent(final EventObject evt) {
-        final UnitListener[] listnrs;
+        final StatusListener[] listnrs;
 
-        listnrs = getListeners().getListeners(UnitListener.class);
-        for (final UnitListener l : listnrs) {
+        listnrs = getListeners().getListeners(StatusListener.class);
+        for (final StatusListener l : listnrs) {
             l.statusChanged(evt);
         }
     }
@@ -294,6 +313,10 @@ public final class DefaultUnit implements Unit {
 
     private final Collection<SpecialRule> getSpecialRulesModifiable() {
         return rules;
+    }
+
+    private final StatusListener getStatusListener() {
+        return listenerStatus;
     }
 
     private final Collection<Weapon> getWeaponsModifiable() {
