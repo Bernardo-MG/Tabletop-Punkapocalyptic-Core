@@ -51,6 +51,8 @@ public abstract class AbstractWeapon implements Weapon {
                 ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
             }
         }
+
+        enhancements.addAll(weapon.enhancements);
     }
 
     public AbstractWeapon(final String name, final Integer cost) {
