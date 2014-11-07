@@ -41,6 +41,7 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
         strengthRanges = weapon.strengthRanges;
 
         melee = weapon.melee;
+        firearm = weapon.firearm;
     }
 
     public DefaultRangedWeapon(final String name, final Integer cost,

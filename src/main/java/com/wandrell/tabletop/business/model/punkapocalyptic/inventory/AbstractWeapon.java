@@ -138,7 +138,9 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name).toString();
+        return MoreObjects.toStringHelper(this).add("name", name)
+                .add("cost", cost).add("rules", rules)
+                .add("enhancements", enhancements).toString();
     }
 
     protected final Collection<WeaponEnhancement> getEnhacementsModifiable() {
