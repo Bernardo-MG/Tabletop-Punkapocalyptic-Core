@@ -31,27 +31,26 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnarmoredA
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
-import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
 
 public final class DefaultUnit implements Unit {
 
-    private final ValueHandler            actions;
-    private final ValueHandler            agility;
+    private final Integer                 actions;
+    private final Integer                 agility;
     private Armor                         armor     = new UnarmoredArmor();
-    private final ValueHandler            combat;
+    private final Integer                 combat;
     private final Integer                 cost;
     private final Collection<Equipment>   equipment = new LinkedHashSet<>();
     private final EventListenerList       listeners = new EventListenerList();
     private final StatusListener          listenerStatus;
     private final String                  name;
-    private final ValueHandler            precision;
+    private final Integer                 precision;
     private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
-    private final ValueHandler            strength;
-    private final ValueHandler            tech;
-    private final ValueHandler            toughness;
+    private final Integer                 strength;
+    private final Integer                 tech;
+    private final Integer                 toughness;
     private final ValueHandler            valoration;
     private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
 
@@ -73,13 +72,13 @@ public final class DefaultUnit implements Unit {
 
         name = unit.name;
 
-        actions = unit.actions.createNewInstance();
-        agility = unit.agility.createNewInstance();
-        combat = unit.combat.createNewInstance();
-        precision = unit.precision.createNewInstance();
-        strength = unit.strength.createNewInstance();
-        tech = unit.tech.createNewInstance();
-        toughness = unit.toughness.createNewInstance();
+        actions = unit.actions;
+        agility = unit.agility;
+        combat = unit.combat;
+        precision = unit.precision;
+        strength = unit.strength;
+        tech = unit.tech;
+        toughness = unit.toughness;
 
         cost = unit.cost;
 
@@ -102,13 +101,10 @@ public final class DefaultUnit implements Unit {
                 .getStore()).setUnit(this);
     }
 
-    public DefaultUnit(final String name, final EditableValueHandler actions,
-            final EditableValueHandler agility,
-            final EditableValueHandler combat,
-            final EditableValueHandler precision,
-            final EditableValueHandler strength,
-            final EditableValueHandler tech,
-            final EditableValueHandler toughness, final Integer cost,
+    public DefaultUnit(final String name, final Integer actions,
+            final Integer agility, final Integer combat,
+            final Integer precision, final Integer strength,
+            final Integer tech, final Integer toughness, final Integer cost,
             final Collection<SpecialRule> rules, final ValueHandler valoration) {
         super();
 
@@ -121,6 +117,8 @@ public final class DefaultUnit implements Unit {
         checkNotNull(strength, "Received a null pointer as strength");
         checkNotNull(tech, "Received a null pointer as tech");
         checkNotNull(toughness, "Received a null pointer as toughness");
+
+        checkNotNull(rules, "Received a null pointer as special rules");
 
         checkNotNull(cost, "Received a null pointer as cost");
 
@@ -193,12 +191,12 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getActions() {
-        return actions.getValue();
+        return actions;
     }
 
     @Override
     public final Integer getAgility() {
-        return agility.getValue();
+        return agility;
     }
 
     @Override
@@ -213,7 +211,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getCombat() {
-        return combat.getValue();
+        return combat;
     }
 
     @Override
@@ -223,7 +221,7 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getPrecision() {
-        return precision.getValue();
+        return precision;
     }
 
     @Override
@@ -233,17 +231,17 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final Integer getStrength() {
-        return strength.getValue();
+        return strength;
     }
 
     @Override
     public final Integer getTech() {
-        return tech.getValue();
+        return tech;
     }
 
     @Override
     public final Integer getToughness() {
-        return toughness.getValue();
+        return toughness;
     }
 
     @Override
