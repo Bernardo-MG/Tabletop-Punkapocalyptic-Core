@@ -6,38 +6,23 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.conf.punkapocalyptic.MessageBundleKey;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.service.punkapocalyptic.LocalizationService;
 
-public final class UnitUpToHalfGangLimitConstraint implements
-        UnitGangConstraint {
+public final class UnitUpToHalfGangLimitConstraint implements GangConstraint {
 
-    private final LocalizationService localization;
-    private String                    message;
-    private String                    unit;
+    private final String message;
+    private final String unit;
 
-    public UnitUpToHalfGangLimitConstraint(final LocalizationService service) {
+    public UnitUpToHalfGangLimitConstraint(final String unit,
+            final String message) {
         super();
 
-        checkNotNull(service, "Received a null pointer as localization service");
+        checkNotNull(unit, "Received a null pointer as unit");
+        checkNotNull(message, "Received a null pointer as message");
 
-        localization = service;
-    }
-
-    public UnitUpToHalfGangLimitConstraint(
-            final UnitUpToHalfGangLimitConstraint constraint) {
-        super();
-
-        checkNotNull(constraint, "Received a null pointer as constraint");
-
-        localization = constraint.localization;
-    }
-
-    @Override
-    public final UnitUpToHalfGangLimitConstraint createNewInstance() {
-        return new UnitUpToHalfGangLimitConstraint(this);
+        this.unit = unit;
+        this.message = message;
     }
 
     @Override
@@ -62,13 +47,6 @@ public final class UnitUpToHalfGangLimitConstraint implements
 
     @Override
     public final String getErrorMessage() {
-        if (message == null) {
-            message = String.format(
-                    getLocalizationService().getMessageString(
-                            MessageBundleKey.HALF_GANG),
-                    getLocalizationService().getUnitNameString(getUnit()));
-        }
-
         return message;
     }
 
@@ -103,20 +81,8 @@ public final class UnitUpToHalfGangLimitConstraint implements
     }
 
     @Override
-    public final void setUnit(final String unit) {
-        checkNotNull(unit, "Received a null pointer as unit");
-
-        message = null;
-        this.unit = unit;
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("unit", unit).toString();
-    }
-
-    private final LocalizationService getLocalizationService() {
-        return localization;
     }
 
     private final String getUnit() {
