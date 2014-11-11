@@ -25,6 +25,7 @@ import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
@@ -184,6 +185,12 @@ public final class DefaultGang implements Gang {
             }
         }
 
+    }
+
+    @Override
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("faction", faction)
+                .add("units", units).toString();
     }
 
     private final void fireStatusChangedEvent(final EventObject evt) {

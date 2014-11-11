@@ -1,5 +1,6 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Iterator;
@@ -24,6 +25,8 @@ public final class UnitUpToACountConstraint implements GangConstraint {
         checkNotNull(unit, "Received a null pointer as unit");
         checkNotNull(count, "Received a null pointer as count");
         checkNotNull(message, "Received a null pointer as message");
+
+        checkArgument(count >= 0, "The count should be positive or zero");
 
         this.name = name;
         this.unit = unit;

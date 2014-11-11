@@ -58,6 +58,9 @@
 		<!-- Manifest data -->
 		<manifest.name>com/wandrell/tabletop/punkapocalyptic/core</manifest.name>
 		<!-- Dependencies versions -->
+		<jaxen.version>1.1.6</jaxen.version>
+		<jdom.version>2.0.5</jdom.version>
+		<mockito.version>1.9.5</mockito.version>
 		<slf4j.version>1.7.7</slf4j.version>
 		<tabletop.version>alpha</tabletop.version>
 		<testng.version>6.8.8</testng.version>
@@ -80,6 +83,27 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<!-- Jaxen -->
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>${jaxen.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<!-- JDom 2 -->
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+			<version>${jdom.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<!-- Mockito -->
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<!-- SLF4J API -->
 			<groupId>org.slf4j</groupId>
