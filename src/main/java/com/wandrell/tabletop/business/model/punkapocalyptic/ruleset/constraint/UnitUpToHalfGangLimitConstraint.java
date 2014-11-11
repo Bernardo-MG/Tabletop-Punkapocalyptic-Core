@@ -51,11 +51,6 @@ public final class UnitUpToHalfGangLimitConstraint implements GangConstraint {
     }
 
     @Override
-    public final String getName() {
-        return "up_to_half_points";
-    }
-
-    @Override
     public final int hashCode() {
         return Objects.hash(unit);
     }

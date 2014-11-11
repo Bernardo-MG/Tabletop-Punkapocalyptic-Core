@@ -14,21 +14,18 @@ public final class UnitUpToACountConstraint implements GangConstraint {
 
     private final Integer count;
     private final String  message;
-    private final String  name;
     private final String  unit;
 
-    public UnitUpToACountConstraint(final String name, final String unit,
-            final Integer count, final String message) {
+    public UnitUpToACountConstraint(final String unit, final Integer count,
+            final String message) {
         super();
 
-        checkNotNull(name, "Received a null pointer as name");
         checkNotNull(unit, "Received a null pointer as unit");
         checkNotNull(count, "Received a null pointer as count");
         checkNotNull(message, "Received a null pointer as message");
 
         checkArgument(count >= 0, "The count should be positive or zero");
 
-        this.name = name;
         this.unit = unit;
         this.count = count;
         this.message = message;
@@ -51,8 +48,7 @@ public final class UnitUpToACountConstraint implements GangConstraint {
         final UnitUpToACountConstraint other;
 
         other = (UnitUpToACountConstraint) obj;
-        return Objects.equals(name, other.name)
-                && Objects.equals(unit, other.unit)
+        return Objects.equals(unit, other.unit)
                 && Objects.equals(count, other.count);
     }
 
@@ -62,13 +58,8 @@ public final class UnitUpToACountConstraint implements GangConstraint {
     }
 
     @Override
-    public final String getName() {
-        return name;
-    }
-
-    @Override
     public final int hashCode() {
-        return Objects.hash(name, unit, count);
+        return Objects.hash(unit, count);
     }
 
     @Override
@@ -91,8 +82,8 @@ public final class UnitUpToACountConstraint implements GangConstraint {
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name)
-                .add("unit", unit).add("count", count).toString();
+        return MoreObjects.toStringHelper(this).add("unit", unit)
+                .add("count", count).toString();
     }
 
     private final Integer getCount() {

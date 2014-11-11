@@ -42,7 +42,7 @@ public final class ConstraintParameterFactory {
         for (final Collection<Object> values : valuesTable) {
             itrValues = values.iterator();
 
-            constraint = new UnitUpToACountConstraint("constraint",
+            constraint = new UnitUpToACountConstraint(
                     (String) itrValues.next(), (Integer) itrValues.next(),
                     "message");
 
