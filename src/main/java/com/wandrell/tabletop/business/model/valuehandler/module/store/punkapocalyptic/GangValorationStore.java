@@ -52,17 +52,6 @@ public final class GangValorationStore extends AbstractStoreModule {
         serviceRuleset = store.serviceRuleset;
     }
 
-    public GangValorationStore(final RulesetService service) {
-        super();
-
-        if (service == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as ruleset service");
-        }
-
-        serviceRuleset = service;
-    }
-
     @Override
     public final GangValorationStore createNewInstance() {
         return new GangValorationStore(this);

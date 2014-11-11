@@ -271,6 +271,8 @@ public final class DefaultUnit implements Unit {
 
     @Override
     public final void removeWeapon(final Weapon weapon) {
+        checkNotNull(armor, "Received a null pointer as weapon");
+
         getWeaponsModifiable().remove(weapon);
 
         weapon.removeStatusListener(getStatusListener());

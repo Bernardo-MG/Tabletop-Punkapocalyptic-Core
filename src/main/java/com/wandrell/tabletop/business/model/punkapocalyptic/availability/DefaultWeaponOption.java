@@ -3,6 +3,8 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.availability;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -11,7 +13,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.WeaponEnha
 
 public final class DefaultWeaponOption implements WeaponOption {
 
-    private final Collection<WeaponEnhancement> enhancements;
+    private final Collection<WeaponEnhancement> enhancements = new LinkedHashSet<>();
     private final Weapon                        weapon;
 
     public DefaultWeaponOption(final Weapon weapon,
@@ -23,7 +25,13 @@ public final class DefaultWeaponOption implements WeaponOption {
                 "Received a null pointer as weapon enhancements");
 
         this.weapon = weapon;
-        this.enhancements = enhancements;
+
+        for (final WeaponEnhancement enhancement : enhancements) {
+            checkNotNull(enhancement,
+                    "Received a null pointer as weapon enhancement");
+
+            this.enhancements.add(enhancement);
+        }
     }
 
     @Override
@@ -48,7 +56,7 @@ public final class DefaultWeaponOption implements WeaponOption {
 
     @Override
     public final Collection<WeaponEnhancement> getEnhancements() {
-        return enhancements;
+        return Collections.unmodifiableCollection(getEnhancementsModifiable());
     }
 
     @Override
@@ -65,6 +73,10 @@ public final class DefaultWeaponOption implements WeaponOption {
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("weapon", weapon)
                 .add("enhancements", enhancements).toString();
+    }
+
+    private final Collection<WeaponEnhancement> getEnhancementsModifiable() {
+        return enhancements;
     }
 
 }

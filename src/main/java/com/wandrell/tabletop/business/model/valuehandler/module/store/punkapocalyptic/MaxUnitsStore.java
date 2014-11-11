@@ -38,6 +38,8 @@ public final class MaxUnitsStore extends AbstractStoreModule {
     public MaxUnitsStore(final MaxUnitsStore store) {
         super();
 
+        checkNotNull(store, "Received a null pointer as store");
+
         gang = store.gang;
         serviceRuleset = store.serviceRuleset;
     }

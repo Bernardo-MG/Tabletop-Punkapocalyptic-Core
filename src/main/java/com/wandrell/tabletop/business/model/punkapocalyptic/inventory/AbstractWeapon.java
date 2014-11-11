@@ -161,10 +161,12 @@ public abstract class AbstractWeapon implements Weapon {
     public final void setRules(final Collection<SpecialRule> rules) {
         checkNotNull(rules, "Received a null pointer as rules");
 
+        getSpecialRulesModifiable().clear();
+
         for (final SpecialRule rule : rules) {
             checkNotNull(rule, "Received a null pointer as rule");
 
-            this.rules.add(rule);
+            getSpecialRulesModifiable().add(rule);
 
             if (rule instanceof WeaponModifierSpecialRule) {
                 ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
