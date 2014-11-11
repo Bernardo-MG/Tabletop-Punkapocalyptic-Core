@@ -154,6 +154,7 @@ public abstract class AbstractWeapon implements Weapon {
         getListeners().remove(StatusListener.class, listener);
     }
 
+    @Override
     public final void setRules(final Collection<SpecialRule> rules) {
         checkNotNull(rules, "Received a null pointer as rules");
 

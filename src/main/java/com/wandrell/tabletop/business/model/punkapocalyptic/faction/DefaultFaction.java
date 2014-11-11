@@ -46,6 +46,7 @@ public final class DefaultFaction implements Faction {
         this.name = name;
     }
 
+    @Override
     public final void addUnit(final FactionUnitAvailability unit) {
         getUnitsModifiable().add(unit);
     }
@@ -89,6 +90,7 @@ public final class DefaultFaction implements Faction {
         return Objects.hashCode(name);
     }
 
+    @Override
     public final void removeUnit(final FactionUnitAvailability unit) {
         getUnitsModifiable().remove(unit);
     }
