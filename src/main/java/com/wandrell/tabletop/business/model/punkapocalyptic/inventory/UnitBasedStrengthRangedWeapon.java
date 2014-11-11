@@ -8,19 +8,13 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.UnitDependant;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
 
-public final class KnivesRangedWeapon implements RangedWeapon, UnitDependant {
+public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
+        UnitDependant {
 
     private final RangedWeapon baseWeapon;
     private Unit               unit;
 
-    public KnivesRangedWeapon(final KnivesRangedWeapon weapon) {
-        super();
-
-        baseWeapon = weapon.baseWeapon.createNewInstance();
-        unit = weapon.unit;
-    }
-
-    public KnivesRangedWeapon(final String name, final Integer cost,
+    public UnitBasedStrengthRangedWeapon(final String name, final Integer cost,
             final RangedValue penetration, final RangedValue strength,
             final RangedValue distanceCM, final RangedValue distanceInches,
             final MeleeWeapon weaponMelee) {
@@ -28,6 +22,14 @@ public final class KnivesRangedWeapon implements RangedWeapon, UnitDependant {
 
         baseWeapon = new DefaultRangedWeapon(name, cost, penetration, strength,
                 distanceCM, distanceInches, weaponMelee);
+    }
+
+    public UnitBasedStrengthRangedWeapon(
+            final UnitBasedStrengthRangedWeapon weapon) {
+        super();
+
+        baseWeapon = weapon.baseWeapon.createNewInstance();
+        unit = weapon.unit;
     }
 
     @Override
@@ -41,8 +43,8 @@ public final class KnivesRangedWeapon implements RangedWeapon, UnitDependant {
     }
 
     @Override
-    public final KnivesRangedWeapon createNewInstance() {
-        return new KnivesRangedWeapon(this);
+    public final UnitBasedStrengthRangedWeapon createNewInstance() {
+        return new UnitBasedStrengthRangedWeapon(this);
     }
 
     @Override
