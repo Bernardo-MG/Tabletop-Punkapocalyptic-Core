@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public final class FirearmWeaponEnhancement implements WeaponEnhancement {
 
     private final Integer cost;
@@ -7,6 +9,9 @@ public final class FirearmWeaponEnhancement implements WeaponEnhancement {
 
     public FirearmWeaponEnhancement(final String name, final Integer cost) {
         super();
+
+        checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(cost, "Received a null pointer as cost");
 
         this.name = name;
         this.cost = cost;
@@ -25,6 +30,8 @@ public final class FirearmWeaponEnhancement implements WeaponEnhancement {
     @Override
     public final Boolean isValid(final Weapon weapon) {
         final Boolean valid;
+
+        checkNotNull(weapon, "Received a null pointer as weapon");
 
         if ((weapon instanceof RangedWeapon)
                 && (((RangedWeapon) weapon).isFirearm())) {

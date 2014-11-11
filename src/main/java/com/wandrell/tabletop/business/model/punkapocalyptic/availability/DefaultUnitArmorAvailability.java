@@ -32,17 +32,6 @@ public final class DefaultUnitArmorAvailability implements
         }
     }
 
-    public DefaultUnitArmorAvailability(
-            final DefaultUnitArmorAvailability availability) {
-        super();
-
-        checkNotNull(availability,
-                "Received a null pointer as the availability");
-
-        this.initialArmor = availability.initialArmor;
-        armorOptions.addAll(availability.armorOptions);
-    }
-
     @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {

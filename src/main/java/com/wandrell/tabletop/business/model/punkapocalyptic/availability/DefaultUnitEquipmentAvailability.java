@@ -14,19 +14,23 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.WeaponEnha
 public final class DefaultUnitEquipmentAvailability implements
         UnitEquipmentAvailability {
 
-    private final Collection<Equipment>         equipment          = new LinkedHashSet<>();
-    private final Collection<WeaponEnhancement> weaponEnhancements = new LinkedHashSet<>();
+    private final Collection<WeaponEnhancement> enhancements = new LinkedHashSet<>();
+    private final Collection<Equipment>         equipment    = new LinkedHashSet<>();
 
     public DefaultUnitEquipmentAvailability(
-            final Collection<WeaponEnhancement> weaponEnhancements,
+            final Collection<WeaponEnhancement> enhancements,
             final Collection<Equipment> equipment) {
         super();
 
-        for (final WeaponEnhancement enhancement : weaponEnhancements) {
+        checkNotNull(enhancements,
+                "Received a null pointer as weapon enhancements");
+        checkNotNull(equipment, "Received a null pointer as equipment");
+
+        for (final WeaponEnhancement enhancement : enhancements) {
             checkNotNull(enhancement,
                     "Received a null pointer as weapon enhancement");
 
-            this.weaponEnhancements.add(enhancement);
+            this.enhancements.add(enhancement);
         }
 
         for (final Equipment equip : equipment) {
@@ -55,7 +59,7 @@ public final class DefaultUnitEquipmentAvailability implements
 
         other = (DefaultUnitEquipmentAvailability) obj;
         return Objects.equal(equipment, other.equipment)
-                && Objects.equal(weaponEnhancements, other.weaponEnhancements);
+                && Objects.equal(enhancements, other.enhancements);
     }
 
     @Override
@@ -72,13 +76,13 @@ public final class DefaultUnitEquipmentAvailability implements
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(equipment, weaponEnhancements);
+        return Objects.hashCode(equipment, enhancements);
     }
 
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("equipment", equipment)
-                .add("enhancement", weaponEnhancements).toString();
+                .add("enhancement", enhancements).toString();
     }
 
     private final Collection<Equipment> getEquipmentOptionsModifiable() {
@@ -87,7 +91,7 @@ public final class DefaultUnitEquipmentAvailability implements
 
     private final Collection<WeaponEnhancement>
             getWeaponEnhancementsModifiable() {
-        return weaponEnhancements;
+        return enhancements;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.availability;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 
 import com.google.common.base.MoreObjects;
@@ -15,6 +17,10 @@ public final class DefaultWeaponOption implements WeaponOption {
     public DefaultWeaponOption(final Weapon weapon,
             final Collection<WeaponEnhancement> enhancements) {
         super();
+
+        checkNotNull(weapon, "Received a null pointer as weapon");
+        checkNotNull(enhancements,
+                "Received a null pointer as weapon enhancements");
 
         this.weapon = weapon;
         this.enhancements = enhancements;

@@ -48,9 +48,12 @@ public final class DefaultFaction implements Faction {
 
     @Override
     public final void addUnit(final FactionUnitAvailability unit) {
+        checkNotNull(unit, "Received a null pointer as unit availability");
+
         getUnitsModifiable().add(unit);
     }
 
+    @Override
     public final void clearUnits() {
         getUnitsModifiable().clear();
     }

@@ -36,19 +36,6 @@ public final class DefaultUnitWeaponAvailability implements
 
     }
 
-    public DefaultUnitWeaponAvailability(
-            final DefaultUnitWeaponAvailability availability) {
-        super();
-
-        checkNotNull(availability,
-                "Received a null pointer as weapon availability");
-
-        weaponOptions.addAll(availability.weaponOptions);
-
-        minWeapons = availability.minWeapons;
-        maxWeapons = availability.maxWeapons;
-    }
-
     @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {

@@ -73,6 +73,9 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final void addEnhancement(final WeaponEnhancement enhancement) {
+        checkNotNull(enhancement,
+                "Received a null pointer as weapon enhancement");
+
         getEnhancementsModifiable().add(enhancement);
 
         fireStatusChangedEvent(new EventObject(this));

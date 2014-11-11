@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
@@ -27,6 +29,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     public UnitBasedStrengthRangedWeapon(
             final UnitBasedStrengthRangedWeapon weapon) {
         super();
+
+        checkNotNull(weapon, "Received a null pointer as weapon");
 
         baseWeapon = weapon.baseWeapon.createNewInstance();
         unit = weapon.unit;
@@ -154,6 +158,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
     @Override
     public final void setUnit(final Unit unit) {
+        checkNotNull(unit, "Received a null pointer as unit");
+
         this.unit = unit;
     }
 

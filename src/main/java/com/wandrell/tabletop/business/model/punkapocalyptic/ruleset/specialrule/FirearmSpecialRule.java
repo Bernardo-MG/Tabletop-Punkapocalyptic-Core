@@ -23,6 +23,8 @@ public final class FirearmSpecialRule implements SpecialRule,
 
     @Override
     public final void applyToWeapon(final Weapon weapon) {
+        checkNotNull(weapon, "Received a null pointer as weapon");
+
         if (weapon instanceof RangedWeapon) {
             ((RangedWeapon) weapon).setFirearm(true);
         }

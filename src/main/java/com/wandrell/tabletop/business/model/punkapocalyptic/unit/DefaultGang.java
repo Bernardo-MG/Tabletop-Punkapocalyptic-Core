@@ -162,11 +162,6 @@ public final class DefaultGang implements Gang {
 
     @Override
     public final void removeGangListener(final GangListener listener) {
-        if (listener == null) {
-            throw new NullPointerException(
-                    "Received a null pointer as listener");
-        }
-
         getListeners().remove(GangListener.class, listener);
     }
 
@@ -174,6 +169,8 @@ public final class DefaultGang implements Gang {
     public final void removeUnit(final Unit unit) {
         final Iterator<Unit> itr;
         Boolean found;
+
+        checkNotNull(unit, "Received a null pointer as unit");
 
         itr = getUnitsModifiable().iterator();
         found = false;

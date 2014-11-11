@@ -127,6 +127,8 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     @Override
     public final void setFirearm(final Boolean firearm) {
+        checkNotNull(firearm, "Received a null pointer as firearm flag");
+
         this.firearm = firearm;
     }
 

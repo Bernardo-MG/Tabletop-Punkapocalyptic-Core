@@ -28,6 +28,8 @@ public final class DefaultSpecialRule implements SpecialRule {
     public DefaultSpecialRule(final DefaultSpecialRule rule) {
         super();
 
+        checkNotNull(rule, "Received a null pointer as rule");
+
         name = rule.name;
     }
 
