@@ -9,23 +9,12 @@ import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 
-public final class RangedArmorWrapper implements RangedArmor {
+public final class DefaultRangedArmor implements RangedArmor {
 
     private final Armor       armor;
     private final RangedValue rangedArmor;
 
-    public RangedArmorWrapper(final Armor armor, final RangedValue rangedArmor) {
-        super();
-
-        checkNotNull(armor, "Received a null pointer as armor");
-        checkNotNull(rangedArmor,
-                "Received a null pointer as ranged armor value");
-
-        this.armor = armor;
-        this.rangedArmor = rangedArmor;
-    }
-
-    public RangedArmorWrapper(final RangedArmorWrapper armor) {
+    public DefaultRangedArmor(final DefaultRangedArmor armor) {
         super();
 
         checkNotNull(armor, "Received a null pointer as armor");
@@ -34,9 +23,20 @@ public final class RangedArmorWrapper implements RangedArmor {
         rangedArmor = armor.rangedArmor;
     }
 
+    public DefaultRangedArmor(final String name, final Integer armor,
+            final RangedValue rangedArmor, final Collection<SpecialRule> rules) {
+        super();
+
+        checkNotNull(rangedArmor,
+                "Received a null pointer as ranged armor value");
+
+        this.armor = new DefaultArmor(name, armor, rules);
+        this.rangedArmor = rangedArmor;
+    }
+
     @Override
-    public final RangedArmorWrapper createNewInstance() {
-        return new RangedArmorWrapper(this);
+    public final DefaultRangedArmor createNewInstance() {
+        return new DefaultRangedArmor(this);
     }
 
     @Override
@@ -53,25 +53,25 @@ public final class RangedArmorWrapper implements RangedArmor {
             return false;
         }
 
-        final RangedArmorWrapper other;
+        final DefaultRangedArmor other;
 
-        other = (RangedArmorWrapper) obj;
+        other = (DefaultRangedArmor) obj;
         return Objects.equals(armor, other.armor);
     }
 
     @Override
     public final Integer getArmor() {
-        return getWrappedArmor().getArmor();
+        return getBaseArmor().getArmor();
     }
 
     @Override
     public final Integer getCost() {
-        return getWrappedArmor().getCost();
+        return getBaseArmor().getCost();
     }
 
     @Override
     public final String getName() {
-        return getWrappedArmor().getName();
+        return getBaseArmor().getName();
     }
 
     @Override
@@ -81,7 +81,7 @@ public final class RangedArmorWrapper implements RangedArmor {
 
     @Override
     public final Collection<SpecialRule> getSpecialRules() {
-        return getWrappedArmor().getSpecialRules();
+        return getBaseArmor().getSpecialRules();
     }
 
     @Override
@@ -93,7 +93,7 @@ public final class RangedArmorWrapper implements RangedArmor {
     public final void setCost(final Integer cost) {
         checkNotNull(armor, "Received a null pointer as cost");
 
-        getWrappedArmor().setCost(cost);
+        getBaseArmor().setCost(cost);
     }
 
     @Override
@@ -102,7 +102,7 @@ public final class RangedArmorWrapper implements RangedArmor {
                 .toString();
     }
 
-    private final Armor getWrappedArmor() {
+    private final Armor getBaseArmor() {
         return armor;
     }
 
