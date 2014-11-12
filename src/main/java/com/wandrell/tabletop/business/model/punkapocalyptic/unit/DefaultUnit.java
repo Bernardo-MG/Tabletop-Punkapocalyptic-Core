@@ -262,6 +262,8 @@ public final class DefaultUnit implements Unit {
     @Override
     public final void removeEquipment(final Equipment equipment) {
         getEquipmentModifiable().remove(equipment);
+
+        fireStatusChangedEvent(new EventObject(this));
     }
 
     @Override
