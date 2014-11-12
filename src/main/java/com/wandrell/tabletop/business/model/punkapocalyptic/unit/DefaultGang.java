@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
@@ -71,7 +72,7 @@ public final class DefaultGang implements Gang {
 
                     @Override
                     public final void valueChanged(final ValueHandlerEvent evt) {
-                        fireStatusChangedEvent(new EventObject(this));
+                        fireValorationChangedEvent(new EventObject(this));
                     }
 
                 });
@@ -97,7 +98,7 @@ public final class DefaultGang implements Gang {
 
                     @Override
                     public final void valueChanged(final ValueHandlerEvent evt) {
-                        fireStatusChangedEvent(new EventObject(this));
+                        fireValorationChangedEvent(new EventObject(this));
                     }
 
                 });
@@ -118,7 +119,14 @@ public final class DefaultGang implements Gang {
 
         fireUnitAddedEvent(new UnitEvent(this, unit));
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
+    }
+
+    @Override
+    public final void addValorationListener(final ValorationListener listener) {
+        checkNotNull(listener, "Received a null pointer as listener");
+
+        getListeners().add(ValorationListener.class, listener);
     }
 
     @Override
@@ -133,7 +141,7 @@ public final class DefaultGang implements Gang {
             fireUnitRemovedEvent(new UnitEvent(this, unit));
         }
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -181,25 +189,22 @@ public final class DefaultGang implements Gang {
             if (found) {
                 itr.remove();
                 fireUnitRemovedEvent(new UnitEvent(this, unit));
-                fireStatusChangedEvent(new EventObject(this));
+                fireValorationChangedEvent(new EventObject(this));
             }
         }
 
     }
 
     @Override
+    public final void
+            removeValorationListener(final ValorationListener listener) {
+        getListeners().remove(ValorationListener.class, listener);
+    }
+
+    @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("faction", faction)
                 .add("units", units).toString();
-    }
-
-    private final void fireStatusChangedEvent(final EventObject evt) {
-        final GangListener[] listnrs;
-
-        listnrs = getListeners().getListeners(GangListener.class);
-        for (final GangListener l : listnrs) {
-            l.statusChanged(evt);
-        }
     }
 
     private final void fireUnitAddedEvent(final UnitEvent evt) {
@@ -217,6 +222,15 @@ public final class DefaultGang implements Gang {
         listnrs = getListeners().getListeners(GangListener.class);
         for (final GangListener l : listnrs) {
             l.unitRemoved(evt);
+        }
+    }
+
+    private final void fireValorationChangedEvent(final EventObject evt) {
+        final ValorationListener[] listnrs;
+
+        listnrs = getListeners().getListeners(ValorationListener.class);
+        for (final ValorationListener l : listnrs) {
+            l.valorationChanged(evt);
         }
     }
 

@@ -4,9 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.EventObject;
 
+import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListenerAdapter;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.AbstractStoreModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
@@ -14,16 +13,16 @@ import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
 public final class GangValorationStore extends AbstractStoreModule {
 
-    private Gang                      gang;
-    private final GangListenerAdapter listener;
-    private final RulesetService      serviceRuleset;
+    private Gang                     gang;
+    private final ValorationListener listener;
+    private final RulesetService     serviceRuleset;
 
     {
         final StoreModule source = this;
-        listener = new GangListenerAdapter() {
+        listener = new ValorationListener() {
 
             @Override
-            public final void statusChanged(final EventObject event) {
+            public final void valorationChanged(final EventObject event) {
                 fireValueChangedEvent(new ValueHandlerEvent(source,
                         source.getValue(), source.getValue()));
             }
@@ -40,7 +39,7 @@ public final class GangValorationStore extends AbstractStoreModule {
         this.gang = gang;
         serviceRuleset = service;
 
-        gang.addGangListener(getListener());
+        gang.addValorationListener(getListener());
     }
 
     public GangValorationStore(final GangValorationStore store) {
@@ -67,14 +66,14 @@ public final class GangValorationStore extends AbstractStoreModule {
 
         this.gang = gang;
 
-        gang.addGangListener(getListener());
+        gang.addValorationListener(getListener());
     }
 
     private final Gang getGang() {
         return gang;
     }
 
-    private final GangListener getListener() {
+    private final ValorationListener getListener() {
         return listener;
     }
 
