@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.EventObject;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.ValorationListener;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.AbstractStoreModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
@@ -13,16 +13,16 @@ import com.wandrell.tabletop.business.service.punkapocalyptic.RulesetService;
 
 public final class UnitValorationStore extends AbstractStoreModule {
 
-    private final StatusListener listener;
-    private final RulesetService serviceRuleset;
-    private Unit                 unit;
+    private final ValorationListener listener;
+    private final RulesetService     serviceRuleset;
+    private Unit                     unit;
 
     {
         final StoreModule source = this;
-        listener = new StatusListener() {
+        listener = new ValorationListener() {
 
             @Override
-            public final void statusChanged(final EventObject event) {
+            public final void valorationChanged(final EventObject event) {
                 fireValueChangedEvent(new ValueHandlerEvent(source,
                         source.getValue(), source.getValue()));
             }
@@ -47,7 +47,7 @@ public final class UnitValorationStore extends AbstractStoreModule {
         this.unit = unit;
         serviceRuleset = service;
 
-        unit.addStatusListener(getListener());
+        unit.addValorationListener(getListener());
     }
 
     public UnitValorationStore(final UnitValorationStore store) {
@@ -74,10 +74,10 @@ public final class UnitValorationStore extends AbstractStoreModule {
 
         this.unit = unit;
 
-        unit.addStatusListener(getListener());
+        unit.addValorationListener(getListener());
     }
 
-    private final StatusListener getListener() {
+    private final ValorationListener getListener() {
         return listener;
     }
 

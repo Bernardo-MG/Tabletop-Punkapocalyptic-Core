@@ -30,7 +30,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnarmoredArmor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.ValorationListener;
 import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
@@ -44,7 +44,7 @@ public final class DefaultUnit implements Unit {
     private final Integer                 cost;
     private final Collection<Equipment>   equipment = new LinkedHashSet<>();
     private final EventListenerList       listeners = new EventListenerList();
-    private final StatusListener          listenerStatus;
+    private final ValorationListener      listenerStatus;
     private final String                  name;
     private final Integer                 precision;
     private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
@@ -55,11 +55,11 @@ public final class DefaultUnit implements Unit {
     private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
 
     {
-        listenerStatus = new StatusListener() {
+        listenerStatus = new ValorationListener() {
 
             @Override
-            public void statusChanged(final EventObject e) {
-                fireStatusChangedEvent(new EventObject(this));
+            public void valorationChanged(final EventObject e) {
+                fireValorationChangedEvent(new EventObject(this));
             }
 
         };
@@ -149,14 +149,14 @@ public final class DefaultUnit implements Unit {
 
         getEquipmentModifiable().add(equipment);
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
-    public final void addStatusListener(final StatusListener listener) {
+    public final void addValorationListener(final ValorationListener listener) {
         checkNotNull(listener, "Received a null pointer as listener");
 
-        getListeners().add(StatusListener.class, listener);
+        getListeners().add(ValorationListener.class, listener);
     }
 
     @Override
@@ -165,23 +165,23 @@ public final class DefaultUnit implements Unit {
 
         getWeaponsModifiable().add(weapon);
 
-        weapon.addStatusListener(getStatusListener());
+        weapon.addValorationListener(getStatusListener());
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
     public final void clearEquipment() {
         getEquipmentModifiable().clear();
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
     public final void clearWeapons() {
         getWeaponsModifiable().clear();
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -263,12 +263,13 @@ public final class DefaultUnit implements Unit {
     public final void removeEquipment(final Equipment equipment) {
         getEquipmentModifiable().remove(equipment);
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
-    public final void removeStatusListener(final StatusListener listener) {
-        getListeners().remove(StatusListener.class, listener);
+    public final void
+            removeValorationListener(final ValorationListener listener) {
+        getListeners().remove(ValorationListener.class, listener);
     }
 
     @Override
@@ -277,9 +278,9 @@ public final class DefaultUnit implements Unit {
 
         getWeaponsModifiable().remove(weapon);
 
-        weapon.removeStatusListener(getStatusListener());
+        weapon.removeValorationListener(getStatusListener());
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -288,7 +289,7 @@ public final class DefaultUnit implements Unit {
 
         this.armor = armor;
 
-        fireStatusChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -296,12 +297,12 @@ public final class DefaultUnit implements Unit {
         return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
-    private final void fireStatusChangedEvent(final EventObject evt) {
-        final StatusListener[] listnrs;
+    private final void fireValorationChangedEvent(final EventObject evt) {
+        final ValorationListener[] listnrs;
 
-        listnrs = getListeners().getListeners(StatusListener.class);
-        for (final StatusListener l : listnrs) {
-            l.statusChanged(evt);
+        listnrs = getListeners().getListeners(ValorationListener.class);
+        for (final ValorationListener l : listnrs) {
+            l.valorationChanged(evt);
         }
     }
 
@@ -317,7 +318,7 @@ public final class DefaultUnit implements Unit {
         return rules;
     }
 
-    private final StatusListener getStatusListener() {
+    private final ValorationListener getStatusListener() {
         return listenerStatus;
     }
 

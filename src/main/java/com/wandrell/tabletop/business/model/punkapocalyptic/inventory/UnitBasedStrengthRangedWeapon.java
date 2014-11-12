@@ -8,7 +8,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.UnitDependant;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.StatusListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.ValorationListener;
 
 public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
         UnitDependant {
@@ -42,8 +42,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     }
 
     @Override
-    public final void addStatusListener(final StatusListener listener) {
-        getBaseWeapon().addStatusListener(listener);
+    public final void addValorationListener(final ValorationListener listener) {
+        getBaseWeapon().addValorationListener(listener);
     }
 
     @Override
@@ -132,8 +132,9 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     }
 
     @Override
-    public final void removeStatusListener(final StatusListener listener) {
-        getBaseWeapon().removeStatusListener(listener);
+    public final void
+            removeValorationListener(final ValorationListener listener) {
+        getBaseWeapon().removeValorationListener(listener);
     }
 
     @Override
