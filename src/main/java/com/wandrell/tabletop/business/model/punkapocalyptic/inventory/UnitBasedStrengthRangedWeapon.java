@@ -5,10 +5,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Collection;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
+import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.UnitDependant;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.ValorationListener;
 
 public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
         UnitDependant {
