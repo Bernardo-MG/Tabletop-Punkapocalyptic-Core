@@ -52,7 +52,7 @@ public final class UnitUpToHalfGangLimitConstraint implements GangConstraint {
 
     @Override
     public final int hashCode() {
-        return Objects.hash(unit);
+        return Objects.hash(getClass().getName(), unit);
     }
 
     @Override

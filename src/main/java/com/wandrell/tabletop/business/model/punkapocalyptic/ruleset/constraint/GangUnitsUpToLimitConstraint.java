@@ -2,6 +2,8 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Objects;
+
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Gang;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 
@@ -22,8 +24,25 @@ public final class GangUnitsUpToLimitConstraint implements GangConstraint {
     }
 
     @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        GangUnitsUpToLimitConstraint other = (GangUnitsUpToLimitConstraint) obj;
+        return Objects.equals(unitsLimit, other.unitsLimit);
+    }
+
+    @Override
     public final String getErrorMessage() {
         return message;
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(getClass().getName(), unitsLimit);
     }
 
     @Override

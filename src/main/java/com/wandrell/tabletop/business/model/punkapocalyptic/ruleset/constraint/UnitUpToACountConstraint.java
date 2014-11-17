@@ -59,7 +59,7 @@ public final class UnitUpToACountConstraint implements GangConstraint {
 
     @Override
     public final int hashCode() {
-        return Objects.hash(unit, count);
+        return Objects.hash(getClass().getName(), unit, count);
     }
 
     @Override
