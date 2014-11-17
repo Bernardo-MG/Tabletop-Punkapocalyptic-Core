@@ -8,17 +8,17 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.procedure.constraint.punkapocalyptic.GangConstraint;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
+import com.wandrell.tabletop.business.procedure.ProcedureConstraint;
 
 public final class DefaultFactionUnitAvailability implements
         FactionUnitAvailability {
 
-    private final Collection<GangConstraint> constraints = new LinkedHashSet<>();
-    private final Unit                       unit;
+    private final Collection<ProcedureConstraint> constraints = new LinkedHashSet<>();
+    private final Unit                            unit;
 
     public DefaultFactionUnitAvailability(final Unit unit,
-            final Collection<GangConstraint> constraints) {
+            final Collection<ProcedureConstraint> constraints) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
@@ -26,7 +26,7 @@ public final class DefaultFactionUnitAvailability implements
 
         this.unit = unit;
 
-        for (final GangConstraint constraint : constraints) {
+        for (final ProcedureConstraint constraint : constraints) {
             checkNotNull(constraint, "Received a null pointer as a constraint");
 
             this.constraints.add(constraint);
@@ -55,7 +55,7 @@ public final class DefaultFactionUnitAvailability implements
     }
 
     @Override
-    public final Collection<GangConstraint> getConstraints() {
+    public final Collection<ProcedureConstraint> getConstraints() {
         return Collections.unmodifiableCollection(getConstraintsModifiable());
     }
 
@@ -75,7 +75,7 @@ public final class DefaultFactionUnitAvailability implements
                 .add("constraints", constraints).toString();
     }
 
-    private final Collection<GangConstraint> getConstraintsModifiable() {
+    private final Collection<ProcedureConstraint> getConstraintsModifiable() {
         return constraints;
     }
 
