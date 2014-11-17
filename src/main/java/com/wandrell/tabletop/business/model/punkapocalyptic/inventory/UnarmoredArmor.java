@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 
 public final class UnarmoredArmor implements Armor {
 

@@ -1,32 +1,38 @@
-package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.MeleeWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.RangedWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 
-public final class FirearmSpecialRule implements SpecialRule,
+public final class TwoHandedSpecialRule implements SpecialRule,
         WeaponModifierSpecialRule {
 
     private final SpecialRule rule;
+    private final MeleeWeapon weapon;
 
-    public FirearmSpecialRule(final String name) {
+    public TwoHandedSpecialRule(final String name, final MeleeWeapon weapon) {
         super();
 
         checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(weapon, "Received a null pointer as weapon");
 
         rule = new DefaultSpecialRule(name);
+        this.weapon = weapon;
     }
 
     @Override
     public final void applyToWeapon(final Weapon weapon) {
         checkNotNull(weapon, "Received a null pointer as weapon");
 
+        weapon.setTwoHanded(true);
+
         if (weapon instanceof RangedWeapon) {
-            ((RangedWeapon) weapon).setFirearm(true);
+            ((RangedWeapon) weapon).setMeleeEquivalent(getEquivalentWeapon());
         }
     }
 
@@ -44,9 +50,9 @@ public final class FirearmSpecialRule implements SpecialRule,
             return false;
         }
 
-        final FirearmSpecialRule other;
+        final TwoHandedSpecialRule other;
 
-        other = (FirearmSpecialRule) obj;
+        other = (TwoHandedSpecialRule) obj;
         return Objects.equals(rule, other.rule);
     }
 
@@ -67,6 +73,10 @@ public final class FirearmSpecialRule implements SpecialRule,
 
     private final SpecialRule getBaseRule() {
         return rule;
+    }
+
+    private final MeleeWeapon getEquivalentWeapon() {
+        return weapon;
     }
 
 }

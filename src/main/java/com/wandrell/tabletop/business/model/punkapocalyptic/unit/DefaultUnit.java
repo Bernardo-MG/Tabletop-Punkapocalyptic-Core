@@ -30,7 +30,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnarmoredArmor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.UnitAware;

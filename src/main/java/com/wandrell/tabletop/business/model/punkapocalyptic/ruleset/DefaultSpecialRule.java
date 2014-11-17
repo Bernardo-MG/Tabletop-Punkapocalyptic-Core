@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule;
+package com.wandrell.tabletop.business.model.punkapocalyptic.ruleset;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

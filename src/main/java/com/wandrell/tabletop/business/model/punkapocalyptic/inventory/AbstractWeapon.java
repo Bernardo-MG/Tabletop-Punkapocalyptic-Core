@@ -28,8 +28,8 @@ import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.WeaponModifierSpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.WeaponModifierSpecialRule;
 
 public abstract class AbstractWeapon implements Weapon {
 

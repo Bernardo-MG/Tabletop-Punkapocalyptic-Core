@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 
 public final class DefaultRangedArmor implements RangedArmor {
 

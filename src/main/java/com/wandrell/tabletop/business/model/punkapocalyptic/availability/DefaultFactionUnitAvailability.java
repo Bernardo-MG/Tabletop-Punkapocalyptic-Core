@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.constraint.GangConstraint;
+import com.wandrell.tabletop.business.model.procedure.constraint.punkapocalyptic.GangConstraint;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 
 public final class DefaultFactionUnitAvailability implements
