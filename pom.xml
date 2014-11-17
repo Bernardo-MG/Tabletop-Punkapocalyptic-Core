@@ -124,12 +124,6 @@
 			<version>${tabletop.version}</version>
 		</dependency>
 		<dependency>
-			<!-- Tabletop's Framework API -->
-			<groupId>com.wandrell.tabletop</groupId>
-			<artifactId>tabletop-punkapocalyptic-framework-api</artifactId>
-			<version>${tabletop.version}</version>
-		</dependency>
-		<dependency>
 			<!-- Tabletop's Punkapocalyptic API -->
 			<groupId>com.wandrell.tabletop</groupId>
 			<artifactId>tabletop-punkapocalyptic-api</artifactId>

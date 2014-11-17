@@ -33,7 +33,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.specialrule.SpecialRule;
 import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.UnitValorationStore;
+import com.wandrell.tabletop.business.util.tag.punkapocalyptic.UnitAware;
 
 public final class DefaultUnit implements Unit {
 
@@ -97,8 +97,9 @@ public final class DefaultUnit implements Unit {
         }
 
         valoration = unit.valoration.createNewInstance();
-        ((UnitValorationStore) ((ModularDerivedValueHandler) valoration)
-                .getStore()).setUnit(this);
+        // TODO: Do in another way
+        ((UnitAware) ((ModularDerivedValueHandler) valoration).getStore())
+                .setUnit(this);
     }
 
     public DefaultUnit(final String name, final Integer actions,

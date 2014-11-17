@@ -40,8 +40,8 @@ import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListe
 import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
 import com.wandrell.tabletop.business.model.valuehandler.module.interval.DefaultIntervalModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.DefaultStore;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.GangValorationStore;
 import com.wandrell.tabletop.business.model.valuehandler.module.validator.IntervalValidator;
+import com.wandrell.tabletop.business.util.tag.punkapocalyptic.GangAware;
 
 public final class DefaultGang implements Gang {
 
@@ -64,8 +64,9 @@ public final class DefaultGang implements Gang {
         }
 
         valoration = gang.valoration.createNewInstance();
-        ((GangValorationStore) ((ModularDerivedValueHandler) valoration)
-                .getStore()).setGang(this);
+        // TODO: Do in another way
+        ((GangAware) ((ModularDerivedValueHandler) valoration).getStore())
+                .setGang(this);
 
         ((AbstractValueHandler) bullets)
                 .addValueEventListener(new ValueHandlerListener() {
