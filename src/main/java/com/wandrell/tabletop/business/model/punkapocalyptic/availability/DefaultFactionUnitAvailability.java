@@ -9,16 +9,16 @@ import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.procedure.ProcedureConstraint;
+import com.wandrell.tabletop.business.procedure.Constraint;
 
 public final class DefaultFactionUnitAvailability implements
         FactionUnitAvailability {
 
-    private final Collection<ProcedureConstraint> constraints = new LinkedHashSet<>();
-    private final Unit                            unit;
+    private final Collection<Constraint> constraints = new LinkedHashSet<>();
+    private final Unit                   unit;
 
     public DefaultFactionUnitAvailability(final Unit unit,
-            final Collection<ProcedureConstraint> constraints) {
+            final Collection<Constraint> constraints) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
@@ -26,7 +26,7 @@ public final class DefaultFactionUnitAvailability implements
 
         this.unit = unit;
 
-        for (final ProcedureConstraint constraint : constraints) {
+        for (final Constraint constraint : constraints) {
             checkNotNull(constraint, "Received a null pointer as a constraint");
 
             this.constraints.add(constraint);
@@ -55,7 +55,7 @@ public final class DefaultFactionUnitAvailability implements
     }
 
     @Override
-    public final Collection<ProcedureConstraint> getConstraints() {
+    public final Collection<Constraint> getConstraints() {
         return Collections.unmodifiableCollection(getConstraintsModifiable());
     }
 
@@ -75,7 +75,7 @@ public final class DefaultFactionUnitAvailability implements
                 .add("constraints", constraints).toString();
     }
 
-    private final Collection<ProcedureConstraint> getConstraintsModifiable() {
+    private final Collection<Constraint> getConstraintsModifiable() {
         return constraints;
     }
 
