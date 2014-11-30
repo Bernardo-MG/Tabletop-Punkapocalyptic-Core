@@ -148,8 +148,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     }
 
     @Override
-    public final void setRules(final Collection<SpecialRule> rules) {
-        getBaseWeapon().setRules(rules);
+    public final void setSpecialRules(final Collection<SpecialRule> rules) {
+        getBaseWeapon().setSpecialRules(rules);
     }
 
     @Override

@@ -159,7 +159,7 @@ public abstract class AbstractWeapon implements Weapon {
     }
 
     @Override
-    public final void setRules(final Collection<SpecialRule> rules) {
+    public final void setSpecialRules(final Collection<SpecialRule> rules) {
         checkNotNull(rules, "Received a null pointer as rules");
 
         getSpecialRulesModifiable().clear();
