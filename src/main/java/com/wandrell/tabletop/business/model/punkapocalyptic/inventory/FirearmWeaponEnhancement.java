@@ -2,6 +2,8 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.MoreObjects;
+
 public final class FirearmWeaponEnhancement implements WeaponEnhancement {
 
     private final Integer cost;
@@ -41,6 +43,12 @@ public final class FirearmWeaponEnhancement implements WeaponEnhancement {
         }
 
         return valid;
+    }
+
+    @Override
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("name", name)
+                .add("cost", cost).toString();
     }
 
 }
