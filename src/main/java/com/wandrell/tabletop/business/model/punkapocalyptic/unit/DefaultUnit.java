@@ -21,14 +21,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
+import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.DefaultArmor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnarmoredArmor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
@@ -39,7 +40,9 @@ public final class DefaultUnit implements Unit {
 
     private final Integer                 actions;
     private final Integer                 agility;
-    private Armor                         armor     = new UnarmoredArmor();
+    private Armor                         armor     = new DefaultArmor(
+                                                            "unarmored", 0,
+                                                            new LinkedList<>());
     private final Integer                 combat;
     private final Integer                 cost;
     private final Collection<Equipment>   equipment = new LinkedHashSet<>();
