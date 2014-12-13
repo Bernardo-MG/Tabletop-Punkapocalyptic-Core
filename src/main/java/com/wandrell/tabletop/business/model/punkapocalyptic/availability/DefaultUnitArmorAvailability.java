@@ -21,7 +21,6 @@ public final class DefaultUnitArmorAvailability implements
         super();
 
         checkNotNull(armorOptions, "Received a null pointer as armor options");
-        checkNotNull(initialArmor, "Received a null pointer as initial armor");
 
         this.initialArmor = initialArmor;
 
