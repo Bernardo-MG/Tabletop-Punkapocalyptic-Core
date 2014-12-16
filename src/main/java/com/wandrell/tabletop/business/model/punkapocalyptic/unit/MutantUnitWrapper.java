@@ -4,17 +4,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EventObject;
 import java.util.LinkedHashSet;
+
+import javax.swing.event.EventListenerList;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.util.tag.punkapocalyptic.UnitAware;
 
 public final class MutantUnitWrapper implements MutantUnit {
 
+    private final EventListenerList    listeners = new EventListenerList();
     private final Collection<Mutation> mutations = new LinkedHashSet<>();
     private final Unit                 unit;
 
@@ -24,6 +30,18 @@ public final class MutantUnitWrapper implements MutantUnit {
         checkNotNull(unit, "Received a null pointer as unit");
 
         this.unit = unit.unit.createNewInstance();
+
+        this.unit.addValorationListener(new ValorationListener() {
+
+            @Override
+            public final void valorationChanged(final EventObject e) {
+                fireValorationChangedEvent(new EventObject(this));
+            }
+
+        });
+
+        ((UnitAware) ((ModularDerivedValueHandler) this.unit.getValoration())
+                .getStore()).setUnit(this);
     }
 
     public MutantUnitWrapper(final Unit unit) {
@@ -32,6 +50,18 @@ public final class MutantUnitWrapper implements MutantUnit {
         checkNotNull(unit, "Received a null pointer as unit");
 
         this.unit = unit;
+
+        this.unit.addValorationListener(new ValorationListener() {
+
+            @Override
+            public final void valorationChanged(final EventObject e) {
+                fireValorationChangedEvent(new EventObject(this));
+            }
+
+        });
+
+        ((UnitAware) ((ModularDerivedValueHandler) this.unit.getValoration())
+                .getStore()).setUnit(this);
     }
 
     @Override
@@ -42,11 +72,15 @@ public final class MutantUnitWrapper implements MutantUnit {
     @Override
     public final void addMutation(final Mutation mutation) {
         getMutationsModifiable().add(mutation);
+
+        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
     public final void addValorationListener(final ValorationListener listener) {
         getWrappedUnit().addValorationListener(listener);
+
+        getListeners().add(ValorationListener.class, listener);
     }
 
     @Override
@@ -155,9 +189,18 @@ public final class MutantUnitWrapper implements MutantUnit {
     }
 
     @Override
+    public final void removeMutation(final Mutation mutation) {
+        getMutationsModifiable().remove(mutation);
+
+        fireValorationChangedEvent(new EventObject(this));
+    }
+
+    @Override
     public final void
             removeValorationListener(final ValorationListener listener) {
         getWrappedUnit().removeValorationListener(listener);
+
+        getListeners().remove(ValorationListener.class, listener);
     }
 
     @Override
@@ -168,6 +211,19 @@ public final class MutantUnitWrapper implements MutantUnit {
     @Override
     public final void setArmor(final Armor armor) {
         getWrappedUnit().setArmor(armor);
+    }
+
+    private final void fireValorationChangedEvent(final EventObject evt) {
+        final ValorationListener[] listnrs;
+
+        listnrs = getListeners().getListeners(ValorationListener.class);
+        for (final ValorationListener l : listnrs) {
+            l.valorationChanged(evt);
+        }
+    }
+
+    private final EventListenerList getListeners() {
+        return listeners;
     }
 
     private final Collection<Mutation> getMutationsModifiable() {
