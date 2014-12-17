@@ -39,7 +39,6 @@ import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
 import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.DefaultStore;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.GangAware;
 
 public final class DefaultGang implements Gang {
@@ -88,7 +87,7 @@ public final class DefaultGang implements Gang {
 
         bullets = new ModularEditableValueHandler("bullets",
                 new DefaultGenerator(), new DefaultInterval(0,
-                        Integer.MAX_VALUE), new DefaultStore());
+                        Integer.MAX_VALUE), 0);
 
         this.valoration = valoration;
 
