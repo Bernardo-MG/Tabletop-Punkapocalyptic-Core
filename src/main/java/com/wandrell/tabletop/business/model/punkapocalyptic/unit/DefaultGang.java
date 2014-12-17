@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.tabletop.business.model.interval.DefaultInterval;
 import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
@@ -38,7 +39,6 @@ import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
 import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
-import com.wandrell.tabletop.business.model.valuehandler.module.interval.DefaultIntervalModule;
 import com.wandrell.tabletop.business.model.valuehandler.module.store.DefaultStore;
 import com.wandrell.tabletop.business.model.valuehandler.module.validator.IntervalValidator;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.GangAware;
@@ -88,7 +88,7 @@ public final class DefaultGang implements Gang {
         this.faction = faction;
 
         bullets = new ModularEditableValueHandler("bullets",
-                new DefaultGenerator(), new DefaultIntervalModule(0,
+                new DefaultGenerator(), new DefaultInterval(0,
                         Integer.MAX_VALUE), new DefaultStore(),
                 new IntervalValidator());
 
