@@ -32,13 +32,12 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
 import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
+import com.wandrell.tabletop.business.model.valuehandler.DefaultEditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ModularEditableValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
 import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
-import com.wandrell.tabletop.business.model.valuehandler.module.generator.DefaultGenerator;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.GangAware;
 
 public final class DefaultGang implements Gang {
@@ -85,9 +84,8 @@ public final class DefaultGang implements Gang {
 
         this.faction = faction;
 
-        bullets = new ModularEditableValueHandler("bullets",
-                new DefaultGenerator(), new DefaultInterval(0,
-                        Integer.MAX_VALUE), 0);
+        bullets = new DefaultEditableValueHandler("bullets",
+                new DefaultInterval(0, Integer.MAX_VALUE), 0);
 
         this.valoration = valoration;
 
