@@ -33,8 +33,6 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
-import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
-import com.wandrell.tabletop.business.util.tag.punkapocalyptic.UnitAware;
 
 public final class DefaultUnit implements Unit {
 
@@ -109,9 +107,6 @@ public final class DefaultUnit implements Unit {
         valorationBuilder = unit.valorationBuilder;
 
         valoration = valorationBuilder.getValoration(this);
-        // TODO: Do in another way
-        ((UnitAware) ((DerivedValueBox) valoration).getViewPoint())
-                .setUnit(this);
     }
 
     public DefaultUnit(final String name, final Integer actions,

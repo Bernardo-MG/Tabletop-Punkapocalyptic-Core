@@ -14,15 +14,16 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.DefaultUnit.ValorationBuilder;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
-import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
-import com.wandrell.tabletop.business.util.tag.punkapocalyptic.UnitAware;
 
 public final class MutantUnitWrapper implements MutantUnit {
 
     private final EventListenerList    listeners = new EventListenerList();
     private final Collection<Mutation> mutations = new LinkedHashSet<>();
     private final Unit                 unit;
+    private final ValueBox             valoration;
+    private final ValorationBuilder    valorationBuilder;
 
     public MutantUnitWrapper(final MutantUnitWrapper unit) {
         super();
@@ -30,6 +31,8 @@ public final class MutantUnitWrapper implements MutantUnit {
         checkNotNull(unit, "Received a null pointer as unit");
 
         this.unit = unit.unit.createNewInstance();
+
+        this.valorationBuilder = unit.valorationBuilder;
 
         this.unit.addValorationListener(new ValorationListener() {
 
@@ -40,11 +43,12 @@ public final class MutantUnitWrapper implements MutantUnit {
 
         });
 
-        ((UnitAware) ((DerivedValueBox) this.unit.getValoration())
-                .getViewPoint()).setUnit(this);
+        // TODO: Do this some other way
+        valoration = valorationBuilder.getValoration(this);
     }
 
-    public MutantUnitWrapper(final Unit unit) {
+    public MutantUnitWrapper(final Unit unit,
+            final ValorationBuilder valorationBuilder) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
@@ -60,8 +64,10 @@ public final class MutantUnitWrapper implements MutantUnit {
 
         });
 
-        ((UnitAware) ((DerivedValueBox) this.unit.getValoration())
-                .getViewPoint()).setUnit(this);
+        this.valorationBuilder = valorationBuilder;
+
+        // TODO: Do this some other way
+        valoration = valorationBuilder.getValoration(this);
     }
 
     @Override
@@ -175,7 +181,7 @@ public final class MutantUnitWrapper implements MutantUnit {
 
     @Override
     public final ValueBox getValoration() {
-        return getWrappedUnit().getValoration();
+        return valoration;
     }
 
     @Override
