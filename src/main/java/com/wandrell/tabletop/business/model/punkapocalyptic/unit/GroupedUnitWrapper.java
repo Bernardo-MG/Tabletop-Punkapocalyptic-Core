@@ -9,17 +9,17 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.StoreModule;
-import com.wandrell.tabletop.business.model.valuehandler.module.store.punkapocalyptic.GroupedUnitStoreModule;
+import com.wandrell.tabletop.business.model.valuebox.EditableValueBox;
+import com.wandrell.tabletop.business.model.valuebox.ValueBox;
+import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
+import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueViewPoint;
+import com.wandrell.tabletop.business.model.valuebox.derived.punkapocalyptic.GroupedUnitValorationDerivedValueViewPoint;
 
 public final class GroupedUnitWrapper implements GroupedUnit {
 
-    private final EditableValueHandler size;
-    private final Unit                 unit;
-    private final ValueHandler         valoration;
+    private final EditableValueBox size;
+    private final Unit             unit;
+    private final ValueBox         valoration;
 
     public GroupedUnitWrapper(final GroupedUnitWrapper unit) {
         super();
@@ -29,13 +29,14 @@ public final class GroupedUnitWrapper implements GroupedUnit {
         this.unit = unit.unit.createNewInstance();
         size = unit.size.createNewInstance();
 
-        final StoreModule store;
+        final DerivedValueViewPoint store;
 
-        store = new GroupedUnitStoreModule(unit.getBaseCost(), size);
-        valoration = new ModularDerivedValueHandler("valoration", store);
+        store = new GroupedUnitValorationDerivedValueViewPoint(
+                unit.getBaseCost(), size);
+        valoration = new DerivedValueBox(store);
     }
 
-    public GroupedUnitWrapper(final Unit unit, final EditableValueHandler size) {
+    public GroupedUnitWrapper(final Unit unit, final EditableValueBox size) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
@@ -44,10 +45,11 @@ public final class GroupedUnitWrapper implements GroupedUnit {
         this.unit = unit;
         this.size = size;
 
-        final StoreModule store;
+        final DerivedValueViewPoint store;
 
-        store = new GroupedUnitStoreModule(unit.getBaseCost(), size);
-        valoration = new ModularDerivedValueHandler("valoration", store);
+        store = new GroupedUnitValorationDerivedValueViewPoint(
+                unit.getBaseCost(), size);
+        valoration = new DerivedValueBox(store);
     }
 
     @Override
@@ -111,7 +113,7 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final EditableValueHandler getGroupSize() {
+    public final EditableValueBox getGroupSize() {
         return size;
     }
 
@@ -146,7 +148,7 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final ValueHandler getValoration() {
+    public final ValueBox getValoration() {
         return valoration;
     }
 

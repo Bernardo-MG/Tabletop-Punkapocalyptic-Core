@@ -32,8 +32,8 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.DefaultArm
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuebox.ValueBox;
+import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.UnitAware;
 
 public final class DefaultUnit implements Unit {
@@ -54,8 +54,15 @@ public final class DefaultUnit implements Unit {
     private final Integer                 strength;
     private final Integer                 tech;
     private final Integer                 toughness;
-    private final ValueHandler            valoration;
+    private final ValueBox                valoration;
+    private final ValorationBuilder       valorationBuilder;
     private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
+
+    public interface ValorationBuilder {
+
+        public ValueBox getValoration(final Unit unit);
+
+    }
 
     {
         listenerStatus = new ValorationListener() {
@@ -99,9 +106,11 @@ public final class DefaultUnit implements Unit {
             rules.add(r);
         }
 
-        valoration = unit.valoration.createNewInstance();
+        valorationBuilder = unit.valorationBuilder;
+
+        valoration = valorationBuilder.getValoration(this);
         // TODO: Do in another way
-        ((UnitAware) ((ModularDerivedValueHandler) valoration).getStore())
+        ((UnitAware) ((DerivedValueBox) valoration).getViewPoint())
                 .setUnit(this);
     }
 
@@ -109,7 +118,8 @@ public final class DefaultUnit implements Unit {
             final Integer agility, final Integer combat,
             final Integer precision, final Integer strength,
             final Integer tech, final Integer toughness, final Integer cost,
-            final Collection<SpecialRule> rules, final ValueHandler valoration) {
+            final Collection<SpecialRule> rules,
+            final ValorationBuilder valorationBuilder) {
         super();
 
         checkNotNull(name, "Received a null pointer as name");
@@ -126,6 +136,9 @@ public final class DefaultUnit implements Unit {
 
         checkNotNull(cost, "Received a null pointer as cost");
 
+        checkNotNull(valorationBuilder,
+                "Received a null pointer as valoration builder");
+
         this.name = name;
 
         this.actions = actions;
@@ -138,7 +151,9 @@ public final class DefaultUnit implements Unit {
 
         this.cost = cost;
 
-        this.valoration = valoration;
+        this.valorationBuilder = valorationBuilder;
+
+        this.valoration = valorationBuilder.getValoration(this);
 
         for (final SpecialRule rule : rules) {
             checkNotNull(rule, "Received a null pointer as rule");
@@ -254,7 +269,7 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final ValueHandler getValoration() {
+    public final ValueBox getValoration() {
         return valoration;
     }
 

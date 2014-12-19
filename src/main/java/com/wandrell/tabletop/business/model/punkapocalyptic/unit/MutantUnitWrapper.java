@@ -14,8 +14,8 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
+import com.wandrell.tabletop.business.model.valuebox.ValueBox;
+import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.UnitAware;
 
 public final class MutantUnitWrapper implements MutantUnit {
@@ -40,8 +40,8 @@ public final class MutantUnitWrapper implements MutantUnit {
 
         });
 
-        ((UnitAware) ((ModularDerivedValueHandler) this.unit.getValoration())
-                .getStore()).setUnit(this);
+        ((UnitAware) ((DerivedValueBox) this.unit.getValoration())
+                .getViewPoint()).setUnit(this);
     }
 
     public MutantUnitWrapper(final Unit unit) {
@@ -60,8 +60,8 @@ public final class MutantUnitWrapper implements MutantUnit {
 
         });
 
-        ((UnitAware) ((ModularDerivedValueHandler) this.unit.getValoration())
-                .getStore()).setUnit(this);
+        ((UnitAware) ((DerivedValueBox) this.unit.getValoration())
+                .getViewPoint()).setUnit(this);
     }
 
     @Override
@@ -174,7 +174,7 @@ public final class MutantUnitWrapper implements MutantUnit {
     }
 
     @Override
-    public final ValueHandler getValoration() {
+    public final ValueBox getValoration() {
         return getWrappedUnit().getValoration();
     }
 

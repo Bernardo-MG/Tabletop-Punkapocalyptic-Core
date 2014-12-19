@@ -26,27 +26,33 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.interval.DefaultInterval;
 import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
-import com.wandrell.tabletop.business.model.valuehandler.AbstractValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.DefaultEditableValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.EditableValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ModularDerivedValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.ValueHandler;
-import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerEvent;
-import com.wandrell.tabletop.business.model.valuehandler.event.ValueHandlerListener;
+import com.wandrell.tabletop.business.model.valuebox.AbstractValueBox;
+import com.wandrell.tabletop.business.model.valuebox.DefaultEditableValueBox;
+import com.wandrell.tabletop.business.model.valuebox.EditableValueBox;
+import com.wandrell.tabletop.business.model.valuebox.ValueBox;
+import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
+import com.wandrell.tabletop.business.model.valuebox.event.ValueBoxEvent;
+import com.wandrell.tabletop.business.model.valuebox.event.ValueBoxListener;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.GangAware;
 
 public final class DefaultGang implements Gang {
 
-    private final EditableValueHandler bullets;
-    private final Faction              faction;
-    private final EventListenerList    listeners = new EventListenerList();
-    private final Collection<Unit>     units     = new LinkedList<>();
-    private final ValueHandler         valoration;
+    private final EditableValueBox  bullets;
+    private final Faction           faction;
+    private final EventListenerList listeners = new EventListenerList();
+    private final Collection<Unit>  units     = new LinkedList<>();
+    private final ValueBox          valoration;
+    private final ValorationBuilder valorationBuilder;
+
+    public interface ValorationBuilder {
+
+        public ValueBox getValoration(final Gang gang);
+
+    }
 
     public DefaultGang(final DefaultGang gang) {
         super();
@@ -60,40 +66,45 @@ public final class DefaultGang implements Gang {
             units.add(unit.createNewInstance());
         }
 
-        valoration = gang.valoration.createNewInstance();
+        valorationBuilder = gang.valorationBuilder;
+
+        valoration = valorationBuilder.getValoration(this);
         // TODO: Do in another way
-        ((GangAware) ((ModularDerivedValueHandler) valoration).getStore())
+        ((GangAware) ((DerivedValueBox) valoration).getViewPoint())
                 .setGang(this);
 
-        ((AbstractValueHandler) bullets)
-                .addValueEventListener(new ValueHandlerListener() {
+        ((AbstractValueBox) bullets)
+                .addValueEventListener(new ValueBoxListener() {
 
                     @Override
-                    public final void valueChanged(final ValueHandlerEvent evt) {
+                    public final void valueChanged(final ValueBoxEvent evt) {
                         fireValorationChangedEvent(new EventObject(this));
                     }
 
                 });
     }
 
-    public DefaultGang(final Faction faction, final ValueHandler valoration) {
+    public DefaultGang(final Faction faction,
+            final ValorationBuilder valorationBuilder) {
         super();
 
         checkNotNull(faction, "Received a null pointer as faction");
-        checkNotNull(valoration, "Received a null pointer as valoration");
+        checkNotNull(valorationBuilder,
+                "Received a null pointer as valoration builder");
 
         this.faction = faction;
 
-        bullets = new DefaultEditableValueHandler("bullets",
-                new DefaultInterval(0, Integer.MAX_VALUE), 0);
+        bullets = new DefaultEditableValueBox(0, 0, Integer.MAX_VALUE);
 
-        this.valoration = valoration;
+        this.valorationBuilder = valorationBuilder;
 
-        ((AbstractValueHandler) bullets)
-                .addValueEventListener(new ValueHandlerListener() {
+        this.valoration = valorationBuilder.getValoration(this);
+
+        ((AbstractValueBox) bullets)
+                .addValueEventListener(new ValueBoxListener() {
 
                     @Override
-                    public final void valueChanged(final ValueHandlerEvent evt) {
+                    public final void valueChanged(final ValueBoxEvent evt) {
                         fireValorationChangedEvent(new EventObject(this));
                     }
 
@@ -146,7 +157,7 @@ public final class DefaultGang implements Gang {
     }
 
     @Override
-    public final EditableValueHandler getBullets() {
+    public final EditableValueBox getBullets() {
         return bullets;
     }
 
@@ -161,7 +172,7 @@ public final class DefaultGang implements Gang {
     }
 
     @Override
-    public final ValueHandler getValoration() {
+    public final ValueBox getValoration() {
         return valoration;
     }
 
