@@ -9,6 +9,7 @@ import java.util.LinkedHashSet;
 
 import javax.swing.event.EventListenerList;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
@@ -217,6 +218,12 @@ public final class MutantUnitWrapper implements MutantUnit {
     @Override
     public final void setArmor(final Armor armor) {
         getWrappedUnit().setArmor(armor);
+    }
+
+    @Override
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("name", getUnitName())
+                .toString();
     }
 
     private final void fireValorationChangedEvent(final EventObject evt) {

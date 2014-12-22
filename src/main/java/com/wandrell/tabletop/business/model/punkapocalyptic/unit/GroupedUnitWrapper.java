@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
@@ -176,6 +177,12 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     @Override
     public final void setArmor(final Armor armor) {
         getWrappedUnit().setArmor(armor);
+    }
+
+    @Override
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("name", getUnitName())
+                .toString();
     }
 
     private final Unit getWrappedUnit() {
