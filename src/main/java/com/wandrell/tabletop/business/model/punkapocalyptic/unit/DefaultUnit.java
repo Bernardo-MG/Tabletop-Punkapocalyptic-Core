@@ -32,31 +32,54 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.DefaultArm
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
 
-public final class DefaultUnit implements Unit {
+public final class DefaultUnit implements Unit, MutantUnit {
 
-    private final Integer                 actions;
-    private final Integer                 agility;
+    private final ValueBox                actions;
+    private final ValueBox                agility;
     private Armor                         armor     = new DefaultArmor(
                                                             "unarmored", 0,
                                                             new LinkedList<>());
-    private final Integer                 combat;
+    private final Integer                 baseActions;
+    private final Integer                 baseAgility;
+    private final Integer                 baseCombat;
+    private final Integer                 basePrecision;
+    private final Integer                 baseStrength;
+    private final Integer                 baseTech;
+    private final Integer                 baseToughness;
+    private final ValueBox                combat;
     private final Integer                 cost;
+    private final DerivedValuesBuilder    derivedBuilder;
     private final Collection<Equipment>   equipment = new LinkedHashSet<>();
     private final EventListenerList       listeners = new EventListenerList();
     private final ValorationListener      listenerStatus;
+    private final Collection<Mutation>    mutations = new LinkedHashSet<>();
     private final String                  name;
-    private final Integer                 precision;
+    private final ValueBox                precision;
     private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
-    private final Integer                 strength;
-    private final Integer                 tech;
-    private final Integer                 toughness;
+    private final ValueBox                strength;
+    private final ValueBox                tech;
+    private final ValueBox                toughness;
     private final ValueBox                valoration;
-    private final ValorationBuilder       valorationBuilder;
     private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
 
-    public interface ValorationBuilder {
+    public interface DerivedValuesBuilder {
+
+        public ValueBox getActions(final Integer baseValue, final Unit unit);
+
+        public ValueBox getAgility(final Integer baseValue, final Unit unit);
+
+        public ValueBox getCombat(final Integer baseValue, final Unit unit);
+
+        public ValueBox getPrecision(final Integer baseValue, final Unit unit);
+
+        public ValueBox getStrength(final Integer baseValue, final Unit unit);
+
+        public ValueBox getTech(final Integer baseValue, final Unit unit);
+
+        public ValueBox getToughness(final Integer baseValue, final Unit unit);
 
         public ValueBox getValoration(final Unit unit);
 
@@ -80,13 +103,13 @@ public final class DefaultUnit implements Unit {
 
         name = unit.name;
 
-        actions = unit.actions;
-        agility = unit.agility;
-        combat = unit.combat;
-        precision = unit.precision;
-        strength = unit.strength;
-        tech = unit.tech;
-        toughness = unit.toughness;
+        baseActions = unit.getBaseActions();
+        baseAgility = unit.getBaseAgility();
+        baseCombat = unit.getBaseCombat();
+        basePrecision = unit.getBasePrecision();
+        baseStrength = unit.getBaseStrength();
+        baseTech = unit.getBaseTech();
+        baseToughness = unit.getBaseToughness();
 
         cost = unit.cost;
 
@@ -104,9 +127,17 @@ public final class DefaultUnit implements Unit {
             rules.add(r);
         }
 
-        valorationBuilder = unit.valorationBuilder;
+        derivedBuilder = unit.derivedBuilder;
 
-        valoration = valorationBuilder.getValoration(this);
+        actions = derivedBuilder.getActions(getBaseActions(), this);
+        agility = derivedBuilder.getAgility(getBaseAgility(), this);
+        combat = derivedBuilder.getCombat(getBaseCombat(), this);
+        precision = derivedBuilder.getPrecision(getBasePrecision(), this);
+        strength = derivedBuilder.getStrength(getBaseStrength(), this);
+        tech = derivedBuilder.getTech(getBaseTech(), this);
+        toughness = derivedBuilder.getToughness(getBaseToughness(), this);
+
+        valoration = derivedBuilder.getValoration(this);
     }
 
     public DefaultUnit(final String name, final Integer actions,
@@ -114,7 +145,7 @@ public final class DefaultUnit implements Unit {
             final Integer precision, final Integer strength,
             final Integer tech, final Integer toughness, final Integer cost,
             final Collection<SpecialRule> rules,
-            final ValorationBuilder valorationBuilder) {
+            final DerivedValuesBuilder derivedBuilder) {
         super();
 
         checkNotNull(name, "Received a null pointer as name");
@@ -131,24 +162,32 @@ public final class DefaultUnit implements Unit {
 
         checkNotNull(cost, "Received a null pointer as cost");
 
-        checkNotNull(valorationBuilder,
+        checkNotNull(derivedBuilder,
                 "Received a null pointer as valoration builder");
 
         this.name = name;
 
-        this.actions = actions;
-        this.agility = agility;
-        this.combat = combat;
-        this.precision = precision;
-        this.strength = strength;
-        this.tech = tech;
-        this.toughness = toughness;
+        this.baseActions = actions;
+        this.baseAgility = agility;
+        this.baseCombat = combat;
+        this.basePrecision = precision;
+        this.baseStrength = strength;
+        this.baseTech = tech;
+        this.baseToughness = toughness;
 
         this.cost = cost;
 
-        this.valorationBuilder = valorationBuilder;
+        this.derivedBuilder = derivedBuilder;
 
-        this.valoration = valorationBuilder.getValoration(this);
+        this.actions = derivedBuilder.getActions(getBaseActions(), this);
+        this.agility = derivedBuilder.getAgility(getBaseAgility(), this);
+        this.combat = derivedBuilder.getCombat(getBaseCombat(), this);
+        this.precision = derivedBuilder.getPrecision(getBasePrecision(), this);
+        this.strength = derivedBuilder.getStrength(getBaseStrength(), this);
+        this.tech = derivedBuilder.getTech(getBaseTech(), this);
+        this.toughness = derivedBuilder.getToughness(getBaseToughness(), this);
+
+        this.valoration = derivedBuilder.getValoration(this);
 
         for (final SpecialRule rule : rules) {
             checkNotNull(rule, "Received a null pointer as rule");
@@ -167,10 +206,18 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final void addValorationListener(final ValorationListener listener) {
+    public final void addMutation(final Mutation mutation) {
+        getMutationsModifiable().add(mutation);
+
+        fireValorationChangedEvent(new EventObject(this));
+        fireStatusChangedEvent(new EventObject(this));
+    }
+
+    @Override
+    public final void addUnitListener(final UnitListener listener) {
         checkNotNull(listener, "Received a null pointer as listener");
 
-        getListeners().add(ValorationListener.class, listener);
+        getListeners().add(UnitListener.class, listener);
     }
 
     @Override
@@ -192,6 +239,11 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
+    public final void clearMutations() {
+        getMutationsModifiable().clear();
+    }
+
+    @Override
     public final void clearWeapons() {
         getWeaponsModifiable().clear();
 
@@ -204,12 +256,12 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final Integer getActions() {
+    public final ValueBox getActions() {
         return actions;
     }
 
     @Override
-    public final Integer getAgility() {
+    public final ValueBox getAgility() {
         return agility;
     }
 
@@ -218,13 +270,41 @@ public final class DefaultUnit implements Unit {
         return armor;
     }
 
+    public final Integer getBaseActions() {
+        return baseActions;
+    }
+
+    public final Integer getBaseAgility() {
+        return baseAgility;
+    }
+
+    public final Integer getBaseCombat() {
+        return baseCombat;
+    }
+
     @Override
     public final Integer getBaseCost() {
         return cost;
     }
 
+    public final Integer getBasePrecision() {
+        return basePrecision;
+    }
+
+    public final Integer getBaseStrength() {
+        return baseStrength;
+    }
+
+    public final Integer getBaseTech() {
+        return baseTech;
+    }
+
+    public final Integer getBaseToughness() {
+        return baseToughness;
+    }
+
     @Override
-    public final Integer getCombat() {
+    public final ValueBox getCombat() {
         return combat;
     }
 
@@ -234,7 +314,12 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final Integer getPrecision() {
+    public final Collection<Mutation> getMutations() {
+        return Collections.unmodifiableCollection(getMutationsModifiable());
+    }
+
+    @Override
+    public final ValueBox getPrecision() {
         return precision;
     }
 
@@ -244,17 +329,17 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final Integer getStrength() {
+    public final ValueBox getStrength() {
         return strength;
     }
 
     @Override
-    public final Integer getTech() {
+    public final ValueBox getTech() {
         return tech;
     }
 
     @Override
-    public final Integer getToughness() {
+    public final ValueBox getToughness() {
         return toughness;
     }
 
@@ -281,9 +366,16 @@ public final class DefaultUnit implements Unit {
     }
 
     @Override
-    public final void
-            removeValorationListener(final ValorationListener listener) {
-        getListeners().remove(ValorationListener.class, listener);
+    public final void removeMutation(final Mutation mutation) {
+        getMutationsModifiable().remove(mutation);
+
+        fireValorationChangedEvent(new EventObject(this));
+        fireStatusChangedEvent(new EventObject(this));
+    }
+
+    @Override
+    public final void removeUnitListener(final UnitListener listener) {
+        getListeners().remove(UnitListener.class, listener);
     }
 
     @Override
@@ -311,11 +403,20 @@ public final class DefaultUnit implements Unit {
         return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
-    private final void fireValorationChangedEvent(final EventObject evt) {
-        final ValorationListener[] listnrs;
+    private final void fireStatusChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
 
-        listnrs = getListeners().getListeners(ValorationListener.class);
-        for (final ValorationListener l : listnrs) {
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.statusChanged(evt);
+        }
+    }
+
+    private final void fireValorationChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
             l.valorationChanged(evt);
         }
     }
@@ -326,6 +427,10 @@ public final class DefaultUnit implements Unit {
 
     private final EventListenerList getListeners() {
         return listeners;
+    }
+
+    private final Collection<Mutation> getMutationsModifiable() {
+        return mutations;
     }
 
     private final Collection<SpecialRule> getSpecialRulesModifiable() {

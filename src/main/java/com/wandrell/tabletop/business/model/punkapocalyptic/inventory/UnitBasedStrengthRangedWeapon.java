@@ -22,6 +22,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
             final MeleeWeapon weaponMelee) {
         super();
 
+        // TODO: Maybe this should be on the framework library
+
         baseWeapon = new DefaultRangedWeapon(name, cost, penetration, strength,
                 distanceCM, distanceInches, weaponMelee);
     }
@@ -78,7 +80,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
     @Override
     public final Integer getLongStrength() {
-        return getUnit().getStrength() + getBaseWeapon().getLongStrength();
+        return getUnit().getStrength().getValue()
+                + getBaseWeapon().getLongStrength();
     }
 
     @Override
@@ -88,7 +91,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
     @Override
     public final Integer getMediumStrength() {
-        return getUnit().getStrength() + getBaseWeapon().getMediumStrength();
+        return getUnit().getStrength().getValue()
+                + getBaseWeapon().getMediumStrength();
     }
 
     @Override
@@ -108,7 +112,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
     @Override
     public final Integer getShortStrength() {
-        return getUnit().getStrength() + getBaseWeapon().getShortStrength();
+        return getUnit().getStrength().getValue()
+                + getBaseWeapon().getShortStrength();
     }
 
     @Override

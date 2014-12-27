@@ -5,11 +5,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Collection;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuebox.EditableValueBox;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
 import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
@@ -59,8 +59,8 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final void addValorationListener(final ValorationListener listener) {
-        getWrappedUnit().addValorationListener(listener);
+    public final void addUnitListener(final UnitListener listener) {
+        getWrappedUnit().addUnitListener(listener);
     }
 
     @Override
@@ -84,12 +84,12 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final Integer getActions() {
+    public final ValueBox getActions() {
         return getWrappedUnit().getActions();
     }
 
     @Override
-    public final Integer getAgility() {
+    public final ValueBox getAgility() {
         return getWrappedUnit().getAgility();
     }
 
@@ -104,7 +104,7 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final Integer getCombat() {
+    public final ValueBox getCombat() {
         return getWrappedUnit().getCombat();
     }
 
@@ -119,7 +119,7 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final Integer getPrecision() {
+    public final ValueBox getPrecision() {
         return getWrappedUnit().getPrecision();
     }
 
@@ -129,17 +129,17 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final Integer getStrength() {
+    public final ValueBox getStrength() {
         return getWrappedUnit().getStrength();
     }
 
     @Override
-    public final Integer getTech() {
+    public final ValueBox getTech() {
         return getWrappedUnit().getTech();
     }
 
     @Override
-    public final Integer getToughness() {
+    public final ValueBox getToughness() {
         return getWrappedUnit().getToughness();
     }
 
@@ -164,9 +164,8 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final void
-            removeValorationListener(final ValorationListener listener) {
-        getWrappedUnit().removeValorationListener(listener);
+    public final void removeUnitListener(final UnitListener listener) {
+        getWrappedUnit().removeUnitListener(listener);
     }
 
     @Override
