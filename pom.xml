@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.wandrell.tabletop</groupId>
-	<artifactId>tabletop-punkapocalyptic-core</artifactId>
+	<artifactId>punkapocalyptic-core</artifactId>
 	<version>alpha</version>
 	<packaging>jar</packaging>
 
@@ -21,10 +21,10 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:https://github.com/Bernardo-MG/Tabletop-Punkapocalyptic-Core.git</connection>
-		<developerConnection>scm:git:https://github.com/Bernardo-MG/Tabletop-Punkapocalyptic-Core.git</developerConnection>
+		<connection>scm:git:https://github.com/Bernardo-MG/punkapocalyptic-Core.git</connection>
+		<developerConnection>scm:git:https://github.com/Bernardo-MG/punkapocalyptic-Core.git</developerConnection>
 		<tag>head</tag>
-		<url>http://github.com/Bernardo-MG/Tabletop-Punkapocalyptic-Core</url>
+		<url>http://github.com/Bernardo-MG/punkapocalyptic-Core</url>
 	</scm>
 
 	<organization>
@@ -126,7 +126,7 @@
 		<dependency>
 			<!-- Tabletop's Punkapocalyptic API -->
 			<groupId>com.wandrell.tabletop</groupId>
-			<artifactId>tabletop-punkapocalyptic-api</artifactId>
+			<artifactId>punkapocalyptic-api</artifactId>
 			<version>${tabletop.version}</version>
 		</dependency>
 		<dependency>
