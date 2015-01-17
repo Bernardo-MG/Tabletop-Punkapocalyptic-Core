@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.EventObject;
+import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
 
@@ -21,7 +22,7 @@ import com.wandrell.tabletop.business.model.valuebox.derived.punkapocalyptic.Gro
 import com.wandrell.tabletop.business.util.event.ValueChangeEvent;
 import com.wandrell.tabletop.business.util.event.ValueChangeListener;
 
-public final class GroupedUnitWrapper implements GroupedUnit {
+public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
 
     private final EventListenerList listeners = new EventListenerList();
     private final EditableValueBox  size;
@@ -83,6 +84,13 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
+    public final void addMutation(final Mutation mutation) {
+        if (getWrappedUnit() instanceof MutantUnit) {
+            ((MutantUnit) getWrappedUnit()).addMutation(mutation);
+        }
+    }
+
+    @Override
     public final void addUnitListener(final UnitListener listener) {
         checkNotNull(listener, "Received a null pointer as listener");
 
@@ -99,6 +107,13 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     @Override
     public final void clearEquipment() {
         getWrappedUnit().clearEquipment();
+    }
+
+    @Override
+    public final void clearMutations() {
+        if (getWrappedUnit() instanceof MutantUnit) {
+            ((MutantUnit) getWrappedUnit()).clearMutations();
+        }
     }
 
     @Override
@@ -147,6 +162,19 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
+    public final Collection<Mutation> getMutations() {
+        final Collection<Mutation> mutations;
+
+        if (getWrappedUnit() instanceof MutantUnit) {
+            mutations = ((MutantUnit) getWrappedUnit()).getMutations();
+        } else {
+            mutations = new LinkedList<>();
+        }
+
+        return mutations;
+    }
+
+    @Override
     public final Integer getPrecision() {
         return getWrappedUnit().getPrecision();
     }
@@ -189,6 +217,13 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     @Override
     public final void removeEquipment(final Equipment equipment) {
         getWrappedUnit().removeEquipment(equipment);
+    }
+
+    @Override
+    public final void removeMutation(final Mutation mutation) {
+        if (getWrappedUnit() instanceof MutantUnit) {
+            ((MutantUnit) getWrappedUnit()).removeMutation(mutation);
+        }
     }
 
     @Override
