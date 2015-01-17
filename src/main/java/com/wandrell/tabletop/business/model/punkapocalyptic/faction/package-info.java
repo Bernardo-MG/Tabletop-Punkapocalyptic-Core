@@ -15,8 +15,6 @@
  */
 /**
  * Faction related classes.
- * 
- * @author Bernardo Martínez Garrido
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.faction;
 

@@ -33,21 +33,21 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.WeaponModifi
 
 public abstract class AbstractWeapon implements Weapon {
 
-    private final Integer                       cost;
     private final Collection<WeaponEnhancement> enhancements = new LinkedList<>();
     private final EventListenerList             listeners    = new EventListenerList();
-    private final String                        name;
     private final Collection<SpecialRule>       rules        = new LinkedHashSet<>();
     private Boolean                             twoHanded    = false;
+    private final Integer                       weaponCost;
+    private final String                        weaponName;
 
     public AbstractWeapon(final AbstractWeapon weapon) {
         super();
 
         checkNotNull(weapon, "Received a null pointer as weapon");
 
-        name = weapon.name;
+        weaponName = weapon.weaponName;
 
-        cost = weapon.cost;
+        weaponCost = weapon.weaponCost;
         twoHanded = weapon.twoHanded;
 
         rules.addAll(weapon.rules);
@@ -66,9 +66,9 @@ public abstract class AbstractWeapon implements Weapon {
         checkNotNull(name, "Received a null pointer as name");
         checkNotNull(cost, "Received a null pointer as cost");
 
-        this.name = name;
+        this.weaponName = name;
 
-        this.cost = cost;
+        this.weaponCost = cost;
     }
 
     @Override
@@ -105,7 +105,7 @@ public abstract class AbstractWeapon implements Weapon {
         final AbstractWeapon other;
 
         other = (AbstractWeapon) obj;
-        return Objects.equals(name, other.name);
+        return Objects.equals(weaponName, other.weaponName);
     }
 
     @Override
@@ -117,7 +117,7 @@ public abstract class AbstractWeapon implements Weapon {
             costEnhance += enhance.getCost();
         }
 
-        return cost + costEnhance;
+        return weaponCost + costEnhance;
     }
 
     @Override
@@ -127,7 +127,7 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final String getName() {
-        return name;
+        return weaponName;
     }
 
     @Override
@@ -137,7 +137,7 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(weaponName);
     }
 
     @Override
@@ -185,8 +185,8 @@ public abstract class AbstractWeapon implements Weapon {
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name)
-                .add("cost", cost).add("rules", rules)
+        return MoreObjects.toStringHelper(this).add("name", weaponName)
+                .add("cost", weaponCost).add("rules", rules)
                 .add("enhancements", enhancements).toString();
     }
 

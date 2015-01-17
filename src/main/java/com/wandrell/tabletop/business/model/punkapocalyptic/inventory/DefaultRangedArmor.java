@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 the original author or authors
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -6,12 +21,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+import com.wandrell.tabletop.business.model.punkapocalyptic.util.RangedValue;
 
 public final class DefaultRangedArmor implements RangedArmor {
 
-    private final Armor       armor;
+    private final Armor       baseArmor;
     private final RangedValue rangedArmor;
 
     public DefaultRangedArmor(final DefaultRangedArmor armor) {
@@ -19,7 +34,7 @@ public final class DefaultRangedArmor implements RangedArmor {
 
         checkNotNull(armor, "Received a null pointer as armor");
 
-        this.armor = armor.armor;
+        this.baseArmor = armor.baseArmor;
         rangedArmor = armor.rangedArmor;
     }
 
@@ -30,7 +45,7 @@ public final class DefaultRangedArmor implements RangedArmor {
         checkNotNull(rangedArmor,
                 "Received a null pointer as ranged armor value");
 
-        this.armor = new DefaultArmor(name, armor, rules);
+        this.baseArmor = new DefaultArmor(name, armor, rules);
         this.rangedArmor = rangedArmor;
     }
 
@@ -56,7 +71,7 @@ public final class DefaultRangedArmor implements RangedArmor {
         final DefaultRangedArmor other;
 
         other = (DefaultRangedArmor) obj;
-        return Objects.equals(armor, other.armor);
+        return Objects.equals(baseArmor, other.baseArmor);
     }
 
     @Override
@@ -86,12 +101,12 @@ public final class DefaultRangedArmor implements RangedArmor {
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(armor);
+        return Objects.hashCode(baseArmor);
     }
 
     @Override
     public final void setCost(final Integer cost) {
-        checkNotNull(armor, "Received a null pointer as cost");
+        checkNotNull(baseArmor, "Received a null pointer as cost");
 
         getBaseArmor().setCost(cost);
     }
@@ -103,7 +118,7 @@ public final class DefaultRangedArmor implements RangedArmor {
     }
 
     private final Armor getBaseArmor() {
-        return armor;
+        return baseArmor;
     }
 
 }

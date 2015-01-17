@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 the original author or authors
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.wandrell.tabletop.business.model.punkapocalyptic.availability;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -13,8 +28,8 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.WeaponEnha
 
 public final class DefaultWeaponOption implements WeaponOption {
 
-    private final Collection<WeaponEnhancement> enhancements = new LinkedHashSet<>();
-    private final Weapon                        weapon;
+    private final Weapon                        availWeapon;
+    private final Collection<WeaponEnhancement> weaponEnhcn = new LinkedHashSet<>();
 
     public DefaultWeaponOption(final Weapon weapon,
             final Collection<WeaponEnhancement> enhancements) {
@@ -24,13 +39,13 @@ public final class DefaultWeaponOption implements WeaponOption {
         checkNotNull(enhancements,
                 "Received a null pointer as weapon enhancements");
 
-        this.weapon = weapon;
+        this.availWeapon = weapon;
 
         for (final WeaponEnhancement enhancement : enhancements) {
             checkNotNull(enhancement,
                     "Received a null pointer as weapon enhancement");
 
-            this.enhancements.add(enhancement);
+            this.weaponEnhcn.add(enhancement);
         }
     }
 
@@ -51,7 +66,7 @@ public final class DefaultWeaponOption implements WeaponOption {
         DefaultWeaponOption other;
 
         other = (DefaultWeaponOption) obj;
-        return Objects.equal(weapon, other.weapon);
+        return Objects.equal(availWeapon, other.availWeapon);
     }
 
     @Override
@@ -61,22 +76,22 @@ public final class DefaultWeaponOption implements WeaponOption {
 
     @Override
     public final Weapon getWeapon() {
-        return weapon;
+        return availWeapon;
     }
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(weapon);
+        return Objects.hashCode(availWeapon);
     }
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("weapon", weapon)
-                .add("enhancements", enhancements).toString();
+        return MoreObjects.toStringHelper(this).add("weapon", availWeapon)
+                .add("enhancements", weaponEnhcn).toString();
     }
 
     private final Collection<WeaponEnhancement> getEnhancementsModifiable() {
-        return enhancements;
+        return weaponEnhcn;
     }
 
 }

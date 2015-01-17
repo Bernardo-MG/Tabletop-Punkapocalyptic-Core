@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 the original author or authors
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.wandrell.tabletop.business.model.punkapocalyptic.availability;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -14,8 +29,8 @@ import com.wandrell.tabletop.business.procedure.Constraint;
 public final class DefaultFactionUnitAvailability implements
         FactionUnitAvailability {
 
-    private final Collection<Constraint> constraints = new LinkedHashSet<>();
-    private final Unit                   unit;
+    private final Unit                   availUnit;
+    private final Collection<Constraint> unitConstrn = new LinkedHashSet<>();
 
     public DefaultFactionUnitAvailability(final Unit unit,
             final Collection<Constraint> constraints) {
@@ -24,12 +39,12 @@ public final class DefaultFactionUnitAvailability implements
         checkNotNull(unit, "Received a null pointer as unit");
         checkNotNull(constraints, "Received a null pointer as constraints");
 
-        this.unit = unit;
+        this.availUnit = unit;
 
         for (final Constraint constraint : constraints) {
             checkNotNull(constraint, "Received a null pointer as a constraint");
 
-            this.constraints.add(constraint);
+            this.unitConstrn.add(constraint);
         }
     }
 
@@ -50,8 +65,8 @@ public final class DefaultFactionUnitAvailability implements
         DefaultFactionUnitAvailability other;
 
         other = (DefaultFactionUnitAvailability) obj;
-        return Objects.equals(unit, other.unit)
-                && Objects.equals(constraints, other.constraints);
+        return Objects.equals(availUnit, other.availUnit)
+                && Objects.equals(unitConstrn, other.unitConstrn);
     }
 
     @Override
@@ -61,22 +76,22 @@ public final class DefaultFactionUnitAvailability implements
 
     @Override
     public final Unit getUnit() {
-        return unit;
+        return availUnit;
     }
 
     @Override
     public final int hashCode() {
-        return Objects.hash(constraints, unit);
+        return Objects.hash(unitConstrn, availUnit);
     }
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit)
-                .add("constraints", constraints).toString();
+        return MoreObjects.toStringHelper(this).add("unit", availUnit)
+                .add("constraints", unitConstrn).toString();
     }
 
     private final Collection<Constraint> getConstraintsModifiable() {
-        return constraints;
+        return unitConstrn;
     }
 
 }

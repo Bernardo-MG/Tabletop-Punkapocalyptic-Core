@@ -17,7 +17,7 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
+import com.wandrell.tabletop.business.model.punkapocalyptic.util.RangedValue;
 
 public final class DefaultRangedWeapon extends AbstractWeapon implements
         RangedWeapon {

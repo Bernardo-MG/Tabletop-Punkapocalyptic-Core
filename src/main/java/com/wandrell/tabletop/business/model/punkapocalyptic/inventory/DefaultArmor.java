@@ -27,22 +27,22 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 
 public final class DefaultArmor implements Armor {
 
-    private final Integer                 armor;
-    private Integer                       cost  = 0;
-    private final String                  name;
-    private final Collection<SpecialRule> rules = new LinkedHashSet<>();
+    private final Integer                 armorArmor;
+    private final String                  armorName;
+    private final Collection<SpecialRule> armorRules = new LinkedHashSet<>();
+    private Integer                       cost       = 0;
 
     public DefaultArmor(final DefaultArmor armor) {
         super();
 
         checkNotNull(armor, "Received a null pointer as armor");
 
-        this.armor = armor.armor;
+        this.armorArmor = armor.armorArmor;
         cost = armor.cost;
 
-        name = armor.name;
+        armorName = armor.armorName;
 
-        rules.addAll(armor.rules);
+        armorRules.addAll(armor.armorRules);
     }
 
     public DefaultArmor(final String name, final Integer armor,
@@ -53,13 +53,13 @@ public final class DefaultArmor implements Armor {
         checkNotNull(armor, "Received a null pointer as armor");
         checkNotNull(rules, "Received a null pointer as rules");
 
-        this.name = name;
-        this.armor = armor;
+        this.armorName = name;
+        this.armorArmor = armor;
 
         for (final SpecialRule rule : rules) {
             checkNotNull(rule, "Received a null pointer as rule");
 
-            this.rules.add(rule);
+            this.armorRules.add(rule);
         }
     }
 
@@ -85,12 +85,12 @@ public final class DefaultArmor implements Armor {
         final DefaultArmor other;
 
         other = (DefaultArmor) obj;
-        return Objects.equals(name, other.name);
+        return Objects.equals(armorName, other.armorName);
     }
 
     @Override
     public final Integer getArmor() {
-        return armor;
+        return armorArmor;
     }
 
     @Override
@@ -100,7 +100,7 @@ public final class DefaultArmor implements Armor {
 
     @Override
     public final String getName() {
-        return name;
+        return armorName;
     }
 
     @Override
@@ -110,7 +110,7 @@ public final class DefaultArmor implements Armor {
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(armorName);
     }
 
     @Override
@@ -122,11 +122,12 @@ public final class DefaultArmor implements Armor {
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name).toString();
+        return MoreObjects.toStringHelper(this).add("name", armorName)
+                .toString();
     }
 
     private final Collection<SpecialRule> getSpecialRulesModifiable() {
-        return rules;
+        return armorRules;
     }
 
 }

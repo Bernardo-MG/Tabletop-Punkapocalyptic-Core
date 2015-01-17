@@ -23,16 +23,16 @@ import com.google.common.base.MoreObjects;
 
 public final class DefaultEquipment implements Equipment {
 
-    private final Integer cost;
-    private final String  name;
+    private final Integer equipCost;
+    private final String  equipName;
 
     public DefaultEquipment(final DefaultEquipment equipment) {
         super();
 
         checkNotNull(equipment, "Received a null pointer as equipment");
 
-        name = equipment.name;
-        cost = equipment.cost;
+        equipName = equipment.equipName;
+        equipCost = equipment.equipCost;
     }
 
     public DefaultEquipment(final String name, final Integer cost) {
@@ -41,8 +41,8 @@ public final class DefaultEquipment implements Equipment {
         checkNotNull(name, "Received a null pointer as name");
         checkNotNull(cost, "Received a null pointer as cost");
 
-        this.name = name;
-        this.cost = cost;
+        this.equipName = name;
+        this.equipCost = cost;
     }
 
     @Override
@@ -62,27 +62,28 @@ public final class DefaultEquipment implements Equipment {
         final DefaultEquipment other;
 
         other = (DefaultEquipment) obj;
-        return Objects.equals(name, other.name);
+        return Objects.equals(equipName, other.equipName);
     }
 
     @Override
     public final Integer getCost() {
-        return cost;
+        return equipCost;
     }
 
     @Override
     public final String getName() {
-        return name;
+        return equipName;
     }
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(equipName);
     }
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name).toString();
+        return MoreObjects.toStringHelper(this).add("name", equipName)
+                .toString();
     }
 
 }

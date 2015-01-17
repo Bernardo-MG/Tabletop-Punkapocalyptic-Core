@@ -27,7 +27,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.availability.Faction
 
 public final class DefaultFaction implements Faction {
 
-    private final String                              name;
+    private final String                              factionName;
     private final Collection<FactionUnitAvailability> units = new LinkedHashSet<>();
 
     public DefaultFaction(final DefaultFaction faction) {
@@ -35,7 +35,7 @@ public final class DefaultFaction implements Faction {
 
         checkNotNull(faction, "Received a null pointer as faction");
 
-        name = faction.name;
+        factionName = faction.factionName;
     }
 
     public DefaultFaction(final String name) {
@@ -43,7 +43,7 @@ public final class DefaultFaction implements Faction {
 
         checkNotNull(name, "Received a null pointer as name");
 
-        this.name = name;
+        this.factionName = name;
     }
 
     @Override
@@ -75,12 +75,12 @@ public final class DefaultFaction implements Faction {
         final DefaultFaction other;
 
         other = (DefaultFaction) obj;
-        return Objects.equals(name, other.name);
+        return Objects.equals(factionName, other.factionName);
     }
 
     @Override
     public final String getName() {
-        return name;
+        return factionName;
     }
 
     @Override
@@ -90,7 +90,7 @@ public final class DefaultFaction implements Faction {
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(factionName);
     }
 
     @Override
@@ -100,7 +100,8 @@ public final class DefaultFaction implements Faction {
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name).toString();
+        return MoreObjects.toStringHelper(this).add("name", factionName)
+                .toString();
     }
 
     private final Collection<FactionUnitAvailability> getUnitsModifiable() {

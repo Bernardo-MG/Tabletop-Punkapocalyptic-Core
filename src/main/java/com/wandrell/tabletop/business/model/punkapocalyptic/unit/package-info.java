@@ -15,8 +15,6 @@
  */
 /**
  * Classes for modelling the units.
- * 
- * @author Bernardo Martínez Garrido
  */
 package com.wandrell.tabletop.business.model.punkapocalyptic.unit;
 

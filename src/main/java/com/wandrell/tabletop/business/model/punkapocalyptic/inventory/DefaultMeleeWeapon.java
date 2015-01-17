@@ -20,18 +20,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public final class DefaultMeleeWeapon extends AbstractWeapon implements
         MeleeWeapon {
 
-    private final Integer combat;
-    private final Integer penetration;
-    private final Integer strength;
+    private final Integer weaponCombat;
+    private final Integer weaponPenet;
+    private final Integer weaponStr;
 
     public DefaultMeleeWeapon(final DefaultMeleeWeapon weapon) {
         super(weapon);
 
         checkNotNull(weapon, "Received a null pointer as weapon");
 
-        combat = weapon.combat;
-        penetration = weapon.penetration;
-        strength = weapon.strength;
+        weaponCombat = weapon.weaponCombat;
+        weaponPenet = weapon.weaponPenet;
+        weaponStr = weapon.weaponStr;
     }
 
     public DefaultMeleeWeapon(final String name, final Integer cost,
@@ -43,9 +43,9 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
         checkNotNull(penetration, "Received a null pointer as penetration");
         checkNotNull(strength, "Received a null pointer as strength");
 
-        this.combat = combat;
-        this.penetration = penetration;
-        this.strength = strength;
+        this.weaponCombat = combat;
+        this.weaponPenet = penetration;
+        this.weaponStr = strength;
     }
 
     @Override
@@ -55,17 +55,17 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
 
     @Override
     public final Integer getCombat() {
-        return combat;
+        return weaponCombat;
     }
 
     @Override
     public final Integer getPenetration() {
-        return penetration;
+        return weaponPenet;
     }
 
     @Override
     public final Integer getStrength() {
-        return strength;
+        return weaponStr;
     }
 
 }

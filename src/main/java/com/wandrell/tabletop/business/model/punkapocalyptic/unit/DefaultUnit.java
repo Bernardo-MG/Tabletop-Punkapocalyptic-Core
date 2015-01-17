@@ -33,6 +33,8 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Equipment;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.mutation.MutantUnit;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.mutation.Mutation;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
 import com.wandrell.tabletop.business.util.event.ValueChangeEvent;
 import com.wandrell.tabletop.business.util.event.ValueChangeListener;
@@ -91,7 +93,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
         listenerStatus = new ValorationListener() {
 
             @Override
-            public void valorationChanged(final EventObject e) {
+            public void valorationChanged(final EventObject event) {
                 fireValorationChangedEvent(new EventObject(this));
             }
 

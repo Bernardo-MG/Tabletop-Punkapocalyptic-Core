@@ -175,12 +175,12 @@ public final class DefaultGang implements Gang {
         found = false;
         while ((itr.hasNext()) && (!found)) {
             found = (itr.next() == unit);
+        }
 
-            if (found) {
-                itr.remove();
-                fireUnitRemovedEvent(new UnitEvent(this, unit));
-                fireValorationChangedEvent(new EventObject(this));
-            }
+        if (found) {
+            itr.remove();
+            fireUnitRemovedEvent(new UnitEvent(this, unit));
+            fireValorationChangedEvent(new EventObject(this));
         }
 
     }
