@@ -39,7 +39,7 @@ public final class GroupedUnitValorationDerivedValueViewPoint extends
         this.valoration = valoration;
         this.size = size;
 
-        size.addValueEventListener(listener);
+        size.addValueChangeListener(listener);
     }
 
     @Override

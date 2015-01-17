@@ -547,7 +547,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     private final void setAttributesListeners() {
-        getActionsValueBox().addValueEventListener(new ValueChangeListener() {
+        getActionsValueBox().addValueChangeListener(new ValueChangeListener() {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
@@ -555,7 +555,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
             }
 
         });
-        getAgilityValueBox().addValueEventListener(new ValueChangeListener() {
+        getAgilityValueBox().addValueChangeListener(new ValueChangeListener() {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
@@ -563,7 +563,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
             }
 
         });
-        getCombatValueBox().addValueEventListener(new ValueChangeListener() {
+        getCombatValueBox().addValueChangeListener(new ValueChangeListener() {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
@@ -571,15 +571,17 @@ public final class DefaultUnit implements Unit, MutantUnit {
             }
 
         });
-        getPrecisionValueBox().addValueEventListener(new ValueChangeListener() {
+        getPrecisionValueBox().addValueChangeListener(
+                new ValueChangeListener() {
 
-            @Override
-            public final void valueChanged(final ValueChangeEvent event) {
-                firePrecisionChangedEvent(event);
-            }
+                    @Override
+                    public final void
+                            valueChanged(final ValueChangeEvent event) {
+                        firePrecisionChangedEvent(event);
+                    }
 
-        });
-        getStrengthValueBox().addValueEventListener(new ValueChangeListener() {
+                });
+        getStrengthValueBox().addValueChangeListener(new ValueChangeListener() {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
@@ -587,7 +589,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
             }
 
         });
-        getTechValueBox().addValueEventListener(new ValueChangeListener() {
+        getTechValueBox().addValueChangeListener(new ValueChangeListener() {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
@@ -595,14 +597,16 @@ public final class DefaultUnit implements Unit, MutantUnit {
             }
 
         });
-        getToughnessValueBox().addValueEventListener(new ValueChangeListener() {
+        getToughnessValueBox().addValueChangeListener(
+                new ValueChangeListener() {
 
-            @Override
-            public final void valueChanged(final ValueChangeEvent event) {
-                fireToughnessChangedEvent(event);
-            }
+                    @Override
+                    public final void
+                            valueChanged(final ValueChangeEvent event) {
+                        fireToughnessChangedEvent(event);
+                    }
 
-        });
+                });
     }
 
 }

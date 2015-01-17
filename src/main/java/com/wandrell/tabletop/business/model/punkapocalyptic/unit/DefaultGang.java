@@ -74,7 +74,7 @@ public final class DefaultGang implements Gang {
                 .setGang(this);
 
         ((AbstractValueBox) bullets)
-                .addValueEventListener(new ValueChangeListener() {
+                .addValueChangeListener(new ValueChangeListener() {
 
                     @Override
                     public final void valueChanged(final ValueChangeEvent evt) {
@@ -101,7 +101,7 @@ public final class DefaultGang implements Gang {
         this.valoration = valorationBuilder.getValoration(this);
 
         ((AbstractValueBox) bullets)
-                .addValueEventListener(new ValueChangeListener() {
+                .addValueChangeListener(new ValueChangeListener() {
 
                     @Override
                     public final void valueChanged(final ValueChangeEvent evt) {
