@@ -26,11 +26,9 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.punkapocalyptic.event.ValorationListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.GangListener;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitEvent;
-import com.wandrell.tabletop.business.model.valuebox.AbstractValueBox;
 import com.wandrell.tabletop.business.model.valuebox.DefaultEditableValueBox;
 import com.wandrell.tabletop.business.model.valuebox.EditableValueBox;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
@@ -60,7 +58,7 @@ public final class DefaultGang implements Gang {
         checkNotNull(gang, "Received a null pointer as gang");
 
         faction = gang.faction;
-        bullets = gang.bullets.createNewInstance();
+        bullets = gang.getBulletsValueBox().createNewInstance();
 
         for (final Unit unit : gang.units) {
             units.add(unit.createNewInstance());
@@ -70,18 +68,10 @@ public final class DefaultGang implements Gang {
 
         valoration = valorationBuilder.getValoration(this);
         // TODO: Do in another way
-        ((GangAware) ((DerivedValueBox) valoration).getViewPoint())
+        ((GangAware) ((DerivedValueBox) getValorationValueBox()).getViewPoint())
                 .setGang(this);
 
-        ((AbstractValueBox) bullets)
-                .addValueChangeListener(new ValueChangeListener() {
-
-                    @Override
-                    public final void valueChanged(final ValueChangeEvent evt) {
-                        fireValorationChangedEvent(new EventObject(this));
-                    }
-
-                });
+        setBulletsListeners();
     }
 
     public DefaultGang(final Faction faction,
@@ -100,15 +90,7 @@ public final class DefaultGang implements Gang {
 
         this.valoration = valorationBuilder.getValoration(this);
 
-        ((AbstractValueBox) bullets)
-                .addValueChangeListener(new ValueChangeListener() {
-
-                    @Override
-                    public final void valueChanged(final ValueChangeEvent evt) {
-                        fireValorationChangedEvent(new EventObject(this));
-                    }
-
-                });
+        setBulletsListeners();
     }
 
     @Override
@@ -127,13 +109,6 @@ public final class DefaultGang implements Gang {
         fireUnitAddedEvent(new UnitEvent(this, unit));
 
         fireValorationChangedEvent(new EventObject(this));
-    }
-
-    @Override
-    public final void addValorationListener(final ValorationListener listener) {
-        checkNotNull(listener, "Received a null pointer as listener");
-
-        getListeners().add(ValorationListener.class, listener);
     }
 
     @Override
@@ -157,7 +132,11 @@ public final class DefaultGang implements Gang {
     }
 
     @Override
-    public final EditableValueBox getBullets() {
+    public final Integer getBullets() {
+        return getBulletsValueBox().getValue();
+    }
+
+    public final EditableValueBox getBulletsValueBox() {
         return bullets;
     }
 
@@ -172,7 +151,11 @@ public final class DefaultGang implements Gang {
     }
 
     @Override
-    public final ValueBox getValoration() {
+    public final Integer getValoration() {
+        return getValorationValueBox().getValue();
+    }
+
+    public final ValueBox getValorationValueBox() {
         return valoration;
     }
 
@@ -203,15 +186,23 @@ public final class DefaultGang implements Gang {
     }
 
     @Override
-    public final void
-            removeValorationListener(final ValorationListener listener) {
-        getListeners().remove(ValorationListener.class, listener);
+    public final void setBullets(final Integer bullets) {
+        getBulletsValueBox().setValue(bullets);
     }
 
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("faction", faction)
                 .add("units", units).toString();
+    }
+
+    private final void fireBulletsChangedEvent(final EventObject evt) {
+        final GangListener[] listnrs;
+
+        listnrs = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : listnrs) {
+            l.bulletsChanged(evt);
+        }
     }
 
     private final void fireUnitAddedEvent(final UnitEvent evt) {
@@ -233,10 +224,10 @@ public final class DefaultGang implements Gang {
     }
 
     private final void fireValorationChangedEvent(final EventObject evt) {
-        final ValorationListener[] listnrs;
+        final GangListener[] listnrs;
 
-        listnrs = getListeners().getListeners(ValorationListener.class);
-        for (final ValorationListener l : listnrs) {
+        listnrs = getListeners().getListeners(GangListener.class);
+        for (final GangListener l : listnrs) {
             l.valorationChanged(evt);
         }
     }
@@ -247,6 +238,18 @@ public final class DefaultGang implements Gang {
 
     private final Collection<Unit> getUnitsModifiable() {
         return units;
+    }
+
+    private final void setBulletsListeners() {
+        getBulletsValueBox().addValueChangeListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent evt) {
+                fireBulletsChangedEvent(new EventObject(this));
+                fireValorationChangedEvent(new EventObject(this));
+            }
+
+        });
     }
 
 }
