@@ -6,9 +6,9 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.AttributeBonusM
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.MutantUnit;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Mutation;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListenerAdapter;
 import com.wandrell.tabletop.business.model.valuebox.derived.AbstractDerivedValueViewPoint;
-import com.wandrell.tabletop.business.model.valuebox.event.ValueBoxEvent;
+import com.wandrell.tabletop.business.util.event.ValueChangeEvent;
 
 public final class UnitToughnessDerivedValueViewPoint extends
         AbstractDerivedValueViewPoint {
@@ -23,19 +23,16 @@ public final class UnitToughnessDerivedValueViewPoint extends
         this.baseValue = baseValue;
         this.unit = unit;
 
-        unit.addUnitListener(new UnitListener() {
+        unit.addUnitListener(new UnitListenerAdapter() {
 
             @Override
-            public final void statusChanged(final EventObject e) {
+            public final void mutationChanged(final EventObject e) {
                 final Integer value;
 
                 value = getValue();
 
-                fireValueChangedEvent(new ValueBoxEvent(this, value, value));
+                fireValueChangedEvent(new ValueChangeEvent(this, value, value));
             }
-
-            @Override
-            public final void valorationChanged(final EventObject e) {}
 
         });
     }

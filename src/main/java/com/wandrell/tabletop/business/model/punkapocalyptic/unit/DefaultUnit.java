@@ -34,6 +34,8 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.event.UnitListener;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
+import com.wandrell.tabletop.business.util.event.ValueChangeEvent;
+import com.wandrell.tabletop.business.util.event.ValueChangeListener;
 
 public final class DefaultUnit implements Unit, MutantUnit {
 
@@ -138,6 +140,8 @@ public final class DefaultUnit implements Unit, MutantUnit {
         toughness = derivedBuilder.getToughness(getBaseToughness(), this);
 
         valoration = derivedBuilder.getValoration(this);
+
+        setAttributesListeners();
     }
 
     public DefaultUnit(final String name, final Integer actions,
@@ -194,6 +198,8 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
             getSpecialRulesModifiable().add(rule);
         }
+
+        setAttributesListeners();
     }
 
     @Override
@@ -210,7 +216,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
         getMutationsModifiable().add(mutation);
 
         fireValorationChangedEvent(new EventObject(this));
-        fireStatusChangedEvent(new EventObject(this));
+        fireMutationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -256,13 +262,13 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final ValueBox getActions() {
-        return actions;
+    public final Integer getActions() {
+        return getActionsValueBox().getValue();
     }
 
     @Override
-    public final ValueBox getAgility() {
-        return agility;
+    public final Integer getAgility() {
+        return getAgilityValueBox().getValue();
     }
 
     @Override
@@ -304,8 +310,8 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final ValueBox getCombat() {
-        return combat;
+    public final Integer getCombat() {
+        return getCombatValueBox().getValue();
     }
 
     @Override
@@ -319,8 +325,8 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final ValueBox getPrecision() {
-        return precision;
+    public final Integer getPrecision() {
+        return getPrecisionValueBox().getValue();
     }
 
     @Override
@@ -329,18 +335,18 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final ValueBox getStrength() {
-        return strength;
+    public final Integer getStrength() {
+        return getStrengthValueBox().getValue();
     }
 
     @Override
-    public final ValueBox getTech() {
-        return tech;
+    public final Integer getTech() {
+        return getTechValueBox().getValue();
     }
 
     @Override
-    public final ValueBox getToughness() {
-        return toughness;
+    public final Integer getToughness() {
+        return getToughnessValueBox().getValue();
     }
 
     @Override
@@ -349,8 +355,8 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final ValueBox getValoration() {
-        return valoration;
+    public final Integer getValoration() {
+        return getValorationValueBox().getValue();
     }
 
     @Override
@@ -370,7 +376,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
         getMutationsModifiable().remove(mutation);
 
         fireValorationChangedEvent(new EventObject(this));
-        fireStatusChangedEvent(new EventObject(this));
+        fireMutationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -403,12 +409,75 @@ public final class DefaultUnit implements Unit, MutantUnit {
         return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
-    private final void fireStatusChangedEvent(final EventObject evt) {
+    private final void fireActionsChangedEvent(final EventObject evt) {
         final UnitListener[] listnrs;
 
         listnrs = getListeners().getListeners(UnitListener.class);
         for (final UnitListener l : listnrs) {
-            l.statusChanged(evt);
+            l.actionsChanged(evt);
+        }
+    }
+
+    private final void fireAgilityChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.agilityChanged(evt);
+        }
+    }
+
+    private final void fireCombatChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.combatChanged(evt);
+        }
+    }
+
+    private final void fireMutationChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.mutationChanged(evt);
+        }
+    }
+
+    private final void firePrecisionChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.precisionChanged(evt);
+        }
+    }
+
+    private final void fireStrengthChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.strengthChanged(evt);
+        }
+    }
+
+    private final void fireTechChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.techChanged(evt);
+        }
+    }
+
+    private final void fireToughnessChangedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.toughnessChanged(evt);
         }
     }
 
@@ -419,6 +488,18 @@ public final class DefaultUnit implements Unit, MutantUnit {
         for (final UnitListener l : listnrs) {
             l.valorationChanged(evt);
         }
+    }
+
+    private final ValueBox getActionsValueBox() {
+        return actions;
+    }
+
+    private final ValueBox getAgilityValueBox() {
+        return agility;
+    }
+
+    private final ValueBox getCombatValueBox() {
+        return combat;
     }
 
     private final Collection<Equipment> getEquipmentModifiable() {
@@ -433,6 +514,10 @@ public final class DefaultUnit implements Unit, MutantUnit {
         return mutations;
     }
 
+    private final ValueBox getPrecisionValueBox() {
+        return precision;
+    }
+
     private final Collection<SpecialRule> getSpecialRulesModifiable() {
         return rules;
     }
@@ -441,8 +526,83 @@ public final class DefaultUnit implements Unit, MutantUnit {
         return listenerStatus;
     }
 
+    private final ValueBox getStrengthValueBox() {
+        return strength;
+    }
+
+    private final ValueBox getTechValueBox() {
+        return tech;
+    }
+
+    private final ValueBox getToughnessValueBox() {
+        return toughness;
+    }
+
+    private final ValueBox getValorationValueBox() {
+        return valoration;
+    }
+
     private final Collection<Weapon> getWeaponsModifiable() {
         return weapons;
+    }
+
+    private final void setAttributesListeners() {
+        getActionsValueBox().addValueEventListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireActionsChangedEvent(event);
+            }
+
+        });
+        getAgilityValueBox().addValueEventListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireAgilityChangedEvent(event);
+            }
+
+        });
+        getCombatValueBox().addValueEventListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireCombatChangedEvent(event);
+            }
+
+        });
+        getPrecisionValueBox().addValueEventListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                firePrecisionChangedEvent(event);
+            }
+
+        });
+        getStrengthValueBox().addValueEventListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireStrengthChangedEvent(event);
+            }
+
+        });
+        getTechValueBox().addValueEventListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireTechChangedEvent(event);
+            }
+
+        });
+        getToughnessValueBox().addValueEventListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireToughnessChangedEvent(event);
+            }
+
+        });
     }
 
 }

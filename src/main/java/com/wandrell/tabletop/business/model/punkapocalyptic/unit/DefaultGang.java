@@ -35,8 +35,8 @@ import com.wandrell.tabletop.business.model.valuebox.DefaultEditableValueBox;
 import com.wandrell.tabletop.business.model.valuebox.EditableValueBox;
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
 import com.wandrell.tabletop.business.model.valuebox.derived.DerivedValueBox;
-import com.wandrell.tabletop.business.model.valuebox.event.ValueBoxEvent;
-import com.wandrell.tabletop.business.model.valuebox.event.ValueBoxListener;
+import com.wandrell.tabletop.business.util.event.ValueChangeEvent;
+import com.wandrell.tabletop.business.util.event.ValueChangeListener;
 import com.wandrell.tabletop.business.util.tag.punkapocalyptic.GangAware;
 
 public final class DefaultGang implements Gang {
@@ -74,10 +74,10 @@ public final class DefaultGang implements Gang {
                 .setGang(this);
 
         ((AbstractValueBox) bullets)
-                .addValueEventListener(new ValueBoxListener() {
+                .addValueEventListener(new ValueChangeListener() {
 
                     @Override
-                    public final void valueChanged(final ValueBoxEvent evt) {
+                    public final void valueChanged(final ValueChangeEvent evt) {
                         fireValorationChangedEvent(new EventObject(this));
                     }
 
@@ -101,10 +101,10 @@ public final class DefaultGang implements Gang {
         this.valoration = valorationBuilder.getValoration(this);
 
         ((AbstractValueBox) bullets)
-                .addValueEventListener(new ValueBoxListener() {
+                .addValueEventListener(new ValueChangeListener() {
 
                     @Override
-                    public final void valueChanged(final ValueBoxEvent evt) {
+                    public final void valueChanged(final ValueChangeEvent evt) {
                         fireValorationChangedEvent(new EventObject(this));
                     }
 

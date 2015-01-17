@@ -84,12 +84,12 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final ValueBox getActions() {
+    public final Integer getActions() {
         return getWrappedUnit().getActions();
     }
 
     @Override
-    public final ValueBox getAgility() {
+    public final Integer getAgility() {
         return getWrappedUnit().getAgility();
     }
 
@@ -104,7 +104,7 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final ValueBox getCombat() {
+    public final Integer getCombat() {
         return getWrappedUnit().getCombat();
     }
 
@@ -119,7 +119,7 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final ValueBox getPrecision() {
+    public final Integer getPrecision() {
         return getWrappedUnit().getPrecision();
     }
 
@@ -129,17 +129,17 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final ValueBox getStrength() {
+    public final Integer getStrength() {
         return getWrappedUnit().getStrength();
     }
 
     @Override
-    public final ValueBox getTech() {
+    public final Integer getTech() {
         return getWrappedUnit().getTech();
     }
 
     @Override
-    public final ValueBox getToughness() {
+    public final Integer getToughness() {
         return getWrappedUnit().getToughness();
     }
 
@@ -149,8 +149,8 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     }
 
     @Override
-    public final ValueBox getValoration() {
-        return valoration;
+    public final Integer getValoration() {
+        return getValorationValueBox().getValue();
     }
 
     @Override
@@ -182,6 +182,10 @@ public final class GroupedUnitWrapper implements GroupedUnit {
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("name", getUnitName())
                 .toString();
+    }
+
+    private final ValueBox getValorationValueBox() {
+        return valoration;
     }
 
     private final Unit getWrappedUnit() {

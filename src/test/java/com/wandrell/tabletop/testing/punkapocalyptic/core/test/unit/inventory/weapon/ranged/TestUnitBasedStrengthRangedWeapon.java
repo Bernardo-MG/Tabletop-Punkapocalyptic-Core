@@ -9,7 +9,6 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.RangedValue;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.MeleeWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnitBasedStrengthRangedWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.valuebox.ValueBox;
 
 public final class TestUnitBasedStrengthRangedWeapon {
 
@@ -27,7 +26,6 @@ public final class TestUnitBasedStrengthRangedWeapon {
         final RangedValue distanceInches;
         final MeleeWeapon weaponMelee;
         final Unit unit;
-        final ValueBox strengthValue;
 
         penetration = Mockito.mock(RangedValue.class);
         strength = Mockito.mock(RangedValue.class);
@@ -41,10 +39,7 @@ public final class TestUnitBasedStrengthRangedWeapon {
         Mockito.when(strength.getMediumValue()).thenReturn(2);
         Mockito.when(strength.getLongValue()).thenReturn(3);
 
-        strengthValue = Mockito.mock(ValueBox.class);
-        Mockito.when(strengthValue.getValue()).thenReturn(4);
-
-        Mockito.when(unit.getStrength()).thenReturn(strengthValue);
+        Mockito.when(unit.getStrength()).thenReturn(4);
 
         weapon = new UnitBasedStrengthRangedWeapon("weapon", 0, penetration,
                 strength, distanceCM, distanceInches, weaponMelee);

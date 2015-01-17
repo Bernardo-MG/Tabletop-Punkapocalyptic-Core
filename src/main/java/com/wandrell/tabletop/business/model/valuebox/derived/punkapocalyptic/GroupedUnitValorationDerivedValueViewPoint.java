@@ -2,22 +2,22 @@ package com.wandrell.tabletop.business.model.valuebox.derived.punkapocalyptic;
 
 import com.wandrell.tabletop.business.model.valuebox.ValueBox;
 import com.wandrell.tabletop.business.model.valuebox.derived.AbstractDerivedValueViewPoint;
-import com.wandrell.tabletop.business.model.valuebox.event.ValueBoxEvent;
-import com.wandrell.tabletop.business.model.valuebox.event.ValueBoxListener;
+import com.wandrell.tabletop.business.util.event.ValueChangeEvent;
+import com.wandrell.tabletop.business.util.event.ValueChangeListener;
 
 public final class GroupedUnitValorationDerivedValueViewPoint extends
         AbstractDerivedValueViewPoint {
 
-    private final ValueBoxListener listener;
-    private final ValueBox         size;
-    private final Integer          valoration;
+    private final ValueChangeListener listener;
+    private final ValueBox            size;
+    private final Integer             valoration;
 
     {
-        listener = new ValueBoxListener() {
+        listener = new ValueChangeListener() {
 
             @Override
-            public final void valueChanged(final ValueBoxEvent event) {
-                fireValueChangedEvent(new ValueBoxEvent(this, getValue(),
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireValueChangedEvent(new ValueChangeEvent(this, getValue(),
                         getValue()));
             }
 
