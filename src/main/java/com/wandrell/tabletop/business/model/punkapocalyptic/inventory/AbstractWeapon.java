@@ -44,6 +44,7 @@ public abstract class AbstractWeapon implements Weapon {
         super();
 
         checkNotNull(weapon, "Received a null pointer as weapon");
+        checkNotNull(rules, "Received a null pointer as rules");
 
         weaponName = weapon.weaponName;
 
@@ -60,7 +61,8 @@ public abstract class AbstractWeapon implements Weapon {
         enhancements.addAll(weapon.enhancements);
     }
 
-    public AbstractWeapon(final String name, final Integer cost) {
+    public AbstractWeapon(final String name, final Integer cost,
+            final Collection<SpecialRule> rules) {
         super();
 
         checkNotNull(name, "Received a null pointer as name");
@@ -69,6 +71,16 @@ public abstract class AbstractWeapon implements Weapon {
         this.weaponName = name;
 
         this.weaponCost = cost;
+
+        for (final SpecialRule rule : rules) {
+            checkNotNull(rule, "Received a null pointer as rule");
+
+            this.rules.add(rule);
+
+            if (rule instanceof WeaponModifierSpecialRule) {
+                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
+            }
+        }
     }
 
     @Override
@@ -156,23 +168,6 @@ public abstract class AbstractWeapon implements Weapon {
     public final void
             removeValorationListener(final ValorationListener listener) {
         getListeners().remove(ValorationListener.class, listener);
-    }
-
-    @Override
-    public final void setSpecialRules(final Collection<SpecialRule> rules) {
-        checkNotNull(rules, "Received a null pointer as rules");
-
-        getSpecialRulesModifiable().clear();
-
-        for (final SpecialRule rule : rules) {
-            checkNotNull(rule, "Received a null pointer as rule");
-
-            getSpecialRulesModifiable().add(rule);
-
-            if (rule instanceof WeaponModifierSpecialRule) {
-                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
-            }
-        }
     }
 
     @Override

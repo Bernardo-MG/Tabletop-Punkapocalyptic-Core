@@ -17,18 +17,13 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.faction;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.business.model.punkapocalyptic.availability.FactionUnitAvailability;
 
 public final class DefaultFaction implements Faction {
 
-    private final String                              factionName;
-    private final Collection<FactionUnitAvailability> units = new LinkedHashSet<>();
+    private final String factionName;
 
     public DefaultFaction(final DefaultFaction faction) {
         super();
@@ -44,18 +39,6 @@ public final class DefaultFaction implements Faction {
         checkNotNull(name, "Received a null pointer as name");
 
         this.factionName = name;
-    }
-
-    @Override
-    public final void addUnit(final FactionUnitAvailability unit) {
-        checkNotNull(unit, "Received a null pointer as unit availability");
-
-        getUnitsModifiable().add(unit);
-    }
-
-    @Override
-    public final void clearUnits() {
-        getUnitsModifiable().clear();
     }
 
     @Override
@@ -84,28 +67,14 @@ public final class DefaultFaction implements Faction {
     }
 
     @Override
-    public final Collection<FactionUnitAvailability> getUnits() {
-        return Collections.unmodifiableCollection(getUnitsModifiable());
-    }
-
-    @Override
     public final int hashCode() {
         return Objects.hashCode(factionName);
-    }
-
-    @Override
-    public final void removeUnit(final FactionUnitAvailability unit) {
-        getUnitsModifiable().remove(unit);
     }
 
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("name", factionName)
                 .toString();
-    }
-
-    private final Collection<FactionUnitAvailability> getUnitsModifiable() {
-        return units;
     }
 
 }

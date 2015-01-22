@@ -105,6 +105,8 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
         checkNotNull(unit, "Received a null pointer as unit");
 
+        // TODO: Set the base armor in some other way
+
         name = unit.name;
 
         baseActions = unit.getBaseActions();

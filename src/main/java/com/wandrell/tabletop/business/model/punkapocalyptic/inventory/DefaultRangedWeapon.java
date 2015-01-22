@@ -17,6 +17,9 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Collection;
+
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.util.RangedValue;
 
 public final class DefaultRangedWeapon extends AbstractWeapon implements
@@ -45,10 +48,10 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     public DefaultRangedWeapon(final String name, final Integer cost,
-            final RangedValue penetration, final RangedValue strength,
-            final RangedValue distanceCM, final RangedValue distanceInches,
-            final MeleeWeapon weaponMelee) {
-        super(name, cost);
+            final Collection<SpecialRule> rules, final RangedValue penetration,
+            final RangedValue strength, final RangedValue distanceCM,
+            final RangedValue distanceInches, final MeleeWeapon weaponMelee) {
+        super(name, cost, rules);
 
         checkNotNull(distanceCM,
                 "Received a null pointer as the distances in cm");

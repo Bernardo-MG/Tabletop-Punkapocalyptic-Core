@@ -23,6 +23,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.tabletop.business.model.punkapocalyptic.faction.Faction;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.procedure.Constraint;
 
@@ -30,15 +31,18 @@ public final class DefaultFactionUnitAvailability implements
         FactionUnitAvailability {
 
     private final Unit                   availUnit;
+    private final Faction                faction;
     private final Collection<Constraint> unitConstrn = new LinkedHashSet<>();
 
-    public DefaultFactionUnitAvailability(final Unit unit,
-            final Collection<Constraint> constraints) {
+    public DefaultFactionUnitAvailability(final Faction faction,
+            final Unit unit, final Collection<Constraint> constraints) {
         super();
 
+        checkNotNull(faction, "Received a null pointer as faction");
         checkNotNull(unit, "Received a null pointer as unit");
         checkNotNull(constraints, "Received a null pointer as constraints");
 
+        this.faction = faction;
         this.availUnit = unit;
 
         for (final Constraint constraint : constraints) {
@@ -72,6 +76,11 @@ public final class DefaultFactionUnitAvailability implements
     @Override
     public final Collection<Constraint> getConstraints() {
         return Collections.unmodifiableCollection(getConstraintsModifiable());
+    }
+
+    @Override
+    public final Faction getFaction() {
+        return faction;
     }
 
     @Override

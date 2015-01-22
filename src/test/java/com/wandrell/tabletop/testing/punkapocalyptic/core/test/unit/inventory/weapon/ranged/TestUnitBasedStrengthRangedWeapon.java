@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.testing.punkapocalyptic.core.test.unit.inventory.weapon.ranged;
 
+import java.util.LinkedList;
+
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -41,8 +43,9 @@ public final class TestUnitBasedStrengthRangedWeapon {
 
         Mockito.when(unit.getStrength()).thenReturn(4);
 
-        weapon = new UnitBasedStrengthRangedWeapon("weapon", 0, penetration,
-                strength, distanceCM, distanceInches, weaponMelee);
+        weapon = new UnitBasedStrengthRangedWeapon("weapon", 0,
+                new LinkedList<>(), penetration, strength, distanceCM,
+                distanceInches, weaponMelee);
 
         weapon.setUnit(unit);
     }

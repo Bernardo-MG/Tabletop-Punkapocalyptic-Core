@@ -32,15 +32,15 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     private Unit               unit;
 
     public UnitBasedStrengthRangedWeapon(final String name, final Integer cost,
-            final RangedValue penetration, final RangedValue strength,
-            final RangedValue distanceCM, final RangedValue distanceInches,
-            final MeleeWeapon weaponMelee) {
+            final Collection<SpecialRule> rules, final RangedValue penetration,
+            final RangedValue strength, final RangedValue distanceCM,
+            final RangedValue distanceInches, final MeleeWeapon weaponMelee) {
         super();
 
         // TODO: Maybe this should be on the framework library
 
-        baseWeapon = new DefaultRangedWeapon(name, cost, penetration, strength,
-                distanceCM, distanceInches, weaponMelee);
+        baseWeapon = new DefaultRangedWeapon(name, cost, rules, penetration,
+                strength, distanceCM, distanceInches, weaponMelee);
     }
 
     public UnitBasedStrengthRangedWeapon(
@@ -162,11 +162,6 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     @Override
     public final void setMeleeEquivalent(final MeleeWeapon weapon) {
         getBaseWeapon().setMeleeEquivalent(weapon);
-    }
-
-    @Override
-    public final void setSpecialRules(final Collection<SpecialRule> rules) {
-        getBaseWeapon().setSpecialRules(rules);
     }
 
     @Override

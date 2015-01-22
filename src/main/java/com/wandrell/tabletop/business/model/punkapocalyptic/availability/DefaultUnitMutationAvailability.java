@@ -23,6 +23,7 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.mutation.Mutation;
 
 public final class DefaultUnitMutationAvailability implements
@@ -30,13 +31,18 @@ public final class DefaultUnitMutationAvailability implements
 
     private final Integer              max;
     private final Collection<Mutation> mutations = new LinkedHashSet<>();
+    private final Unit                 unit;
 
-    public DefaultUnitMutationAvailability(final Integer maxMutations,
+    public DefaultUnitMutationAvailability(final Unit unit,
+            final Integer maxMutations,
             final Collection<Mutation> mutationOptions) {
         super();
 
+        checkNotNull(unit, "Received a null pointer as unit");
         checkNotNull(maxMutations, "Received a null pointer as max mutations");
         checkNotNull(mutationOptions, "Received a null pointer as mutations");
+
+        this.unit = unit;
 
         max = maxMutations;
         for (final Mutation mutation : mutationOptions) {
@@ -44,7 +50,6 @@ public final class DefaultUnitMutationAvailability implements
 
             this.mutations.add(mutation);
         }
-
     }
 
     @Override
@@ -64,8 +69,7 @@ public final class DefaultUnitMutationAvailability implements
         DefaultUnitMutationAvailability other;
 
         other = (DefaultUnitMutationAvailability) obj;
-        return Objects.equal(max, other.max)
-                && Objects.equal(mutations, other.mutations);
+        return Objects.equal(unit, other.unit);
     }
 
     @Override
@@ -80,14 +84,19 @@ public final class DefaultUnitMutationAvailability implements
     }
 
     @Override
+    public final Unit getUnit() {
+        return unit;
+    }
+
+    @Override
     public final int hashCode() {
-        return Objects.hashCode(max, mutations);
+        return Objects.hashCode(unit);
     }
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("max", max)
-                .add("mutations", mutations).toString();
+        return MoreObjects.toStringHelper(this).add("unit", unit.getUnitName())
+                .add("max", max).add("mutations", mutations).toString();
     }
 
     private final Collection<Mutation> getMutationOptionsModifiable() {

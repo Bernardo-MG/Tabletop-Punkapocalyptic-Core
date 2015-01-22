@@ -23,22 +23,27 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 
 public final class DefaultUnitWeaponAvailability implements
         UnitWeaponAvailability {
 
     private final Integer                  maxWeapons;
     private final Integer                  minWeapons;
+    private final Unit                     unit;
     private final Collection<WeaponOption> weaponOptions = new LinkedHashSet<>();
 
-    public DefaultUnitWeaponAvailability(
+    public DefaultUnitWeaponAvailability(final Unit unit,
             final Collection<WeaponOption> weapons, final Integer min,
             final Integer max) {
         super();
 
+        checkNotNull(unit, "Received a null pointer as unit");
         checkNotNull(weapons, "Received a null pointer as weapon options");
         checkNotNull(min, "Received a null pointer as min weapons");
         checkNotNull(max, "Received a null pointer as max weapons");
+
+        this.unit = unit;
 
         this.minWeapons = min;
         this.maxWeapons = max;
@@ -68,9 +73,7 @@ public final class DefaultUnitWeaponAvailability implements
         DefaultUnitWeaponAvailability other;
 
         other = (DefaultUnitWeaponAvailability) obj;
-        return Objects.equal(minWeapons, other.minWeapons)
-                && Objects.equal(maxWeapons, other.maxWeapons)
-                && Objects.equal(weaponOptions, other.weaponOptions);
+        return Objects.equal(unit, other.unit);
     }
 
     @Override
@@ -84,20 +87,25 @@ public final class DefaultUnitWeaponAvailability implements
     }
 
     @Override
+    public final Unit getUnit() {
+        return unit;
+    }
+
+    @Override
     public final Collection<WeaponOption> getWeaponOptions() {
         return Collections.unmodifiableCollection(getWeaponOptionsModifiable());
     }
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(minWeapons, maxWeapons, weaponOptions);
+        return Objects.hashCode(unit);
     }
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("min", minWeapons)
-                .add("max", maxWeapons).add("weapons", weaponOptions)
-                .toString();
+        return MoreObjects.toStringHelper(this).add("unit", unit.getUnitName())
+                .add("min", minWeapons).add("max", maxWeapons)
+                .add("weapons", weaponOptions).toString();
     }
 
     private final Collection<WeaponOption> getWeaponOptionsModifiable() {

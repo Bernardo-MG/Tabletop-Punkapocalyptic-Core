@@ -17,6 +17,10 @@ package com.wandrell.tabletop.business.model.punkapocalyptic.inventory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Collection;
+
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
+
 public final class DefaultMeleeWeapon extends AbstractWeapon implements
         MeleeWeapon {
 
@@ -36,8 +40,8 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
 
     public DefaultMeleeWeapon(final String name, final Integer cost,
             final Integer strength, final Integer penetration,
-            final Integer combat) {
-        super(name, cost);
+            final Integer combat, final Collection<SpecialRule> rules) {
+        super(name, cost, rules);
 
         checkNotNull(combat, "Received a null pointer as combat");
         checkNotNull(penetration, "Received a null pointer as penetration");

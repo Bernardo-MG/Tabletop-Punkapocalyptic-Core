@@ -24,19 +24,24 @@ import java.util.LinkedHashSet;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Armor;
+import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 
 public final class DefaultUnitArmorAvailability implements
         UnitArmorAvailability {
 
     private final Collection<Armor> armorOptions = new LinkedHashSet<>();
     private final Armor             initialArmor;
+    private final Unit              unit;
 
-    public DefaultUnitArmorAvailability(final Collection<Armor> armors,
-            final Armor initial) {
+    public DefaultUnitArmorAvailability(final Unit unit,
+            final Collection<Armor> armors, final Armor initial) {
         super();
 
+        checkNotNull(unit, "Received a null pointer as unit");
         checkNotNull(armors, "Received a null pointer as armor options");
+        checkNotNull(initial, "Received a null pointer as initial armor");
 
+        this.unit = unit;
         this.initialArmor = initial;
 
         for (final Armor armor : armors) {
@@ -63,8 +68,7 @@ public final class DefaultUnitArmorAvailability implements
         DefaultUnitArmorAvailability other;
 
         other = (DefaultUnitArmorAvailability) obj;
-        return Objects.equal(armorOptions, other.armorOptions)
-                && Objects.equal(initialArmor, other.initialArmor);
+        return Objects.equal(unit, other.unit);
     }
 
     @Override
@@ -78,14 +82,20 @@ public final class DefaultUnitArmorAvailability implements
     }
 
     @Override
+    public final Unit getUnit() {
+        return unit;
+    }
+
+    @Override
     public final int hashCode() {
-        return Objects.hashCode(armorOptions, initialArmor);
+        return Objects.hashCode(unit);
     }
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("initial", initialArmor)
-                .add("armors", armorOptions).toString();
+        return MoreObjects.toStringHelper(this).add("unit", unit.getUnitName())
+                .add("initial", initialArmor).add("armors", armorOptions)
+                .toString();
     }
 
     private final Collection<Armor> getArmorOptionsModifiable() {
