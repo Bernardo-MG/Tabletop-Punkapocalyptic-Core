@@ -5,7 +5,7 @@
 
 	<groupId>com.wandrell.tabletop</groupId>
 	<artifactId>punkapocalyptic-core</artifactId>
-	<version>alpha</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Tabletop's Punkapocalyptic Core</name>
@@ -21,11 +21,42 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:https://github.com/Bernardo-MG/punkapocalyptic-Core.git</connection>
-		<developerConnection>scm:git:https://github.com/Bernardo-MG/punkapocalyptic-Core.git</developerConnection>
+		<connection>scm:git:https://github.com/Bernardo-MG/Punkapocalyptic-Core.git</connection>
+		<developerConnection>scm:git:https://github.com/Bernardo-MG/Punkapocalyptic-Core.git</developerConnection>
 		<tag>head</tag>
-		<url>http://github.com/Bernardo-MG/punkapocalyptic-Core</url>
+		<url>http://github.com/Bernardo-MG/Punkapocalyptic-Core</url>
 	</scm>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/Bernardo-MG/Punkapocalyptic-Core/issues</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/Bernardo-MG/Punkapocalyptic-Core</url>
+		<notifiers />
+	</ciManagement>
+
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>wandrell-releases</id>
+			<name>Wandrell releases repository</name>
+			<url>https://api.bintray.com/maven/bernardo-mg/maven/punkapocalyptic-core</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>wandrell-snapshots</id>
+			<name>Wandrell snapshots repository</name>
+			<url>ftp://maven.wandrell.com</url>
+		</snapshotRepository>
+		<site>
+			<id>wandrell-site</id>
+			<name>Wandrell Maven sites</name>
+			<url>ftp://docs.wandrell.com/punkapocalyptic-core</url>
+		</site>
+	</distributionManagement>
 
 	<organization>
 		<name />
@@ -62,12 +93,13 @@
 		<jdom.version>2.0.5</jdom.version>
 		<mockito.version>1.9.5</mockito.version>
 		<slf4j.version>1.7.7</slf4j.version>
-		<tabletop.version>alpha</tabletop.version>
+		<tabletop.version>0.1.0-SNAPSHOT</tabletop.version>
 		<testng.version>6.8.8</testng.version>
-		<wandrell.version>alpha</wandrell.version>
+		<wandrell.version>0.1.0-SNAPSHOT</wandrell.version>
 		<!-- Plugins versions -->
 		<plugin.checkstyle.version>2.13</plugin.checkstyle.version>
 		<plugin.compiler.version>3.2</plugin.compiler.version>
+		<plugin.deploy.version>2.8.2</plugin.deploy.version>
 		<plugin.failsafe.version>2.18</plugin.failsafe.version>
 		<plugin.findbugs.version>3.0.0</plugin.findbugs.version>
 		<plugin.jacoco.version>0.7.2.201409121644</plugin.jacoco.version>
@@ -78,9 +110,25 @@
 		<plugin.pmd.version>3.3</plugin.pmd.version>
 		<plugin.reports.version>2.7</plugin.reports.version>
 		<plugin.site.version>3.4</plugin.site.version>
+		<plugin.source.version>2.4</plugin.source.version>
 		<plugin.surefire.version>2.18</plugin.surefire.version>
 		<plugin.taglist.version>2.4</plugin.taglist.version>
+		<!-- Extensions versions -->
+		<extension.wagon.version>2.8</extension.wagon.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>wandrell-releases</id>
+			<name>Wandrell releases repository</name>
+			<url>http://dl.bintray.com/bernardo-mg/maven</url>
+		</repository>
+		<repository>
+			<id>wandrell-snapshots</id>
+			<name>Wandrell snapshots repository</name>
+			<url>http://maven.wandrell.com</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -146,6 +194,15 @@
 
 	<build>
 		<defaultGoal>clean package install</defaultGoal>
+		<extensions>
+			<extension>
+				<!-- Wagon -->
+				<!-- Enables the use of FTP -->
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>${extension.wagon.version}</version>
+			</extension>
+		</extensions>
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
@@ -208,7 +265,7 @@
 						</property>
 					</properties>
 					<suiteXmlFiles>
-						<suiteXmlFile>${project.build.testOutputDirectory}/tests-maven-integration-suite.xml</suiteXmlFile>
+						<suiteXmlFile>${project.build.testOutputDirectory}/tests_maven_integration_suite.xml</suiteXmlFile>
 					</suiteXmlFiles>
 				</configuration>
 				<executions>
@@ -272,6 +329,57 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<!-- Source -->
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${plugin.source.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<!-- Javadoc -->
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${plugin.javadoc.version}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<!-- Deploy -->
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${plugin.deploy.version}</version>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+						<configuration>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+							<url>${project.distributionManagement.snapshotRepository.url}</url>
+							<artifactId>${project.artifactId}</artifactId>
+							<groupId>${project.groupId}</groupId>
+							<version>${project.version}</version>
+							<file>${project.build.directory}/${project.build.finalName}.jar</file>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<!-- Surefire -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -288,7 +396,7 @@
 						</property>
 					</properties>
 					<suiteXmlFiles>
-						<suiteXmlFile>${project.build.testOutputDirectory}/tests-maven-unit-suite.xml</suiteXmlFile>
+						<suiteXmlFile>${project.build.testOutputDirectory}/tests_maven_unit_suite.xml</suiteXmlFile>
 					</suiteXmlFiles>
 				</configuration>
 			</plugin>
