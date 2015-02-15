@@ -29,7 +29,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 public final class DefaultUnitArmorAvailability implements
         UnitArmorAvailability {
 
-    private final Collection<Armor> armorOptions = new LinkedHashSet<>();
+    private final Collection<Armor> armorOptions = new LinkedHashSet<Armor>();
     private final Armor             initialArmor;
     private final Unit              unit;
 

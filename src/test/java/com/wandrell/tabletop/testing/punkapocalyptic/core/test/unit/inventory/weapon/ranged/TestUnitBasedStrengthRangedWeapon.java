@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.MeleeWeapon;
 import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnitBasedStrengthRangedWeapon;
+import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
 import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
 import com.wandrell.tabletop.business.model.punkapocalyptic.util.RangedValue;
 
@@ -44,8 +45,8 @@ public final class TestUnitBasedStrengthRangedWeapon {
         Mockito.when(unit.getStrength()).thenReturn(4);
 
         weapon = new UnitBasedStrengthRangedWeapon("weapon", 0,
-                new LinkedList<>(), penetration, strength, distanceCM,
-                distanceInches, weaponMelee);
+                new LinkedList<SpecialRule>(), penetration, strength,
+                distanceCM, distanceInches, weaponMelee);
 
         weapon.setUnit(unit);
     }

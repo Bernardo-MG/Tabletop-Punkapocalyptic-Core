@@ -29,7 +29,7 @@ public final class DefaultArmor implements Armor {
 
     private final Integer                 armorArmor;
     private final String                  armorName;
-    private final Collection<SpecialRule> armorRules = new LinkedHashSet<>();
+    private final Collection<SpecialRule> armorRules = new LinkedHashSet<SpecialRule>();
     private Integer                       cost       = 0;
 
     public DefaultArmor(final DefaultArmor armor) {

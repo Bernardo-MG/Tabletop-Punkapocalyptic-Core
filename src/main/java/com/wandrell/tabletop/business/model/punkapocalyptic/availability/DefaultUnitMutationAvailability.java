@@ -30,7 +30,7 @@ public final class DefaultUnitMutationAvailability implements
         UnitMutationAvailability {
 
     private final Integer              max;
-    private final Collection<Mutation> mutations = new LinkedHashSet<>();
+    private final Collection<Mutation> mutations = new LinkedHashSet<Mutation>();
     private final Unit                 unit;
 
     public DefaultUnitMutationAvailability(final Unit unit,

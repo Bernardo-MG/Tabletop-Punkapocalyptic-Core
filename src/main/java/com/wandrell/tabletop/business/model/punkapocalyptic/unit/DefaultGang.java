@@ -42,7 +42,7 @@ public final class DefaultGang implements Gang {
     private final EditableValueBox  bullets;
     private final Faction           faction;
     private final EventListenerList listeners = new EventListenerList();
-    private final Collection<Unit>  units     = new LinkedList<>();
+    private final Collection<Unit>  units     = new LinkedList<Unit>();
     private final ValueBox          valoration;
     private final ValorationBuilder valorationBuilder;
 
@@ -115,7 +115,7 @@ public final class DefaultGang implements Gang {
     public final void clearUnits() {
         final Collection<Unit> units;
 
-        units = new LinkedList<>(getUnits());
+        units = new LinkedList<Unit>(getUnits());
 
         getUnitsModifiable().clear();
 

@@ -29,7 +29,7 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.WeaponEnha
 public final class DefaultWeaponOption implements WeaponOption {
 
     private final Weapon                        availWeapon;
-    private final Collection<WeaponEnhancement> weaponEnhcn = new LinkedHashSet<>();
+    private final Collection<WeaponEnhancement> weaponEnhcn = new LinkedHashSet<WeaponEnhancement>();
 
     public DefaultWeaponOption(final Weapon weapon,
             final Collection<WeaponEnhancement> enhancements) {

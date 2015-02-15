@@ -31,7 +31,7 @@ public final class DefaultUnitWeaponAvailability implements
     private final Integer                  maxWeapons;
     private final Integer                  minWeapons;
     private final Unit                     unit;
-    private final Collection<WeaponOption> weaponOptions = new LinkedHashSet<>();
+    private final Collection<WeaponOption> weaponOptions = new LinkedHashSet<WeaponOption>();
 
     public DefaultUnitWeaponAvailability(final Unit unit,
             final Collection<WeaponOption> weapons, final Integer min,

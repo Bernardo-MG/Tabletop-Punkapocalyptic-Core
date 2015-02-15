@@ -33,9 +33,9 @@ import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.WeaponModifi
 
 public abstract class AbstractWeapon implements Weapon {
 
-    private final Collection<WeaponEnhancement> enhancements = new LinkedList<>();
+    private final Collection<WeaponEnhancement> enhancements = new LinkedList<WeaponEnhancement>();
     private final EventListenerList             listeners    = new EventListenerList();
-    private final Collection<SpecialRule>       rules        = new LinkedHashSet<>();
+    private final Collection<SpecialRule>       rules        = new LinkedHashSet<SpecialRule>();
     private Boolean                             twoHanded    = false;
     private final Integer                       weaponCost;
     private final String                        weaponName;

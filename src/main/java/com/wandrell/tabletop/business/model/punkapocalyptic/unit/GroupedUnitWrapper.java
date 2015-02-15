@@ -185,7 +185,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         if (getWrappedUnit() instanceof MutantUnit) {
             mutations = ((MutantUnit) getWrappedUnit()).getMutations();
         } else {
-            mutations = new LinkedList<>();
+            mutations = new LinkedList<Mutation>();
         }
 
         return mutations;

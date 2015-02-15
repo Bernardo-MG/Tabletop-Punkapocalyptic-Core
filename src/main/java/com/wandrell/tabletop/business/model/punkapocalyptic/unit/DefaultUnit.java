@@ -44,8 +44,9 @@ public final class DefaultUnit implements Unit, MutantUnit {
     private final ValueBox                actions;
     private final ValueBox                agility;
     private Armor                         armor     = new DefaultArmor(
-                                                            "unarmored", 0,
-                                                            new LinkedList<>());
+                                                            "unarmored",
+                                                            0,
+                                                            new LinkedList<SpecialRule>());
     private final Integer                 baseActions;
     private final Integer                 baseAgility;
     private final Integer                 baseCombat;
@@ -56,18 +57,18 @@ public final class DefaultUnit implements Unit, MutantUnit {
     private final ValueBox                combat;
     private final Integer                 cost;
     private final DerivedValuesBuilder    derivedBuilder;
-    private final Collection<Equipment>   equipment = new LinkedHashSet<>();
+    private final Collection<Equipment>   equipment = new LinkedHashSet<Equipment>();
     private final EventListenerList       listeners = new EventListenerList();
     private final ValorationListener      listenerStatus;
-    private final Collection<Mutation>    mutations = new LinkedHashSet<>();
+    private final Collection<Mutation>    mutations = new LinkedHashSet<Mutation>();
     private final String                  name;
     private final ValueBox                precision;
-    private final Collection<SpecialRule> rules     = new LinkedHashSet<>();
+    private final Collection<SpecialRule> rules     = new LinkedHashSet<SpecialRule>();
     private final ValueBox                strength;
     private final ValueBox                tech;
     private final ValueBox                toughness;
     private final ValueBox                valoration;
-    private final Collection<Weapon>      weapons   = new LinkedHashSet<>();
+    private final Collection<Weapon>      weapons   = new LinkedHashSet<Weapon>();
 
     public interface DerivedValuesBuilder {
 

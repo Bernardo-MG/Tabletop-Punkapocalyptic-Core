@@ -32,7 +32,7 @@ public final class DefaultFactionUnitAvailability implements
 
     private final Unit                   availUnit;
     private final Faction                faction;
-    private final Collection<Constraint> unitConstrn = new LinkedHashSet<>();
+    private final Collection<Constraint> unitConstrn = new LinkedHashSet<Constraint>();
 
     public DefaultFactionUnitAvailability(final Faction faction,
             final Unit unit, final Collection<Constraint> constraints) {
