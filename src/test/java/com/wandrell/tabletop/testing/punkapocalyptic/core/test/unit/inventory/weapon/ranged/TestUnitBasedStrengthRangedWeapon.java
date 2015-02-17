@@ -7,11 +7,11 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.MeleeWeapon;
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.UnitBasedStrengthRangedWeapon;
-import com.wandrell.tabletop.business.model.punkapocalyptic.ruleset.SpecialRule;
-import com.wandrell.tabletop.business.model.punkapocalyptic.unit.Unit;
-import com.wandrell.tabletop.business.model.punkapocalyptic.util.RangedValue;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.MeleeWeapon;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitBasedStrengthRangedWeapon;
+import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
+import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
 
 public final class TestUnitBasedStrengthRangedWeapon {
 

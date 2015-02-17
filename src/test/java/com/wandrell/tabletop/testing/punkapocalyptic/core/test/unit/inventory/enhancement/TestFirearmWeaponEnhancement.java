@@ -5,10 +5,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.FirearmWeaponEnhancement;
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.RangedWeapon;
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.Weapon;
-import com.wandrell.tabletop.business.model.punkapocalyptic.inventory.WeaponEnhancement;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.FirearmWeaponEnhancement;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.RangedWeapon;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.WeaponEnhancement;
 
 public final class TestFirearmWeaponEnhancement {
 
