@@ -32,6 +32,23 @@ public final class DefaultMutation implements Mutation, AttributeBonusMutation {
     private final Integer techBonus;
     private final Integer toughnessBonus;
 
+    public DefaultMutation(final DefaultMutation mutation) {
+        super();
+
+        checkNotNull(mutation, "Received a null pointer as mutation");
+
+        this.name = mutation.name;
+        this.cost = mutation.cost;
+
+        actionsBonus = mutation.actionsBonus;
+        agilityBonus = mutation.agilityBonus;
+        combatBonus = mutation.combatBonus;
+        precisionBonus = mutation.precisionBonus;
+        strengthBonus = mutation.strengthBonus;
+        techBonus = mutation.techBonus;
+        toughnessBonus = mutation.toughnessBonus;
+    }
+
     public DefaultMutation(final String name, final Integer cost,
             final Integer actions, final Integer agility, final Integer combat,
             final Integer precision, final Integer strength,
@@ -58,6 +75,11 @@ public final class DefaultMutation implements Mutation, AttributeBonusMutation {
         strengthBonus = strength;
         techBonus = tech;
         toughnessBonus = toughness;
+    }
+
+    @Override
+    public final DefaultMutation createNewInstance() {
+        return new DefaultMutation(this);
     }
 
     @Override

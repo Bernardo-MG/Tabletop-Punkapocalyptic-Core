@@ -42,6 +42,11 @@ public final class DefaultFaction implements Faction {
     }
 
     @Override
+    public final DefaultFaction createNewInstance() {
+        return new DefaultFaction(this);
+    }
+
+    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;

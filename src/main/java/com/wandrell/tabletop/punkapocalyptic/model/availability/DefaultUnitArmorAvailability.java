@@ -93,7 +93,7 @@ public final class DefaultUnitArmorAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getUnitName())
+        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
                 .add("initial", initialArmor).add("armors", armorOptions)
                 .toString();
     }

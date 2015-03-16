@@ -28,6 +28,14 @@ public final class FirearmSpecialRule implements SpecialRule,
 
     private final SpecialRule rule;
 
+    public FirearmSpecialRule(final FirearmSpecialRule rule) {
+        super();
+
+        checkNotNull(rule, "Received a null pointer as special rule");
+
+        this.rule = rule.rule.createNewInstance();
+    }
+
     public FirearmSpecialRule(final String name) {
         super();
 
@@ -43,6 +51,11 @@ public final class FirearmSpecialRule implements SpecialRule,
         if (weapon instanceof RangedWeapon) {
             ((RangedWeapon) weapon).setFirearm(true);
         }
+    }
+
+    @Override
+    public final FirearmSpecialRule createNewInstance() {
+        return new FirearmSpecialRule(this);
     }
 
     @Override

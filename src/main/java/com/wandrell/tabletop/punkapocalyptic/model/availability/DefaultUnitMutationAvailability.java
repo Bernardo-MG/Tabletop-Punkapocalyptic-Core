@@ -95,7 +95,7 @@ public final class DefaultUnitMutationAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getUnitName())
+        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
                 .add("max", max).add("mutations", mutations).toString();
     }
 

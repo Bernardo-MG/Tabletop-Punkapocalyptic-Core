@@ -24,6 +24,16 @@ public final class FirearmWeaponEnhancement implements WeaponEnhancement {
     private final Integer cost;
     private final String  name;
 
+    public FirearmWeaponEnhancement(final FirearmWeaponEnhancement enhancement) {
+        super();
+
+        checkNotNull(enhancement,
+                "Received a null pointer as weapon enhancement");
+
+        name = enhancement.name;
+        cost = enhancement.cost;
+    }
+
     public FirearmWeaponEnhancement(final String name, final Integer cost) {
         super();
 
@@ -32,6 +42,11 @@ public final class FirearmWeaponEnhancement implements WeaponEnhancement {
 
         this.name = name;
         this.cost = cost;
+    }
+
+    @Override
+    public final WeaponEnhancement createNewInstance() {
+        return new FirearmWeaponEnhancement(this);
     }
 
     @Override

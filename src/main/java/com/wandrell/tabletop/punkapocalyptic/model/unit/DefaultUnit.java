@@ -330,6 +330,11 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
+    public final String getName() {
+        return name;
+    }
+
+    @Override
     public final Integer getPrecision() {
         return getPrecisionValueBox().getValue();
     }
@@ -352,11 +357,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
     @Override
     public final Integer getToughness() {
         return getToughnessValueBox().getValue();
-    }
-
-    @Override
-    public final String getUnitName() {
-        return name;
     }
 
     @Override

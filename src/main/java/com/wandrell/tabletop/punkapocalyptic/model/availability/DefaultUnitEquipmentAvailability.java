@@ -63,7 +63,7 @@ public final class DefaultUnitEquipmentAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getUnitName())
+        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
                 .add("equipment", equipment).toString();
     }
 

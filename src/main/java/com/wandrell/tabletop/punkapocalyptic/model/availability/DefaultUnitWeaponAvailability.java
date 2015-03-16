@@ -103,7 +103,7 @@ public final class DefaultUnitWeaponAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getUnitName())
+        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
                 .add("min", minWeapons).add("max", maxWeapons)
                 .add("weapons", weaponOptions).toString();
     }

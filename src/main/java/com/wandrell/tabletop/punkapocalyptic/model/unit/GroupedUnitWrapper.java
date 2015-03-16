@@ -192,6 +192,11 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     }
 
     @Override
+    public final String getName() {
+        return getWrappedUnit().getName();
+    }
+
+    @Override
     public final Integer getPrecision() {
         return getWrappedUnit().getPrecision();
     }
@@ -214,11 +219,6 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     @Override
     public final Integer getToughness() {
         return getWrappedUnit().getToughness();
-    }
-
-    @Override
-    public final String getUnitName() {
-        return getWrappedUnit().getUnitName();
     }
 
     @Override
@@ -261,7 +261,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", getUnitName())
+        return MoreObjects.toStringHelper(this).add("name", getName())
                 .toString();
     }
 
