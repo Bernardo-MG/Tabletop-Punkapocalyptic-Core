@@ -63,7 +63,7 @@
 				<site>
 					<id>wandrell-site</id>
 					<name>Wandrell Maven sites</name>
-					<url>ftp://docs.wandrell.com/tabletop-api</url>
+					<url>ftp://docs.wandrell.com/tabletop-punkapocalyptic-core</url>
 				</site>
 			</distributionManagement>
 		</profile>
@@ -73,7 +73,7 @@
 				<site>
 					<id>wandrell-site-development</id>
 					<name>Wandrell Development Maven sites</name>
-					<url>ftp://docs.wandrell.com/tabletop-api</url>
+					<url>ftp://docs.wandrell.com/tabletop-punkapocalyptic-core</url>
 				</site>
 			</distributionManagement>
 		</profile>
