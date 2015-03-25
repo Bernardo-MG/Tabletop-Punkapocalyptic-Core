@@ -13,15 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.punkapocalyptic.valuebox.derived;
+package com.wandrell.tabletop.punkapocalyptic.valuebox;
 
 import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.event.ValueChangeListener;
+import com.wandrell.tabletop.valuebox.AbstractValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
-import com.wandrell.tabletop.valuebox.derived.AbstractDerivedValueViewPoint;
 
-public final class GroupedUnitValorationDerivedValueViewPoint extends
-        AbstractDerivedValueViewPoint {
+public final class GroupedUnitValorationValueBox extends AbstractValueBox {
 
     private final ValueChangeListener listener;
     private final ValueBox            size;
@@ -39,15 +38,15 @@ public final class GroupedUnitValorationDerivedValueViewPoint extends
         };
     }
 
-    public GroupedUnitValorationDerivedValueViewPoint(
-            final GroupedUnitValorationDerivedValueViewPoint store) {
+    public GroupedUnitValorationValueBox(
+            final GroupedUnitValorationValueBox store) {
         super();
 
         valoration = store.valoration;
         size = store.size;
     }
 
-    public GroupedUnitValorationDerivedValueViewPoint(final Integer valoration,
+    public GroupedUnitValorationValueBox(final Integer valoration,
             final ValueBox size) {
         super();
 

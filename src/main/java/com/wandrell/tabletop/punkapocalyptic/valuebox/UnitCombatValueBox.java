@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.punkapocalyptic.valuebox.derived;
+package com.wandrell.tabletop.punkapocalyptic.valuebox;
 
 import java.util.EventObject;
 
@@ -23,16 +23,14 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListenerAdapte
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.AttributeBonusMutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
-import com.wandrell.tabletop.valuebox.derived.AbstractDerivedValueViewPoint;
+import com.wandrell.tabletop.valuebox.AbstractValueBox;
 
-public final class UnitAgilityDerivedValueViewPoint extends
-        AbstractDerivedValueViewPoint {
+public final class UnitCombatValueBox extends AbstractValueBox {
 
     private final Integer baseValue;
     private final Unit    unit;
 
-    public UnitAgilityDerivedValueViewPoint(final Integer baseValue,
-            final Unit unit) {
+    public UnitCombatValueBox(final Integer baseValue, final Unit unit) {
         super();
 
         this.baseValue = baseValue;
@@ -63,7 +61,7 @@ public final class UnitAgilityDerivedValueViewPoint extends
                     .getMutations()) {
                 if (mutation instanceof AttributeBonusMutation) {
                     result += ((AttributeBonusMutation) mutation)
-                            .getAgilityBonus();
+                            .getCombatBonus();
                 }
             }
         }

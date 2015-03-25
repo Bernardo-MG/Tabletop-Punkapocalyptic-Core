@@ -16,5 +16,5 @@
 /**
  * Derived Value Boxes classes.
  */
-package com.wandrell.tabletop.punkapocalyptic.valuebox.derived;
+package com.wandrell.tabletop.punkapocalyptic.valuebox;
 

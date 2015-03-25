@@ -33,11 +33,9 @@ import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
-import com.wandrell.tabletop.punkapocalyptic.valuebox.derived.GroupedUnitValorationDerivedValueViewPoint;
+import com.wandrell.tabletop.punkapocalyptic.valuebox.GroupedUnitValorationValueBox;
 import com.wandrell.tabletop.valuebox.EditableValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
-import com.wandrell.tabletop.valuebox.derived.DerivedValueBox;
-import com.wandrell.tabletop.valuebox.derived.DerivedValueViewPoint;
 
 public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
 
@@ -54,11 +52,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         this.unit = unit.unit.createNewInstance();
         size = unit.size.createNewInstance();
 
-        final DerivedValueViewPoint store;
-
-        store = new GroupedUnitValorationDerivedValueViewPoint(
-                unit.getBaseCost(), size);
-        valoration = new DerivedValueBox(store);
+        valoration = new GroupedUnitValorationValueBox(unit.getBaseCost(), size);
 
         size.addValueChangeListener(new ValueChangeListener() {
 
@@ -79,11 +73,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         this.unit = unit;
         this.size = size;
 
-        final DerivedValueViewPoint store;
-
-        store = new GroupedUnitValorationDerivedValueViewPoint(
-                unit.getBaseCost(), size);
-        valoration = new DerivedValueBox(store);
+        valoration = new GroupedUnitValorationValueBox(unit.getBaseCost(), size);
 
         size.addValueChangeListener(new ValueChangeListener() {
 

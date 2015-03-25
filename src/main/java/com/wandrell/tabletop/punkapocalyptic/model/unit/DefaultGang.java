@@ -35,7 +35,6 @@ import com.wandrell.tabletop.punkapocalyptic.util.tag.GangAware;
 import com.wandrell.tabletop.valuebox.DefaultEditableValueBox;
 import com.wandrell.tabletop.valuebox.EditableValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
-import com.wandrell.tabletop.valuebox.derived.DerivedValueBox;
 
 public final class DefaultGang implements Gang {
 
@@ -68,8 +67,7 @@ public final class DefaultGang implements Gang {
 
         valoration = valorationBuilder.getValoration(this);
         // TODO: Do in another way
-        ((GangAware) ((DerivedValueBox) getValorationValueBox()).getViewPoint())
-                .setGang(this);
+        ((GangAware) getValorationValueBox()).setGang(this);
 
         setBulletsListeners();
     }
@@ -84,7 +82,7 @@ public final class DefaultGang implements Gang {
 
         this.faction = faction;
 
-        bullets = new DefaultEditableValueBox(0, 0, Integer.MAX_VALUE);
+        bullets = new DefaultEditableValueBox(0);
 
         this.valorationBuilder = valorationBuilder;
 
