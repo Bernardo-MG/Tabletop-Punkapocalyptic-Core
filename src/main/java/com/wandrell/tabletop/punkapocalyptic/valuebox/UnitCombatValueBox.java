@@ -51,6 +51,11 @@ public final class UnitCombatValueBox extends AbstractValueBox {
     }
 
     @Override
+    public final UnitCombatValueBox createNewInstance() {
+        return new UnitCombatValueBox(getBaseValue(), getUnit());
+    }
+
+    @Override
     public final Integer getValue() {
         Integer result;
 

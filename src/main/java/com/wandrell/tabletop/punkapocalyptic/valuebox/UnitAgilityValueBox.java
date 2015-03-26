@@ -51,6 +51,11 @@ public final class UnitAgilityValueBox extends AbstractValueBox {
     }
 
     @Override
+    public final UnitAgilityValueBox createNewInstance() {
+        return new UnitAgilityValueBox(getBaseValue(), getUnit());
+    }
+
+    @Override
     public final Integer getValue() {
         Integer result;
 

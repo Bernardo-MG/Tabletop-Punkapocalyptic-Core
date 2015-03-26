@@ -51,6 +51,11 @@ public final class UnitPrecisionValueBox extends AbstractValueBox {
     }
 
     @Override
+    public final UnitPrecisionValueBox createNewInstance() {
+        return new UnitPrecisionValueBox(getBaseValue(), getUnit());
+    }
+
+    @Override
     public final Integer getValue() {
         Integer result;
 

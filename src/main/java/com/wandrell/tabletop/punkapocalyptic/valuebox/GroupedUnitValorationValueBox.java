@@ -57,6 +57,11 @@ public final class GroupedUnitValorationValueBox extends AbstractValueBox {
     }
 
     @Override
+    public final GroupedUnitValorationValueBox createNewInstance() {
+        return new GroupedUnitValorationValueBox(this);
+    }
+
+    @Override
     public final Integer getValue() {
         return getValoration() * getSize().getValue();
     }

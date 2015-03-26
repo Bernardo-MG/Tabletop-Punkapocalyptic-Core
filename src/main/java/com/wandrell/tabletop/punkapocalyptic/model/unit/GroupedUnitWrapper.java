@@ -34,13 +34,12 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
 import com.wandrell.tabletop.punkapocalyptic.valuebox.GroupedUnitValorationValueBox;
-import com.wandrell.tabletop.valuebox.EditableValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
 public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
 
     private final EventListenerList listeners = new EventListenerList();
-    private final EditableValueBox  size;
+    private final ValueBox          size;
     private final Unit              unit;
     private final ValueBox          valoration;
 
@@ -64,7 +63,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         });
     }
 
-    public GroupedUnitWrapper(final Unit unit, final EditableValueBox size) {
+    public GroupedUnitWrapper(final Unit unit, final ValueBox size) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
@@ -164,7 +163,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final EditableValueBox getGroupSize() {
+    public final ValueBox getGroupSize() {
         return size;
     }
 

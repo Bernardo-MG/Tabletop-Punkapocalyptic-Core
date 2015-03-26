@@ -51,6 +51,11 @@ public final class UnitTechValueBox extends AbstractValueBox {
     }
 
     @Override
+    public final UnitTechValueBox createNewInstance() {
+        return new UnitTechValueBox(getBaseValue(), getUnit());
+    }
+
+    @Override
     public final Integer getValue() {
         Integer result;
 

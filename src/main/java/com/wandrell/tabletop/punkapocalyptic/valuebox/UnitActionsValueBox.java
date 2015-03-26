@@ -51,6 +51,11 @@ public final class UnitActionsValueBox extends AbstractValueBox {
     }
 
     @Override
+    public final UnitActionsValueBox createNewInstance() {
+        return new UnitActionsValueBox(getBaseValue(), getUnit());
+    }
+
+    @Override
     public final Integer getValue() {
         Integer result;
 

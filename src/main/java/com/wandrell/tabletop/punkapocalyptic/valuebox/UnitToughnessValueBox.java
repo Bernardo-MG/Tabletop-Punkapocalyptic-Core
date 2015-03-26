@@ -51,6 +51,11 @@ public final class UnitToughnessValueBox extends AbstractValueBox {
     }
 
     @Override
+    public final UnitToughnessValueBox createNewInstance() {
+        return new UnitToughnessValueBox(getBaseValue(), getUnit());
+    }
+
+    @Override
     public final Integer getValue() {
         Integer result;
 

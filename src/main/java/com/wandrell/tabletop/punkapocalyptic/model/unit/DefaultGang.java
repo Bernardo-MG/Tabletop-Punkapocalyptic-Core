@@ -32,13 +32,12 @@ import com.wandrell.tabletop.punkapocalyptic.model.faction.Faction;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.GangListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitEvent;
 import com.wandrell.tabletop.punkapocalyptic.util.tag.GangAware;
-import com.wandrell.tabletop.valuebox.DefaultEditableValueBox;
-import com.wandrell.tabletop.valuebox.EditableValueBox;
+import com.wandrell.tabletop.valuebox.DefaultValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
 public final class DefaultGang implements Gang {
 
-    private final EditableValueBox  bullets;
+    private final ValueBox          bullets;
     private final Faction           faction;
     private final EventListenerList listeners = new EventListenerList();
     private final Collection<Unit>  units     = new LinkedList<Unit>();
@@ -82,7 +81,7 @@ public final class DefaultGang implements Gang {
 
         this.faction = faction;
 
-        bullets = new DefaultEditableValueBox(0);
+        bullets = new DefaultValueBox(0);
 
         this.valorationBuilder = valorationBuilder;
 
@@ -134,7 +133,7 @@ public final class DefaultGang implements Gang {
         return getBulletsValueBox().getValue();
     }
 
-    public final EditableValueBox getBulletsValueBox() {
+    public final ValueBox getBulletsValueBox() {
         return bullets;
     }
 
