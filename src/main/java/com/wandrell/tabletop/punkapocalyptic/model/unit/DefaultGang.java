@@ -31,7 +31,6 @@ import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.faction.Faction;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.GangListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitEvent;
-import com.wandrell.tabletop.punkapocalyptic.util.tag.GangAware;
 import com.wandrell.tabletop.valuebox.DefaultValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
@@ -65,8 +64,6 @@ public final class DefaultGang implements Gang {
         valorationBuilder = gang.valorationBuilder;
 
         valoration = valorationBuilder.getValoration(this);
-        // TODO: Do in another way
-        ((GangAware) getValorationValueBox()).setGang(this);
 
         setBulletsListeners();
     }
