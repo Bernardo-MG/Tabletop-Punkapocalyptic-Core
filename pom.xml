@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.wandrell.tabletop</groupId>
-	<artifactId>punkapocalyptic-core</artifactId>
+	<artifactId>punkapocalyptic-model</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Tabletop's Punkapocalyptic Core</name>
 	<url />
-	<description>Core library for the wargame Punkapocalyptic, part of the Tabletop project.</description>
+	<description>Model library for the wargame Punkapocalyptic, part of the Tabletop project.</description>
 
 	<licenses>
 		<license>
@@ -21,20 +21,20 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:https://github.com/Bernardo-MG/Punkapocalyptic-Core.git</connection>
-		<developerConnection>scm:git:https://github.com/Bernardo-MG/Punkapocalyptic-Core.git</developerConnection>
+		<connection>scm:git:https://github.com/Bernardo-MG/Tabletop-Punkapocalyptic-Model.git</connection>
+		<developerConnection>scm:git:https://github.com/Bernardo-MG/Tabletop-Punkapocalyptic-Model.git</developerConnection>
 		<tag>head</tag>
-		<url>http://github.com/Bernardo-MG/Punkapocalyptic-Core</url>
+		<url>http://github.com/Bernardo-MG/Tabletop-Punkapocalyptic-Model</url>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/Bernardo-MG/Punkapocalyptic-Core/issues</url>
+		<url>https://github.com/Bernardo-MG/Tabletop-Punkapocalyptic-Model/issues</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>Travis CI</system>
-		<url>https://travis-ci.org/Bernardo-MG/Punkapocalyptic-Core</url>
+		<url>https://travis-ci.org/Bernardo-MG/Tabletop-Punkapocalyptic-Model</url>
 		<notifiers />
 	</ciManagement>
 
@@ -43,7 +43,7 @@
 			<uniqueVersion>false</uniqueVersion>
 			<id>wandrell-releases</id>
 			<name>Wandrell releases repository</name>
-			<url>https://api.bintray.com/maven/bernardo-mg/maven/punkapocalyptic-core</url>
+			<url>https://api.bintray.com/maven/bernardo-mg/maven/tabletop-punkapocalyptic-model</url>
 		</repository>
 		<snapshotRepository>
 			<uniqueVersion>true</uniqueVersion>
@@ -63,7 +63,7 @@
 				<site>
 					<id>wandrell-site</id>
 					<name>Wandrell Maven sites</name>
-					<url>ftp://docs.wandrell.com/tabletop-punkapocalyptic-core</url>
+					<url>ftp://docs.wandrell.com/tabletop-punkapocalyptic-model</url>
 				</site>
 			</distributionManagement>
 		</profile>
@@ -73,7 +73,7 @@
 				<site>
 					<id>wandrell-site-development</id>
 					<name>Wandrell Development Maven sites</name>
-					<url>ftp://docs.wandrell.com/tabletop-punkapocalyptic-core</url>
+					<url>ftp://docs.wandrell.com/tabletop-punkapocalyptic-model</url>
 				</site>
 			</distributionManagement>
 		</profile>
@@ -194,7 +194,7 @@
 		<dependency>
 			<!-- Tabletop's Punkapocalyptic API -->
 			<groupId>com.wandrell.tabletop</groupId>
-			<artifactId>punkapocalyptic-api</artifactId>
+			<artifactId>punkapocalyptic-model-api</artifactId>
 			<version>${tabletop.version}</version>
 		</dependency>
 		<dependency>

@@ -1,5 +1,5 @@
-# Tabletop's Punkapocalyptic Core library
-Default implementation of the Punkapocalyptic's API extension for the library for the Tabletop project.
+# Tabletop's Punkapocalyptic Model
+Default implementation of the Punkapocalyptic's Model API.
 
 ### Webpage
 Currently the project has no webpage.
