@@ -24,10 +24,11 @@ import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
 
-public final class UnitBasedStrengthRangedWeapon implements RangedWeapon {
+public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
+        UnitDependantWeapon {
 
     private final RangedWeapon baseWeapon;
-    private final Unit         unit;
+    private Unit               unit;
 
     public UnitBasedStrengthRangedWeapon(final Unit unit, final String name,
             final Integer cost, final Collection<SpecialRule> rules,
@@ -168,6 +169,11 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon {
     @Override
     public final void setTwoHanded(final Boolean twoHanded) {
         getBaseWeapon().setTwoHanded(twoHanded);
+    }
+
+    @Override
+    public final void setUnit(final Unit unit) {
+        this.unit = unit;
     }
 
     private final RangedWeapon getBaseWeapon() {
