@@ -44,11 +44,9 @@ public final class TestUnitBasedStrengthRangedWeapon {
 
         Mockito.when(unit.getStrength()).thenReturn(4);
 
-        weapon = new UnitBasedStrengthRangedWeapon("weapon", 0,
+        weapon = new UnitBasedStrengthRangedWeapon(unit, "weapon", 0,
                 new LinkedList<SpecialRule>(), penetration, strength,
                 distanceCM, distanceInches, weaponMelee);
-
-        weapon.setUnit(unit);
     }
 
     @Test

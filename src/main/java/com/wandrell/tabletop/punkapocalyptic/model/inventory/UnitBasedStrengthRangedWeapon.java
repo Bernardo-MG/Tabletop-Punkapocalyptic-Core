@@ -23,21 +23,22 @@ import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
-import com.wandrell.tabletop.punkapocalyptic.util.tag.UnitAware;
 
-public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
-        UnitAware {
+public final class UnitBasedStrengthRangedWeapon implements RangedWeapon {
 
     private final RangedWeapon baseWeapon;
-    private Unit               unit;
+    private final Unit         unit;
 
-    public UnitBasedStrengthRangedWeapon(final String name, final Integer cost,
-            final Collection<SpecialRule> rules, final RangedValue penetration,
-            final RangedValue strength, final RangedValue distanceCM,
-            final RangedValue distanceInches, final MeleeWeapon weaponMelee) {
+    public UnitBasedStrengthRangedWeapon(final Unit unit, final String name,
+            final Integer cost, final Collection<SpecialRule> rules,
+            final RangedValue penetration, final RangedValue strength,
+            final RangedValue distanceCM, final RangedValue distanceInches,
+            final MeleeWeapon weaponMelee) {
         super();
 
         // TODO: Maybe this should be on the framework library
+
+        this.unit = unit;
 
         baseWeapon = new DefaultRangedWeapon(name, cost, rules, penetration,
                 strength, distanceCM, distanceInches, weaponMelee);
@@ -167,13 +168,6 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     @Override
     public final void setTwoHanded(final Boolean twoHanded) {
         getBaseWeapon().setTwoHanded(twoHanded);
-    }
-
-    @Override
-    public final void setUnit(final Unit unit) {
-        checkNotNull(unit, "Received a null pointer as unit");
-
-        this.unit = unit;
     }
 
     private final RangedWeapon getBaseWeapon() {
