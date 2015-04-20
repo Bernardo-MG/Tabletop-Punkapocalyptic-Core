@@ -19,23 +19,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.procedure.Constraint;
+import com.wandrell.tabletop.procedure.ConstraintData;
 import com.wandrell.tabletop.punkapocalyptic.model.faction.Faction;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 
 public final class DefaultFactionUnitAvailability implements
         FactionUnitAvailability {
 
-    private final Unit                   availUnit;
-    private final Faction                faction;
-    private final Collection<Constraint> unitConstrn = new LinkedHashSet<Constraint>();
+    private final Unit                       availUnit;
+    private final Faction                    faction;
+    private final Collection<ConstraintData> unitConstrn;
 
     public DefaultFactionUnitAvailability(final Faction faction,
-            final Unit unit, final Collection<Constraint> constraints) {
+            final Unit unit, final Collection<ConstraintData> constraints) {
         super();
 
         checkNotNull(faction, "Received a null pointer as faction");
@@ -45,11 +44,7 @@ public final class DefaultFactionUnitAvailability implements
         this.faction = faction;
         this.availUnit = unit;
 
-        for (final Constraint constraint : constraints) {
-            checkNotNull(constraint, "Received a null pointer as a constraint");
-
-            this.unitConstrn.add(constraint);
-        }
+        unitConstrn = constraints;
     }
 
     @Override
@@ -74,7 +69,7 @@ public final class DefaultFactionUnitAvailability implements
     }
 
     @Override
-    public final Collection<Constraint> getConstraints() {
+    public final Collection<ConstraintData> getConstraints() {
         return Collections.unmodifiableCollection(getConstraintsModifiable());
     }
 
@@ -99,7 +94,7 @@ public final class DefaultFactionUnitAvailability implements
                 .add("constraints", unitConstrn).toString();
     }
 
-    private final Collection<Constraint> getConstraintsModifiable() {
+    private final Collection<ConstraintData> getConstraintsModifiable() {
         return unitConstrn;
     }
 
