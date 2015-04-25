@@ -3,6 +3,7 @@ package com.wandrell.tabletop.punkapocalyptic.model.availability;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -48,7 +49,8 @@ public final class DefaultUnitEquipmentAvailability implements
 
     @Override
     public final Collection<Equipment> getEquipmentOptions() {
-        return equipment;
+        return Collections
+                .unmodifiableCollection(getEquipmentOptionsModifiable());
     }
 
     @Override
@@ -65,6 +67,10 @@ public final class DefaultUnitEquipmentAvailability implements
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("unit", unit.getName())
                 .add("equipment", equipment).toString();
+    }
+
+    private final Collection<Equipment> getEquipmentOptionsModifiable() {
+        return equipment;
     }
 
 }

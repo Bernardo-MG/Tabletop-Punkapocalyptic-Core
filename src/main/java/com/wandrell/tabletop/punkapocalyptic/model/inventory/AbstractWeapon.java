@@ -121,6 +121,11 @@ public abstract class AbstractWeapon implements Weapon {
     }
 
     @Override
+    public final Integer getBaseCost() {
+        return weaponCost;
+    }
+
+    @Override
     public final Integer getCost() {
         Integer costEnhance;
 

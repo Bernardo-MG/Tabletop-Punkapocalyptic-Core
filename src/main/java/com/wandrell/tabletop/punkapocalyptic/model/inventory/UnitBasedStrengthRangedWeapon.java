@@ -71,6 +71,11 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     }
 
     @Override
+    public final Integer getBaseCost() {
+        return getBaseWeapon().getBaseCost();
+    }
+
+    @Override
     public final Integer getCost() {
         return getBaseWeapon().getCost();
     }
