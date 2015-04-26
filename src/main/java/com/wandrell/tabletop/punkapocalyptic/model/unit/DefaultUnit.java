@@ -48,7 +48,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
                                                             0,
                                                             new LinkedList<SpecialRule>());
     private final AttributesHolder        attributes;
-    private final Integer                 cost;
     private final DerivedValuesBuilder    derivedBuilder;
     private final Collection<Equipment>   equipment = new LinkedHashSet<Equipment>();
     private final EventListenerList       listeners = new EventListenerList();
@@ -80,8 +79,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
         template = unit.template;
         attributes = new UnitBonusAttributesHolder(this);
 
-        cost = unit.cost;
-
         armor = unit.armor;
 
         for (final Equipment e : unit.equipment) {
@@ -103,34 +100,19 @@ public final class DefaultUnit implements Unit, MutantUnit {
         setAttributesListeners();
     }
 
-    public DefaultUnit(final UnitTemplate template, final Integer actions,
-            final Integer agility, final Integer combat,
-            final Integer precision, final Integer strength,
-            final Integer tech, final Integer toughness, final Integer cost,
+    public DefaultUnit(final UnitTemplate template,
             final Collection<SpecialRule> rules,
             final DerivedValuesBuilder derivedBuilder) {
         super();
 
         checkNotNull(template, "Received a null pointer as template");
 
-        checkNotNull(actions, "Received a null pointer as actions");
-        checkNotNull(agility, "Received a null pointer as agility");
-        checkNotNull(combat, "Received a null pointer as combat");
-        checkNotNull(precision, "Received a null pointer as precision");
-        checkNotNull(strength, "Received a null pointer as strength");
-        checkNotNull(tech, "Received a null pointer as tech");
-        checkNotNull(toughness, "Received a null pointer as toughness");
-
         checkNotNull(rules, "Received a null pointer as special rules");
-
-        checkNotNull(cost, "Received a null pointer as cost");
 
         checkNotNull(derivedBuilder,
                 "Received a null pointer as valoration builder");
 
         this.template = template;
-
-        this.cost = cost;
 
         this.derivedBuilder = derivedBuilder;
 
