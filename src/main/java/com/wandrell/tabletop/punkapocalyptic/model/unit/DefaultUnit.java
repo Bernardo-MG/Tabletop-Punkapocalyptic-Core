@@ -43,20 +43,19 @@ import com.wandrell.tabletop.valuebox.ValueBox;
 
 public final class DefaultUnit implements Unit, MutantUnit {
 
-    private Armor                         armor     = new DefaultArmor(
-                                                            "unarmored",
-                                                            0,
-                                                            new LinkedList<SpecialRule>());
-    private final AttributesHolder        attributes;
-    private final DerivedValuesBuilder    derivedBuilder;
-    private final Collection<Equipment>   equipment = new LinkedHashSet<Equipment>();
-    private final EventListenerList       listeners = new EventListenerList();
-    private final ValorationListener      listenerStatus;
-    private final Collection<Mutation>    mutations = new LinkedHashSet<Mutation>();
-    private final Collection<SpecialRule> rules     = new LinkedHashSet<SpecialRule>();
-    private final UnitTemplate            template;
-    private final ValueBox                valoration;
-    private final Collection<Weapon>      weapons   = new LinkedHashSet<Weapon>();
+    private Armor                       armor     = new DefaultArmor(
+                                                          "unarmored",
+                                                          0,
+                                                          new LinkedList<SpecialRule>());
+    private final AttributesHolder      attributes;
+    private final DerivedValuesBuilder  derivedBuilder;
+    private final Collection<Equipment> equipment = new LinkedHashSet<Equipment>();
+    private final EventListenerList     listeners = new EventListenerList();
+    private final ValorationListener    listenerStatus;
+    private final Collection<Mutation>  mutations = new LinkedHashSet<Mutation>();
+    private final UnitTemplate          template;
+    private final ValueBox              valoration;
+    private final Collection<Weapon>    weapons   = new LinkedHashSet<Weapon>();
 
     {
         listenerStatus = new ValorationListener() {
@@ -89,10 +88,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
             weapons.add(w);
         }
 
-        for (final SpecialRule r : unit.rules) {
-            rules.add(r);
-        }
-
         derivedBuilder = unit.derivedBuilder;
 
         valoration = derivedBuilder.getValoration(this);
@@ -101,13 +96,10 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     public DefaultUnit(final UnitTemplate template,
-            final Collection<SpecialRule> rules,
             final DerivedValuesBuilder derivedBuilder) {
         super();
 
         checkNotNull(template, "Received a null pointer as template");
-
-        checkNotNull(rules, "Received a null pointer as special rules");
 
         checkNotNull(derivedBuilder,
                 "Received a null pointer as valoration builder");
@@ -119,12 +111,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
         attributes = new UnitBonusAttributesHolder(this);
 
         this.valoration = derivedBuilder.getValoration(this);
-
-        for (final SpecialRule rule : rules) {
-            checkNotNull(rule, "Received a null pointer as rule");
-
-            getSpecialRulesModifiable().add(rule);
-        }
 
         setAttributesListeners();
     }
@@ -211,11 +197,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
     @Override
     public final String getName() {
         return getUnitTemplate().getNameToken();
-    }
-
-    @Override
-    public final Collection<SpecialRule> getSpecialRules() {
-        return Collections.unmodifiableCollection(getSpecialRulesModifiable());
     }
 
     @Override
@@ -370,10 +351,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
     private final Collection<Mutation> getMutationsModifiable() {
         return mutations;
-    }
-
-    private final Collection<SpecialRule> getSpecialRulesModifiable() {
-        return rules;
     }
 
     private final ValorationListener getStatusListener() {

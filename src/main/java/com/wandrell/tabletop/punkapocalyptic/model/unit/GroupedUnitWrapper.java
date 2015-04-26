@@ -29,7 +29,6 @@ import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
-import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
@@ -169,11 +168,6 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     @Override
     public final String getName() {
         return getWrappedUnit().getName();
-    }
-
-    @Override
-    public final Collection<SpecialRule> getSpecialRules() {
-        return getWrappedUnit().getSpecialRules();
     }
 
     @Override
