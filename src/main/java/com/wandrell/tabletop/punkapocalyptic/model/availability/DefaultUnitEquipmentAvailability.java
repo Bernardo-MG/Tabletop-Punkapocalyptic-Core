@@ -8,15 +8,15 @@ import java.util.Collections;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 
 public final class DefaultUnitEquipmentAvailability implements
         UnitEquipmentAvailability {
 
     private final Collection<Equipment> equipment;
-    private final Unit                  unit;
+    private final UnitTemplate          unit;
 
-    public DefaultUnitEquipmentAvailability(final Unit unit,
+    public DefaultUnitEquipmentAvailability(final UnitTemplate unit,
             final Collection<Equipment> equipment) {
         super();
 
@@ -54,7 +54,7 @@ public final class DefaultUnitEquipmentAvailability implements
     }
 
     @Override
-    public final Unit getUnit() {
+    public final UnitTemplate getUnit() {
         return unit;
     }
 
@@ -65,8 +65,9 @@ public final class DefaultUnitEquipmentAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
-                .add("equipment", equipment).toString();
+        return MoreObjects.toStringHelper(this)
+                .add("unit", unit.getNameToken()).add("equipment", equipment)
+                .toString();
     }
 
     private final Collection<Equipment> getEquipmentOptionsModifiable() {

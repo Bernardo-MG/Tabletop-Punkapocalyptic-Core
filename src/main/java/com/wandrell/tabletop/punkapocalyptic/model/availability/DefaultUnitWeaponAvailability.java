@@ -23,17 +23,17 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 
 public final class DefaultUnitWeaponAvailability implements
         UnitWeaponAvailability {
 
     private final Integer                  maxWeapons;
     private final Integer                  minWeapons;
-    private final Unit                     unit;
+    private final UnitTemplate             unit;
     private final Collection<WeaponOption> weaponOptions = new LinkedHashSet<WeaponOption>();
 
-    public DefaultUnitWeaponAvailability(final Unit unit,
+    public DefaultUnitWeaponAvailability(final UnitTemplate unit,
             final Collection<WeaponOption> weapons, final Integer min,
             final Integer max) {
         super();
@@ -87,7 +87,7 @@ public final class DefaultUnitWeaponAvailability implements
     }
 
     @Override
-    public final Unit getUnit() {
+    public final UnitTemplate getUnit() {
         return unit;
     }
 
@@ -103,9 +103,10 @@ public final class DefaultUnitWeaponAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
-                .add("min", minWeapons).add("max", maxWeapons)
-                .add("weapons", weaponOptions).toString();
+        return MoreObjects.toStringHelper(this)
+                .add("unit", unit.getNameToken()).add("min", minWeapons)
+                .add("max", maxWeapons).add("weapons", weaponOptions)
+                .toString();
     }
 
     private final Collection<WeaponOption> getWeaponOptionsModifiable() {

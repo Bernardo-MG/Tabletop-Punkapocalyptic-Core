@@ -102,7 +102,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
     @Override
     public final Integer getLongStrength() {
-        return getUnit().getStrength() + getBaseWeapon().getLongStrength();
+        return getUnit().getAttributes().getStrength()
+                + getBaseWeapon().getLongStrength();
     }
 
     @Override
@@ -112,7 +113,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
     @Override
     public final Integer getMediumStrength() {
-        return getUnit().getStrength() + getBaseWeapon().getMediumStrength();
+        return getUnit().getAttributes().getStrength()
+                + getBaseWeapon().getMediumStrength();
     }
 
     @Override
@@ -132,7 +134,8 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
     @Override
     public final Integer getShortStrength() {
-        return getUnit().getStrength() + getBaseWeapon().getShortStrength();
+        return getUnit().getAttributes().getStrength()
+                + getBaseWeapon().getShortStrength();
     }
 
     @Override

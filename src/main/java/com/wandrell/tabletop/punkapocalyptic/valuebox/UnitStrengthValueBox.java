@@ -27,13 +27,11 @@ import com.wandrell.tabletop.valuebox.AbstractValueBox;
 
 public final class UnitStrengthValueBox extends AbstractValueBox {
 
-    private final Integer baseValue;
-    private final Unit    unit;
+    private final Unit unit;
 
-    public UnitStrengthValueBox(final Integer baseValue, final Unit unit) {
+    public UnitStrengthValueBox(final Unit unit) {
         super();
 
-        this.baseValue = baseValue;
         this.unit = unit;
 
         unit.addUnitListener(new UnitListenerAdapter() {
@@ -52,14 +50,14 @@ public final class UnitStrengthValueBox extends AbstractValueBox {
 
     @Override
     public final UnitStrengthValueBox createNewInstance() {
-        return new UnitStrengthValueBox(getBaseValue(), getUnit());
+        return new UnitStrengthValueBox(getUnit());
     }
 
     @Override
     public final Integer getValue() {
         Integer result;
 
-        result = getBaseValue();
+        result = getUnit().getUnitTemplate().getAttributes().getStrength();
 
         if (getUnit() instanceof MutantUnit) {
             for (final Mutation mutation : ((MutantUnit) getUnit())
@@ -72,10 +70,6 @@ public final class UnitStrengthValueBox extends AbstractValueBox {
         }
 
         return result;
-    }
-
-    private final Integer getBaseValue() {
-        return baseValue;
     }
 
     private final Unit getUnit() {

@@ -23,7 +23,7 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
 
 public final class DefaultUnitMutationAvailability implements
@@ -31,9 +31,9 @@ public final class DefaultUnitMutationAvailability implements
 
     private final Integer              max;
     private final Collection<Mutation> mutations = new LinkedHashSet<Mutation>();
-    private final Unit                 unit;
+    private final UnitTemplate         unit;
 
-    public DefaultUnitMutationAvailability(final Unit unit,
+    public DefaultUnitMutationAvailability(final UnitTemplate unit,
             final Integer maxMutations,
             final Collection<Mutation> mutationOptions) {
         super();
@@ -84,7 +84,7 @@ public final class DefaultUnitMutationAvailability implements
     }
 
     @Override
-    public final Unit getUnit() {
+    public final UnitTemplate getUnit() {
         return unit;
     }
 
@@ -95,8 +95,9 @@ public final class DefaultUnitMutationAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
-                .add("max", max).add("mutations", mutations).toString();
+        return MoreObjects.toStringHelper(this)
+                .add("unit", unit.getNameToken()).add("max", max)
+                .add("mutations", mutations).toString();
     }
 
     private final Collection<Mutation> getMutationOptionsModifiable() {

@@ -11,6 +11,7 @@ import com.wandrell.tabletop.punkapocalyptic.model.inventory.MeleeWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitBasedStrengthRangedWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
 
 public final class TestUnitBasedStrengthRangedWeapon {
@@ -29,6 +30,7 @@ public final class TestUnitBasedStrengthRangedWeapon {
         final RangedValue distanceInches;
         final MeleeWeapon weaponMelee;
         final Unit unit;
+        final AttributesHolder attributes;
 
         penetration = Mockito.mock(RangedValue.class);
         strength = Mockito.mock(RangedValue.class);
@@ -38,11 +40,15 @@ public final class TestUnitBasedStrengthRangedWeapon {
 
         unit = Mockito.mock(Unit.class);
 
+        attributes = Mockito.mock(AttributesHolder.class);
+
         Mockito.when(strength.getShortValue()).thenReturn(1);
         Mockito.when(strength.getMediumValue()).thenReturn(2);
         Mockito.when(strength.getLongValue()).thenReturn(3);
 
-        Mockito.when(unit.getStrength()).thenReturn(4);
+        Mockito.when(attributes.getStrength()).thenReturn(4);
+
+        Mockito.when(unit.getAttributes()).thenReturn(attributes);
 
         weapon = new UnitBasedStrengthRangedWeapon(unit, "weapon", 0,
                 new LinkedList<SpecialRule>(), penetration, strength,

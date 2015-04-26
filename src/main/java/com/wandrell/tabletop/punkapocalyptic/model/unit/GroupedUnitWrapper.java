@@ -33,6 +33,7 @@ import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.valuebox.GroupedUnitValorationValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
@@ -51,7 +52,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         this.unit = unit.unit.createNewInstance();
         size = unit.size.createNewInstance();
 
-        valoration = new GroupedUnitValorationValueBox(unit.getBaseCost(), size);
+        valoration = new GroupedUnitValorationValueBox(unit, size);
 
         size.addValueChangeListener(new ValueChangeListener() {
 
@@ -72,7 +73,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         this.unit = unit;
         this.size = size;
 
-        valoration = new GroupedUnitValorationValueBox(unit.getBaseCost(), size);
+        valoration = new GroupedUnitValorationValueBox(unit, size);
 
         size.addValueChangeListener(new ValueChangeListener() {
 
@@ -133,28 +134,13 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final Integer getActions() {
-        return getWrappedUnit().getActions();
-    }
-
-    @Override
-    public final Integer getAgility() {
-        return getWrappedUnit().getAgility();
-    }
-
-    @Override
     public final Armor getArmor() {
         return getWrappedUnit().getArmor();
     }
 
     @Override
-    public final Integer getBaseCost() {
-        return getWrappedUnit().getBaseCost();
-    }
-
-    @Override
-    public final Integer getCombat() {
-        return getWrappedUnit().getCombat();
+    public final AttributesHolder getAttributes() {
+        return getWrappedUnit().getAttributes();
     }
 
     @Override
@@ -186,28 +172,13 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final Integer getPrecision() {
-        return getWrappedUnit().getPrecision();
-    }
-
-    @Override
     public final Collection<SpecialRule> getSpecialRules() {
         return getWrappedUnit().getSpecialRules();
     }
 
     @Override
-    public final Integer getStrength() {
-        return getWrappedUnit().getStrength();
-    }
-
-    @Override
-    public final Integer getTech() {
-        return getWrappedUnit().getTech();
-    }
-
-    @Override
-    public final Integer getToughness() {
-        return getWrappedUnit().getToughness();
+    public final UnitTemplate getUnitTemplate() {
+        return getWrappedUnit().getUnitTemplate();
     }
 
     @Override

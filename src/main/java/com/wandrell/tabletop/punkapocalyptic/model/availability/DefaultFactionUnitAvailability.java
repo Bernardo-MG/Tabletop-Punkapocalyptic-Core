@@ -24,17 +24,18 @@ import java.util.Objects;
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.procedure.ConstraintData;
 import com.wandrell.tabletop.punkapocalyptic.model.faction.Faction;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 
 public final class DefaultFactionUnitAvailability implements
         FactionUnitAvailability {
 
-    private final Unit                       availUnit;
+    private final UnitTemplate               availUnit;
     private final Faction                    faction;
     private final Collection<ConstraintData> unitConstrn;
 
     public DefaultFactionUnitAvailability(final Faction faction,
-            final Unit unit, final Collection<ConstraintData> constraints) {
+            final UnitTemplate unit,
+            final Collection<ConstraintData> constraints) {
         super();
 
         checkNotNull(faction, "Received a null pointer as faction");
@@ -79,7 +80,7 @@ public final class DefaultFactionUnitAvailability implements
     }
 
     @Override
-    public final Unit getUnit() {
+    public final UnitTemplate getUnit() {
         return availUnit;
     }
 

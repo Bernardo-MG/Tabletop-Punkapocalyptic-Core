@@ -17,6 +17,7 @@ package com.wandrell.tabletop.punkapocalyptic.valuebox;
 
 import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.event.ValueChangeListener;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.valuebox.AbstractValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
@@ -24,7 +25,7 @@ public final class GroupedUnitValorationValueBox extends AbstractValueBox {
 
     private final ValueChangeListener listener;
     private final ValueBox            size;
-    private final Integer             valoration;
+    private final Unit                unit;
 
     {
         listener = new ValueChangeListener() {
@@ -42,15 +43,14 @@ public final class GroupedUnitValorationValueBox extends AbstractValueBox {
             final GroupedUnitValorationValueBox store) {
         super();
 
-        valoration = store.valoration;
+        unit = store.unit;
         size = store.size;
     }
 
-    public GroupedUnitValorationValueBox(final Integer valoration,
-            final ValueBox size) {
+    public GroupedUnitValorationValueBox(final Unit unit, final ValueBox size) {
         super();
 
-        this.valoration = valoration;
+        this.unit = unit;
         this.size = size;
 
         size.addValueChangeListener(listener);
@@ -63,15 +63,15 @@ public final class GroupedUnitValorationValueBox extends AbstractValueBox {
 
     @Override
     public final Integer getValue() {
-        return getValoration() * getSize().getValue();
+        return getUnit().getValoration() * getSize().getValue();
     }
 
     private final ValueBox getSize() {
         return size;
     }
 
-    private final Integer getValoration() {
-        return valoration;
+    private final Unit getUnit() {
+        return unit;
     }
 
 }

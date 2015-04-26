@@ -24,16 +24,16 @@ import java.util.LinkedHashSet;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Armor;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 
 public final class DefaultUnitArmorAvailability implements
         UnitArmorAvailability {
 
     private final Collection<Armor> armorOptions = new LinkedHashSet<Armor>();
     private final Armor             initialArmor;
-    private final Unit              unit;
+    private final UnitTemplate      unit;
 
-    public DefaultUnitArmorAvailability(final Unit unit,
+    public DefaultUnitArmorAvailability(final UnitTemplate unit,
             final Collection<Armor> armors, final Armor initial) {
         super();
 
@@ -82,7 +82,7 @@ public final class DefaultUnitArmorAvailability implements
     }
 
     @Override
-    public final Unit getUnit() {
+    public final UnitTemplate getUnit() {
         return unit;
     }
 
@@ -93,9 +93,9 @@ public final class DefaultUnitArmorAvailability implements
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("unit", unit.getName())
-                .add("initial", initialArmor).add("armors", armorOptions)
-                .toString();
+        return MoreObjects.toStringHelper(this)
+                .add("unit", unit.getNameToken()).add("initial", initialArmor)
+                .add("armors", armorOptions).toString();
     }
 
     private final Collection<Armor> getArmorOptionsModifiable() {
