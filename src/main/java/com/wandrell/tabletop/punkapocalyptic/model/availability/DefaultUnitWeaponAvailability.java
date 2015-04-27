@@ -23,6 +23,7 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.tabletop.punkapocalyptic.model.availability.option.WeaponOption;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 
 public final class DefaultUnitWeaponAvailability implements

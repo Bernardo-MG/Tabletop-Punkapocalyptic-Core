@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.wandrell.tabletop.punkapocalyptic.model.availability;
+package com.wandrell.tabletop.punkapocalyptic.model.availability.option;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

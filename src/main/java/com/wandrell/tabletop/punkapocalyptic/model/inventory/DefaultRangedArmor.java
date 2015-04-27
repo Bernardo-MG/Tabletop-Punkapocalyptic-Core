@@ -80,11 +80,6 @@ public final class DefaultRangedArmor implements RangedArmor {
     }
 
     @Override
-    public final Integer getCost() {
-        return getBaseArmor().getCost();
-    }
-
-    @Override
     public final String getName() {
         return getBaseArmor().getName();
     }
@@ -102,13 +97,6 @@ public final class DefaultRangedArmor implements RangedArmor {
     @Override
     public final int hashCode() {
         return Objects.hashCode(baseArmor);
-    }
-
-    @Override
-    public final void setCost(final Integer cost) {
-        checkNotNull(baseArmor, "Received a null pointer as cost");
-
-        getBaseArmor().setCost(cost);
     }
 
     @Override

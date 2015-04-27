@@ -26,7 +26,7 @@ import javax.swing.event.EventListenerList;
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.event.ValueChangeListener;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.Armor;
+import com.wandrell.tabletop.punkapocalyptic.model.availability.option.ArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
@@ -133,7 +133,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final Armor getArmor() {
+    public final ArmorOption getArmor() {
         return getWrappedUnit().getArmor();
     }
 
@@ -209,7 +209,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final void setArmor(final Armor armor) {
+    public final void setArmor(final ArmorOption armor) {
         getWrappedUnit().setArmor(armor);
     }
 

@@ -23,18 +23,18 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.Armor;
+import com.wandrell.tabletop.punkapocalyptic.model.availability.option.ArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 
 public final class DefaultUnitArmorAvailability implements
         UnitArmorAvailability {
 
-    private final Collection<Armor> armorOptions = new LinkedHashSet<Armor>();
-    private final Armor             initialArmor;
-    private final UnitTemplate      unit;
+    private final Collection<ArmorOption> armorOptions = new LinkedHashSet<ArmorOption>();
+    private final ArmorOption             initialArmor;
+    private final UnitTemplate            unit;
 
     public DefaultUnitArmorAvailability(final UnitTemplate unit,
-            final Collection<Armor> armors, final Armor initial) {
+            final Collection<ArmorOption> armors, final ArmorOption initial) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
@@ -44,7 +44,7 @@ public final class DefaultUnitArmorAvailability implements
         this.unit = unit;
         this.initialArmor = initial;
 
-        for (final Armor armor : armors) {
+        for (final ArmorOption armor : armors) {
             checkNotNull(armor, "Received a null pointer as armor");
 
             this.armorOptions.add(armor);
@@ -72,12 +72,12 @@ public final class DefaultUnitArmorAvailability implements
     }
 
     @Override
-    public final Collection<Armor> getArmorOptions() {
+    public final Collection<ArmorOption> getArmorOptions() {
         return Collections.unmodifiableCollection(getArmorOptionsModifiable());
     }
 
     @Override
-    public final Armor getInitialArmor() {
+    public final ArmorOption getInitialArmor() {
         return initialArmor;
     }
 
@@ -98,7 +98,7 @@ public final class DefaultUnitArmorAvailability implements
                 .add("armors", armorOptions).toString();
     }
 
-    private final Collection<Armor> getArmorOptionsModifiable() {
+    private final Collection<ArmorOption> getArmorOptionsModifiable() {
         return armorOptions;
     }
 

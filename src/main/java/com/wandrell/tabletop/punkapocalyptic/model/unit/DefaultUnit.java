@@ -27,8 +27,9 @@ import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.event.ValueChangeEvent;
+import com.wandrell.tabletop.punkapocalyptic.model.availability.option.ArmorOption;
+import com.wandrell.tabletop.punkapocalyptic.model.availability.option.DefaultArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.DefaultArmor;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
@@ -43,10 +44,12 @@ import com.wandrell.tabletop.valuebox.ValueBox;
 
 public final class DefaultUnit implements Unit, MutantUnit {
 
-    private Armor                       armor     = new DefaultArmor(
-                                                          "unarmored",
-                                                          0,
-                                                          new LinkedList<SpecialRule>());
+    private ArmorOption                 armor     = new DefaultArmorOption(
+                                                          new DefaultArmor(
+                                                                  "unarmored",
+                                                                  0,
+                                                                  new LinkedList<SpecialRule>()),
+                                                          0);
     private final AttributesHolder      attributes;
     private final DerivedValuesBuilder  derivedBuilder;
     private final Collection<Equipment> equipment = new LinkedHashSet<Equipment>();
@@ -175,7 +178,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final Armor getArmor() {
+    public final ArmorOption getArmor() {
         return armor;
     }
 
@@ -246,7 +249,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final void setArmor(final Armor armor) {
+    public final void setArmor(final ArmorOption armor) {
         checkNotNull(armor, "Received a null pointer as armor");
 
         this.armor = armor;

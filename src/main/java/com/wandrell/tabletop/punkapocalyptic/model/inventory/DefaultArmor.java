@@ -30,7 +30,6 @@ public final class DefaultArmor implements Armor {
     private final Integer                 armorArmor;
     private final String                  armorName;
     private final Collection<SpecialRule> armorRules = new LinkedHashSet<SpecialRule>();
-    private Integer                       cost       = 0;
 
     public DefaultArmor(final DefaultArmor armor) {
         super();
@@ -38,7 +37,6 @@ public final class DefaultArmor implements Armor {
         checkNotNull(armor, "Received a null pointer as armor");
 
         this.armorArmor = armor.armorArmor;
-        cost = armor.cost;
 
         armorName = armor.armorName;
 
@@ -94,11 +92,6 @@ public final class DefaultArmor implements Armor {
     }
 
     @Override
-    public final Integer getCost() {
-        return cost;
-    }
-
-    @Override
     public final String getName() {
         return armorName;
     }
@@ -111,13 +104,6 @@ public final class DefaultArmor implements Armor {
     @Override
     public final int hashCode() {
         return Objects.hashCode(armorName);
-    }
-
-    @Override
-    public final void setCost(final Integer cost) {
-        checkNotNull(cost, "Received a null pointer as cost");
-
-        this.cost = cost;
     }
 
     @Override
