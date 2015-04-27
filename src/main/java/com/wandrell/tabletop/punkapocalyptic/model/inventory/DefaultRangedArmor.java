@@ -50,11 +50,6 @@ public final class DefaultRangedArmor implements RangedArmor {
     }
 
     @Override
-    public final DefaultRangedArmor createNewInstance() {
-        return new DefaultRangedArmor(this);
-    }
-
-    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;

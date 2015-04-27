@@ -42,11 +42,6 @@ public final class DefaultSpecialRule implements SpecialRule {
     }
 
     @Override
-    public final DefaultSpecialRule createNewInstance() {
-        return new DefaultSpecialRule(this);
-    }
-
-    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;

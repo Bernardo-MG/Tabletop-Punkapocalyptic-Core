@@ -51,7 +51,7 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
 
         checkNotNull(weapon, "Received a null pointer as weapon");
 
-        baseWeapon = weapon.baseWeapon.createNewInstance();
+        baseWeapon = weapon.baseWeapon;
         unit = weapon.unit;
     }
 
@@ -63,11 +63,6 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     @Override
     public final void addValorationListener(final ValorationListener listener) {
         getBaseWeapon().addValorationListener(listener);
-    }
-
-    @Override
-    public final UnitBasedStrengthRangedWeapon createNewInstance() {
-        return new UnitBasedStrengthRangedWeapon(this);
     }
 
     @Override

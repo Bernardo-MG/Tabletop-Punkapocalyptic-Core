@@ -46,11 +46,6 @@ public final class DefaultEquipment implements Equipment {
     }
 
     @Override
-    public final Equipment createNewInstance() {
-        return new DefaultEquipment(this);
-    }
-
-    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;

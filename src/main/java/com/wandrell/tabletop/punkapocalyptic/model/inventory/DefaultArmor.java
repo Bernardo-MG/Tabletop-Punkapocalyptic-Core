@@ -62,11 +62,6 @@ public final class DefaultArmor implements Armor {
     }
 
     @Override
-    public final DefaultArmor createNewInstance() {
-        return new DefaultArmor(this);
-    }
-
-    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;

@@ -45,11 +45,6 @@ public final class FirearmWeaponEnhancement implements WeaponEnhancement {
     }
 
     @Override
-    public final WeaponEnhancement createNewInstance() {
-        return new FirearmWeaponEnhancement(this);
-    }
-
-    @Override
     public final Integer getCost() {
         return cost;
     }

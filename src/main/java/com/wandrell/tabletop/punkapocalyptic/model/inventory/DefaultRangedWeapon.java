@@ -73,11 +73,6 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     @Override
-    public final DefaultRangedWeapon createNewInstance() {
-        return new DefaultRangedWeapon(this);
-    }
-
-    @Override
     public final RangedValue getDistancesImperialUnits() {
         return distancesInches;
     }
