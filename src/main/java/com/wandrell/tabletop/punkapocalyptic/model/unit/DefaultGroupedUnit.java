@@ -36,13 +36,13 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.valuebox.DefaultValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
-public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
+public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
 
     private final EventListenerList listeners = new EventListenerList();
     private final ValueBox          size      = new DefaultValueBox();
     private final Unit              unit;
 
-    public GroupedUnitWrapper(final GroupedUnitWrapper unit) {
+    public DefaultGroupedUnit(final DefaultGroupedUnit unit) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
@@ -59,12 +59,12 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         });
     }
 
-    public GroupedUnitWrapper(final Unit unit) {
+    public DefaultGroupedUnit(final UnitTemplate template) {
         super();
 
-        checkNotNull(unit, "Received a null pointer as unit");
+        checkNotNull(template, "Received a null pointer as unit template");
 
-        this.unit = unit;
+        this.unit = new DefaultUnit(template);
 
         size.addValueChangeListener(new ValueChangeListener() {
 
@@ -120,8 +120,8 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final GroupedUnitWrapper createNewInstance() {
-        return new GroupedUnitWrapper(this);
+    public final DefaultGroupedUnit createNewInstance() {
+        return new DefaultGroupedUnit(this);
     }
 
     @Override

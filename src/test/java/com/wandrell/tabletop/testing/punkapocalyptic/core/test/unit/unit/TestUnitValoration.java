@@ -6,9 +6,8 @@ import org.testng.annotations.Test;
 
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.DefaultGroupedUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.DefaultUnit;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.GroupedUnit;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.GroupedUnitWrapper;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
@@ -36,15 +35,15 @@ public final class TestUnitValoration {
         Assert.assertEquals(getMutantUnit().getValoration(), (Integer) 28);
     }
 
-    private final GroupedUnit getGroupedUnit() {
-        final GroupedUnit unit;
+    private final DefaultGroupedUnit getGroupedUnit() {
+        final DefaultGroupedUnit unit;
         final UnitTemplate template;
         Equipment equip;
         Weapon weapon;
 
         template = Mockito.mock(UnitTemplate.class);
 
-        unit = new GroupedUnitWrapper(new DefaultUnit(template));
+        unit = new DefaultGroupedUnit(template);
 
         Mockito.when(template.getBaseCost()).thenReturn(1);
 
