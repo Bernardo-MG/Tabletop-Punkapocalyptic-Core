@@ -34,7 +34,7 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
             final Integer cost, final Collection<SpecialRule> rules,
             final RangedValue penetration, final RangedValue strength,
             final RangedValue distanceCM, final RangedValue distanceInches,
-            final MeleeWeapon weaponMelee) {
+            final Boolean firearm, final MeleeWeapon weaponMelee) {
         super();
 
         // TODO: Maybe this should be on the framework library
@@ -42,7 +42,7 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
         this.unit = unit;
 
         baseWeapon = new DefaultRangedWeapon(name, cost, rules, penetration,
-                strength, distanceCM, distanceInches, weaponMelee);
+                strength, distanceCM, distanceInches, firearm, weaponMelee);
     }
 
     public UnitBasedStrengthRangedWeapon(
@@ -162,11 +162,6 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     public final void
             removeValorationListener(final ValorationListener listener) {
         getBaseWeapon().removeValorationListener(listener);
-    }
-
-    @Override
-    public final void setFirearm(final Boolean firearm) {
-        getBaseWeapon().setFirearm(firearm);
     }
 
     @Override

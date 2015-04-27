@@ -27,7 +27,7 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
     private final RangedValue distancesCM;
     private final RangedValue distancesInches;
-    private Boolean           firearm = false;
+    private final Boolean     firearm;
     private MeleeWeapon       melee;
     private final RangedValue penetrationRanges;
     private final RangedValue strengthRanges;
@@ -50,7 +50,8 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     public DefaultRangedWeapon(final String name, final Integer cost,
             final Collection<SpecialRule> rules, final RangedValue penetration,
             final RangedValue strength, final RangedValue distanceCM,
-            final RangedValue distanceInches, final MeleeWeapon weaponMelee) {
+            final RangedValue distanceInches, final Boolean firearm,
+            final MeleeWeapon weaponMelee) {
         super(name, cost, rules);
 
         checkNotNull(distanceCM,
@@ -62,6 +63,7 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
                 "Received a null pointer as penetration ranges");
         checkNotNull(strength, "Received a null pointer as strength ranges");
 
+        checkNotNull(firearm, "Received a null pointer as firearm flag");
         checkNotNull(weaponMelee, "Received a null pointer as melee equivalent");
 
         distancesCM = distanceCM;
@@ -69,6 +71,8 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
 
         penetrationRanges = penetration;
         strengthRanges = strength;
+
+        this.firearm = firearm;
 
         melee = weaponMelee;
     }
@@ -126,13 +130,6 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     @Override
     public final Boolean isFirearm() {
         return firearm;
-    }
-
-    @Override
-    public final void setFirearm(final Boolean firearm) {
-        checkNotNull(firearm, "Received a null pointer as firearm flag");
-
-        this.firearm = firearm;
     }
 
     @Override

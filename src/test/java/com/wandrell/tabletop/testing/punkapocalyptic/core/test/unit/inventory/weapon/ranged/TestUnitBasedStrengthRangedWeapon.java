@@ -52,7 +52,7 @@ public final class TestUnitBasedStrengthRangedWeapon {
 
         weapon = new UnitBasedStrengthRangedWeapon(unit, "weapon", 0,
                 new LinkedList<SpecialRule>(), penetration, strength,
-                distanceCM, distanceInches, weaponMelee);
+                distanceCM, distanceInches, false, weaponMelee);
     }
 
     @Test
