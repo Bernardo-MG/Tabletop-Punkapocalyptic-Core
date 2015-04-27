@@ -78,11 +78,6 @@ public final class DefaultMutation implements Mutation, AttributeBonusMutation {
     }
 
     @Override
-    public final DefaultMutation createNewInstance() {
-        return new DefaultMutation(this);
-    }
-
-    @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
