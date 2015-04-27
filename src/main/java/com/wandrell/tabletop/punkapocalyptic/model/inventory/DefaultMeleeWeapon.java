@@ -40,8 +40,9 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
 
     public DefaultMeleeWeapon(final String name, final Integer cost,
             final Integer strength, final Integer penetration,
-            final Integer combat, final Collection<SpecialRule> rules) {
-        super(name, cost, rules);
+            final Integer combat, final Boolean twoHanded,
+            final Collection<SpecialRule> rules) {
+        super(name, cost, twoHanded, rules);
 
         checkNotNull(combat, "Received a null pointer as combat");
         checkNotNull(penetration, "Received a null pointer as penetration");

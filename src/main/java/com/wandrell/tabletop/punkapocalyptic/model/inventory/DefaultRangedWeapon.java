@@ -46,10 +46,11 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     public DefaultRangedWeapon(final String name, final Integer cost,
-            final Collection<SpecialRule> rules, final RangedValue penetration,
-            final RangedValue strength, final RangedValue distanceCM,
-            final RangedValue distanceInches, final Boolean firearm) {
-        super(name, cost, rules);
+            final Boolean twoHanded, final Collection<SpecialRule> rules,
+            final RangedValue penetration, final RangedValue strength,
+            final RangedValue distanceCM, final RangedValue distanceInches,
+            final Boolean firearm) {
+        super(name, cost, twoHanded, rules);
 
         checkNotNull(distanceCM,
                 "Received a null pointer as the distances in cm");

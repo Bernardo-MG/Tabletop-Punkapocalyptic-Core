@@ -36,7 +36,7 @@ public abstract class AbstractWeapon implements Weapon {
     private final Collection<WeaponEnhancement> enhancements = new LinkedList<WeaponEnhancement>();
     private final EventListenerList             listeners    = new EventListenerList();
     private final Collection<SpecialRule>       rules        = new LinkedHashSet<SpecialRule>();
-    private Boolean                             twoHanded    = false;
+    private final Boolean                       twoHanded;
     private final Integer                       weaponCost;
     private final String                        weaponName;
 
@@ -62,13 +62,17 @@ public abstract class AbstractWeapon implements Weapon {
     }
 
     public AbstractWeapon(final String name, final Integer cost,
-            final Collection<SpecialRule> rules) {
+            final Boolean twoHanded, final Collection<SpecialRule> rules) {
         super();
 
         checkNotNull(name, "Received a null pointer as name");
         checkNotNull(cost, "Received a null pointer as cost");
+        checkNotNull(twoHanded, "Received a null pointer as two handed flag");
+        checkNotNull(rules, "Received a null pointer as rules");
 
         this.weaponName = name;
+
+        this.twoHanded = twoHanded;
 
         this.weaponCost = cost;
 
@@ -173,14 +177,6 @@ public abstract class AbstractWeapon implements Weapon {
     public final void
             removeValorationListener(final ValorationListener listener) {
         getListeners().remove(ValorationListener.class, listener);
-    }
-
-    @Override
-    public final void setTwoHanded(final Boolean twoHanded) {
-        checkNotNull(twoHanded,
-                "Received a null pointer as the two handed status");
-
-        this.twoHanded = twoHanded;
     }
 
     @Override
