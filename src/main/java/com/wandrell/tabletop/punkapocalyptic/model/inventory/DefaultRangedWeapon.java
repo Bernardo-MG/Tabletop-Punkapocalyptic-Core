@@ -28,7 +28,6 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     private final RangedValue distancesCM;
     private final RangedValue distancesInches;
     private final Boolean     firearm;
-    private MeleeWeapon       melee;
     private final RangedValue penetrationRanges;
     private final RangedValue strengthRanges;
 
@@ -43,15 +42,13 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
         penetrationRanges = weapon.penetrationRanges;
         strengthRanges = weapon.strengthRanges;
 
-        melee = weapon.melee;
         firearm = weapon.firearm;
     }
 
     public DefaultRangedWeapon(final String name, final Integer cost,
             final Collection<SpecialRule> rules, final RangedValue penetration,
             final RangedValue strength, final RangedValue distanceCM,
-            final RangedValue distanceInches, final Boolean firearm,
-            final MeleeWeapon weaponMelee) {
+            final RangedValue distanceInches, final Boolean firearm) {
         super(name, cost, rules);
 
         checkNotNull(distanceCM,
@@ -64,7 +61,6 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
         checkNotNull(strength, "Received a null pointer as strength ranges");
 
         checkNotNull(firearm, "Received a null pointer as firearm flag");
-        checkNotNull(weaponMelee, "Received a null pointer as melee equivalent");
 
         distancesCM = distanceCM;
         distancesInches = distanceInches;
@@ -73,8 +69,6 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
         strengthRanges = strength;
 
         this.firearm = firearm;
-
-        melee = weaponMelee;
     }
 
     @Override
@@ -113,11 +107,6 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     }
 
     @Override
-    public final MeleeWeapon getMeleeEquivalent() {
-        return melee;
-    }
-
-    @Override
     public final Integer getShortPenetration() {
         return getPenetrationRanges().getShortValue();
     }
@@ -130,13 +119,6 @@ public final class DefaultRangedWeapon extends AbstractWeapon implements
     @Override
     public final Boolean isFirearm() {
         return firearm;
-    }
-
-    @Override
-    public final void setMeleeEquivalent(final MeleeWeapon weapon) {
-        checkNotNull(weapon, "Received a null pointer as melee equivalent");
-
-        melee = weapon;
     }
 
     private final RangedValue getPenetrationRanges() {

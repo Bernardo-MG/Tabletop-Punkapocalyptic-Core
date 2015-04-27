@@ -7,7 +7,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.MeleeWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitBasedStrengthRangedWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
@@ -28,7 +27,6 @@ public final class TestUnitBasedStrengthRangedWeapon {
         final RangedValue strength;
         final RangedValue distanceCM;
         final RangedValue distanceInches;
-        final MeleeWeapon weaponMelee;
         final Unit unit;
         final AttributesHolder attributes;
 
@@ -36,7 +34,6 @@ public final class TestUnitBasedStrengthRangedWeapon {
         strength = Mockito.mock(RangedValue.class);
         distanceCM = Mockito.mock(RangedValue.class);
         distanceInches = Mockito.mock(RangedValue.class);
-        weaponMelee = Mockito.mock(MeleeWeapon.class);
 
         unit = Mockito.mock(Unit.class);
 
@@ -52,7 +49,7 @@ public final class TestUnitBasedStrengthRangedWeapon {
 
         weapon = new UnitBasedStrengthRangedWeapon(unit, "weapon", 0,
                 new LinkedList<SpecialRule>(), penetration, strength,
-                distanceCM, distanceInches, false, weaponMelee);
+                distanceCM, distanceInches, false);
     }
 
     @Test
