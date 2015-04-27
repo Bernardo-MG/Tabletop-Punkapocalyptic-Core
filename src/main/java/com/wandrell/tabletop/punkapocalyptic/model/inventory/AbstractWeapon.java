@@ -29,7 +29,6 @@ import javax.swing.event.EventListenerList;
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
-import com.wandrell.tabletop.punkapocalyptic.model.ruleset.WeaponModifierSpecialRule;
 
 public abstract class AbstractWeapon implements Weapon {
 
@@ -52,11 +51,6 @@ public abstract class AbstractWeapon implements Weapon {
         twoHanded = weapon.twoHanded;
 
         rules.addAll(weapon.rules);
-        for (final SpecialRule rule : rules) {
-            if (rule instanceof WeaponModifierSpecialRule) {
-                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
-            }
-        }
 
         enhancements.addAll(weapon.enhancements);
     }
@@ -80,10 +74,6 @@ public abstract class AbstractWeapon implements Weapon {
             checkNotNull(rule, "Received a null pointer as rule");
 
             this.rules.add(rule);
-
-            if (rule instanceof WeaponModifierSpecialRule) {
-                ((WeaponModifierSpecialRule) rule).applyToWeapon(this);
-            }
         }
     }
 
