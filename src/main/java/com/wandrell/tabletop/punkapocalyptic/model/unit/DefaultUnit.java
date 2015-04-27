@@ -40,7 +40,6 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.UnitBonusAttributesHolder;
-import com.wandrell.tabletop.valuebox.ValueBox;
 
 public final class DefaultUnit implements Unit, MutantUnit {
 
@@ -51,13 +50,11 @@ public final class DefaultUnit implements Unit, MutantUnit {
                                                                   new LinkedList<SpecialRule>()),
                                                           0);
     private final AttributesHolder      attributes;
-    private final DerivedValuesBuilder  derivedBuilder;
     private final Collection<Equipment> equipment = new LinkedHashSet<Equipment>();
     private final EventListenerList     listeners = new EventListenerList();
     private final ValorationListener    listenerStatus;
     private final Collection<Mutation>  mutations = new LinkedHashSet<Mutation>();
     private final UnitTemplate          template;
-    private final ValueBox              valoration;
     private final Collection<Weapon>    weapons   = new LinkedHashSet<Weapon>();
 
     {
@@ -91,29 +88,17 @@ public final class DefaultUnit implements Unit, MutantUnit {
             weapons.add(w);
         }
 
-        derivedBuilder = unit.derivedBuilder;
-
-        valoration = derivedBuilder.getValoration(this);
-
         setAttributesListeners();
     }
 
-    public DefaultUnit(final UnitTemplate template,
-            final DerivedValuesBuilder derivedBuilder) {
+    public DefaultUnit(final UnitTemplate template) {
         super();
 
         checkNotNull(template, "Received a null pointer as template");
 
-        checkNotNull(derivedBuilder,
-                "Received a null pointer as valoration builder");
-
         this.template = template;
 
-        this.derivedBuilder = derivedBuilder;
-
         attributes = new UnitBonusAttributesHolder(this);
-
-        this.valoration = derivedBuilder.getValoration(this);
 
         setAttributesListeners();
     }
@@ -209,7 +194,27 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
     @Override
     public final Integer getValoration() {
-        return getValorationValueBox().getValue();
+        Integer valoration;
+
+        valoration = getUnitTemplate().getBaseCost();
+
+        for (final Weapon weapon : getWeapons()) {
+            valoration += weapon.getCost();
+        }
+
+        for (final Equipment equipment : getEquipment()) {
+            valoration += equipment.getCost();
+        }
+
+        if (getArmor() != null) {
+            valoration += getArmor().getCost();
+        }
+
+        for (final Mutation mutation : getMutations()) {
+            valoration += mutation.getCost();
+        }
+
+        return valoration;
     }
 
     @Override
@@ -358,10 +363,6 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
     private final ValorationListener getStatusListener() {
         return listenerStatus;
-    }
-
-    private final ValueBox getValorationValueBox() {
-        return valoration;
     }
 
     private final Collection<Weapon> getWeaponsModifiable() {

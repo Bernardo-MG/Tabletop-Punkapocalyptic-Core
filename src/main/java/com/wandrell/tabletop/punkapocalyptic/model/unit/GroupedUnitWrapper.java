@@ -33,15 +33,14 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
-import com.wandrell.tabletop.punkapocalyptic.valuebox.GroupedUnitValorationValueBox;
+import com.wandrell.tabletop.valuebox.DefaultValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
 public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
 
     private final EventListenerList listeners = new EventListenerList();
-    private final ValueBox          size;
+    private final ValueBox          size      = new DefaultValueBox();
     private final Unit              unit;
-    private final ValueBox          valoration;
 
     public GroupedUnitWrapper(final GroupedUnitWrapper unit) {
         super();
@@ -49,9 +48,6 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         checkNotNull(unit, "Received a null pointer as unit");
 
         this.unit = unit.unit.createNewInstance();
-        size = unit.size.createNewInstance();
-
-        valoration = new GroupedUnitValorationValueBox(unit, size);
 
         size.addValueChangeListener(new ValueChangeListener() {
 
@@ -63,16 +59,12 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
         });
     }
 
-    public GroupedUnitWrapper(final Unit unit, final ValueBox size) {
+    public GroupedUnitWrapper(final Unit unit) {
         super();
 
         checkNotNull(unit, "Received a null pointer as unit");
-        checkNotNull(size, "Received a null pointer as size");
 
         this.unit = unit;
-        this.size = size;
-
-        valoration = new GroupedUnitValorationValueBox(unit, size);
 
         size.addValueChangeListener(new ValueChangeListener() {
 
@@ -177,7 +169,7 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
 
     @Override
     public final Integer getValoration() {
-        return getValorationValueBox().getValue();
+        return getWrappedUnit().getValoration() * getGroupSize().getValue();
     }
 
     @Override
@@ -230,10 +222,6 @@ public final class GroupedUnitWrapper implements GroupedUnit, MutantUnit {
 
     private final EventListenerList getListeners() {
         return listeners;
-    }
-
-    private final ValueBox getValorationValueBox() {
-        return valoration;
     }
 
     private final Unit getWrappedUnit() {

@@ -38,6 +38,7 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
         super();
 
         // TODO: Maybe this should be on the framework library
+        // TODO: Remove this class
 
         this.unit = unit;
 
