@@ -63,14 +63,7 @@ public final class DefaultGang implements Gang {
 
         valoration = valorationBuilder.getValoration(this);
 
-        valoration.addValueChangeListener(new ValueChangeListener() {
-
-            @Override
-            public final void valueChanged(final ValueChangeEvent event) {
-                fireValorationChangedEvent(new EventObject(this));
-            }
-
-        });
+        setValorationListener();
     }
 
     public DefaultGang(final Faction faction,
@@ -87,14 +80,7 @@ public final class DefaultGang implements Gang {
 
         this.valoration = valorationBuilder.getValoration(this);
 
-        valoration.addValueChangeListener(new ValueChangeListener() {
-
-            @Override
-            public final void valueChanged(final ValueChangeEvent event) {
-                fireValorationChangedEvent(new EventObject(this));
-            }
-
-        });
+        setValorationListener();
     }
 
     @Override
@@ -235,6 +221,21 @@ public final class DefaultGang implements Gang {
 
     private final ValueBox getValorationValueBox() {
         return valoration;
+    }
+
+    private final void setValorationListener() {
+        final Gang gang;
+
+        gang = this;
+
+        valoration.addValueChangeListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireValorationChangedEvent(new EventObject(gang));
+            }
+
+        });
     }
 
 }
