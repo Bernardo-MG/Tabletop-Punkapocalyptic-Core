@@ -130,10 +130,6 @@ public final class DefaultGang implements Gang {
         return getBulletsValueBox().getValue();
     }
 
-    public final ValueBox getBulletsValueBox() {
-        return bullets;
-    }
-
     @Override
     public final Faction getFaction() {
         return faction;
@@ -147,10 +143,6 @@ public final class DefaultGang implements Gang {
     @Override
     public final Integer getValoration() {
         return getValorationValueBox().getValue();
-    }
-
-    public final ValueBox getValorationValueBox() {
-        return valoration;
     }
 
     @Override
@@ -226,12 +218,20 @@ public final class DefaultGang implements Gang {
         }
     }
 
+    private final ValueBox getBulletsValueBox() {
+        return bullets;
+    }
+
     private final EventListenerList getListeners() {
         return listeners;
     }
 
     private final Collection<Unit> getUnitsModifiable() {
         return units;
+    }
+
+    private final ValueBox getValorationValueBox() {
+        return valoration;
     }
 
     private final void setBulletsListeners() {
