@@ -31,12 +31,11 @@ import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.faction.Faction;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.GangListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitEvent;
-import com.wandrell.tabletop.valuebox.DefaultValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
 public final class DefaultGang implements Gang {
 
-    private final ValueBox          bullets;
+    private Integer                 bullets   = 0;
     private final Faction           faction;
     private final EventListenerList listeners = new EventListenerList();
     private final Collection<Unit>  units     = new LinkedList<Unit>();
@@ -55,7 +54,6 @@ public final class DefaultGang implements Gang {
         checkNotNull(gang, "Received a null pointer as gang");
 
         faction = gang.faction;
-        bullets = gang.getBulletsValueBox().createNewInstance();
 
         for (final Unit unit : gang.units) {
             units.add(unit.createNewInstance());
@@ -65,7 +63,14 @@ public final class DefaultGang implements Gang {
 
         valoration = valorationBuilder.getValoration(this);
 
-        setBulletsListeners();
+        valoration.addValueChangeListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireValorationChangedEvent(new EventObject(this));
+            }
+
+        });
     }
 
     public DefaultGang(final Faction faction,
@@ -78,13 +83,18 @@ public final class DefaultGang implements Gang {
 
         this.faction = faction;
 
-        bullets = new DefaultValueBox(0);
-
         this.valorationBuilder = valorationBuilder;
 
         this.valoration = valorationBuilder.getValoration(this);
 
-        setBulletsListeners();
+        valoration.addValueChangeListener(new ValueChangeListener() {
+
+            @Override
+            public final void valueChanged(final ValueChangeEvent event) {
+                fireValorationChangedEvent(new EventObject(this));
+            }
+
+        });
     }
 
     @Override
@@ -101,8 +111,6 @@ public final class DefaultGang implements Gang {
         getUnitsModifiable().add(unit);
 
         fireUnitAddedEvent(new UnitEvent(this, unit));
-
-        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -116,8 +124,6 @@ public final class DefaultGang implements Gang {
         for (final Unit unit : units) {
             fireUnitRemovedEvent(new UnitEvent(this, unit));
         }
-
-        fireValorationChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -127,7 +133,7 @@ public final class DefaultGang implements Gang {
 
     @Override
     public final Integer getBullets() {
-        return getBulletsValueBox().getValue();
+        return bullets;
     }
 
     @Override
@@ -166,14 +172,15 @@ public final class DefaultGang implements Gang {
         if (found) {
             itr.remove();
             fireUnitRemovedEvent(new UnitEvent(this, unit));
-            fireValorationChangedEvent(new EventObject(this));
         }
 
     }
 
     @Override
     public final void setBullets(final Integer bullets) {
-        getBulletsValueBox().setValue(bullets);
+        this.bullets = bullets;
+
+        fireBulletsChangedEvent(new EventObject(this));
     }
 
     @Override
@@ -218,10 +225,6 @@ public final class DefaultGang implements Gang {
         }
     }
 
-    private final ValueBox getBulletsValueBox() {
-        return bullets;
-    }
-
     private final EventListenerList getListeners() {
         return listeners;
     }
@@ -232,18 +235,6 @@ public final class DefaultGang implements Gang {
 
     private final ValueBox getValorationValueBox() {
         return valoration;
-    }
-
-    private final void setBulletsListeners() {
-        getBulletsValueBox().addValueChangeListener(new ValueChangeListener() {
-
-            @Override
-            public final void valueChanged(final ValueChangeEvent evt) {
-                fireBulletsChangedEvent(new EventObject(this));
-                fireValorationChangedEvent(new EventObject(this));
-            }
-
-        });
     }
 
 }
