@@ -62,7 +62,7 @@ public final class DefaultFaction implements Faction {
     }
 
     @Override
-    public final String getName() {
+    public final String getNameToken() {
         return factionName;
     }
 
