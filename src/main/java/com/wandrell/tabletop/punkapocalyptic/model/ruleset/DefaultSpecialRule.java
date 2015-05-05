@@ -62,7 +62,7 @@ public final class DefaultSpecialRule implements SpecialRule {
     }
 
     @Override
-    public final String getName() {
+    public final String getNameToken() {
         return name;
     }
 
