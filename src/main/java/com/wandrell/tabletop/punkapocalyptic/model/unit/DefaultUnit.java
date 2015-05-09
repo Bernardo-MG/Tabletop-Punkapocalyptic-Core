@@ -32,7 +32,7 @@ import com.wandrell.tabletop.punkapocalyptic.model.availability.option.DefaultAr
 import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.DefaultArmor;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.AttributesListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
@@ -43,19 +43,19 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.UnitBonusAttribute
 
 public final class DefaultUnit implements Unit, MutantUnit {
 
-    private ArmorOption                 armor     = new DefaultArmorOption(
-                                                          new DefaultArmor(
-                                                                  "unarmored",
-                                                                  0,
-                                                                  new LinkedList<SpecialRule>()),
-                                                          0);
-    private final AttributesHolder      attributes;
-    private final Collection<Equipment> equipment = new LinkedHashSet<Equipment>();
-    private final EventListenerList     listeners = new EventListenerList();
-    private final ValorationListener    listenerStatus;
-    private final Collection<Mutation>  mutations = new LinkedHashSet<Mutation>();
-    private final UnitTemplate          template;
-    private final Collection<Weapon>    weapons   = new LinkedHashSet<Weapon>();
+    private ArmorOption                  armor     = new DefaultArmorOption(
+                                                           new DefaultArmor(
+                                                                   "unarmored",
+                                                                   0,
+                                                                   new LinkedList<SpecialRule>()),
+                                                           0);
+    private final AttributesHolder       attributes;
+    private final Collection<Equipment>  equipment = new LinkedHashSet<Equipment>();
+    private final EventListenerList      listeners = new EventListenerList();
+    private final ValorationListener     listenerStatus;
+    private final Collection<Mutation>   mutations = new LinkedHashSet<Mutation>();
+    private final UnitTemplate           template;
+    private final Collection<UnitWeapon> weapons   = new LinkedHashSet<UnitWeapon>();
 
     {
         listenerStatus = new ValorationListener() {
@@ -84,7 +84,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
             equipment.add(e);
         }
 
-        for (final Weapon w : unit.weapons) {
+        for (final UnitWeapon w : unit.weapons) {
             weapons.add(w);
         }
 
@@ -128,7 +128,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final void addWeapon(final Weapon weapon) {
+    public final void addWeapon(final UnitWeapon weapon) {
         checkNotNull(weapon, "Received a null pointer as weapon");
 
         getWeaponsModifiable().add(weapon);
@@ -198,7 +198,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
         valoration = getUnitTemplate().getBaseCost();
 
-        for (final Weapon weapon : getWeapons()) {
+        for (final UnitWeapon weapon : getWeapons()) {
             valoration += weapon.getCost();
         }
 
@@ -218,7 +218,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final Collection<Weapon> getWeapons() {
+    public final Collection<UnitWeapon> getWeapons() {
         return Collections.unmodifiableCollection(getWeaponsModifiable());
     }
 
@@ -243,7 +243,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
     }
 
     @Override
-    public final void removeWeapon(final Weapon weapon) {
+    public final void removeWeapon(final UnitWeapon weapon) {
         checkNotNull(armor, "Received a null pointer as weapon");
 
         getWeaponsModifiable().remove(weapon);
@@ -365,7 +365,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
         return listenerStatus;
     }
 
-    private final Collection<Weapon> getWeaponsModifiable() {
+    private final Collection<UnitWeapon> getWeaponsModifiable() {
         return weapons;
     }
 

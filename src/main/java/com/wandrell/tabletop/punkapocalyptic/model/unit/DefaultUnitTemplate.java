@@ -1,6 +1,7 @@
 package com.wandrell.tabletop.punkapocalyptic.model.unit;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
@@ -41,6 +42,10 @@ public final class DefaultUnitTemplate implements UnitTemplate {
 
     @Override
     public final Collection<SpecialRule> getSpecialRules() {
+        return Collections.unmodifiableCollection(getSpecialRulesModifiable());
+    }
+
+    private final Collection<SpecialRule> getSpecialRulesModifiable() {
         return rules;
     }
 

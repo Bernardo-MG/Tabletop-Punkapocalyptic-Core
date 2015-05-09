@@ -19,7 +19,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 
-import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
@@ -57,21 +56,6 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     }
 
     @Override
-    public final void addEnhancement(final WeaponEnhancement enhancement) {
-        getBaseWeapon().addEnhancement(enhancement);
-    }
-
-    @Override
-    public final void addValorationListener(final ValorationListener listener) {
-        getBaseWeapon().addValorationListener(listener);
-    }
-
-    @Override
-    public final Integer getBaseCost() {
-        return getBaseWeapon().getBaseCost();
-    }
-
-    @Override
     public final Integer getCost() {
         return getBaseWeapon().getCost();
     }
@@ -84,11 +68,6 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     @Override
     public final RangedValue getDistancesMetricSystem() {
         return getBaseWeapon().getDistancesMetricSystem();
-    }
-
-    @Override
-    public final Collection<WeaponEnhancement> getEnhancements() {
-        return getBaseWeapon().getEnhancements();
     }
 
     @Override
@@ -142,17 +121,6 @@ public final class UnitBasedStrengthRangedWeapon implements RangedWeapon,
     @Override
     public final Boolean isTwoHanded() {
         return getBaseWeapon().isTwoHanded();
-    }
-
-    @Override
-    public final void removeEnhancement(final WeaponEnhancement enhancement) {
-        getBaseWeapon().removeEnhancement(enhancement);
-    }
-
-    @Override
-    public final void
-            removeValorationListener(final ValorationListener listener) {
-        getBaseWeapon().removeValorationListener(listener);
     }
 
     @Override

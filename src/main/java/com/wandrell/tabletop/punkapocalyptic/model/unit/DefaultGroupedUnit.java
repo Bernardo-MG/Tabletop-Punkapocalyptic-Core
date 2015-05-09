@@ -28,7 +28,7 @@ import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.availability.option.ArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
@@ -98,7 +98,7 @@ public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final void addWeapon(final Weapon weapon) {
+    public final void addWeapon(final UnitWeapon weapon) {
         getWrappedUnit().addWeapon(weapon);
     }
 
@@ -173,7 +173,7 @@ public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final Collection<Weapon> getWeapons() {
+    public final Collection<UnitWeapon> getWeapons() {
         return getWrappedUnit().getWeapons();
     }
 
@@ -196,7 +196,7 @@ public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
     }
 
     @Override
-    public final void removeWeapon(final Weapon weapon) {
+    public final void removeWeapon(final UnitWeapon weapon) {
         getWrappedUnit().removeWeapon(weapon);
     }
 

@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.DefaultGroupedUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.DefaultUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
@@ -39,7 +39,7 @@ public final class TestUnitValoration {
         final DefaultGroupedUnit unit;
         final UnitTemplate template;
         Equipment equip;
-        Weapon weapon;
+        UnitWeapon weapon;
 
         template = Mockito.mock(UnitTemplate.class);
 
@@ -47,12 +47,12 @@ public final class TestUnitValoration {
 
         Mockito.when(template.getBaseCost()).thenReturn(1);
 
-        weapon = Mockito.mock(Weapon.class);
+        weapon = Mockito.mock(UnitWeapon.class);
         Mockito.when(weapon.getCost()).thenReturn(2);
 
         unit.addWeapon(weapon);
 
-        weapon = Mockito.mock(Weapon.class);
+        weapon = Mockito.mock(UnitWeapon.class);
         Mockito.when(weapon.getCost()).thenReturn(3);
 
         unit.addWeapon(weapon);
@@ -78,7 +78,7 @@ public final class TestUnitValoration {
         final AttributesHolder attributes;
         Mutation mutation;
         Equipment equip;
-        Weapon weapon;
+        UnitWeapon weapon;
 
         template = Mockito.mock(UnitTemplate.class);
 
@@ -98,12 +98,12 @@ public final class TestUnitValoration {
 
         Mockito.when(template.getBaseCost()).thenReturn(1);
 
-        weapon = Mockito.mock(Weapon.class);
+        weapon = Mockito.mock(UnitWeapon.class);
         Mockito.when(weapon.getCost()).thenReturn(2);
 
         unit.addWeapon(weapon);
 
-        weapon = Mockito.mock(Weapon.class);
+        weapon = Mockito.mock(UnitWeapon.class);
         Mockito.when(weapon.getCost()).thenReturn(3);
 
         unit.addWeapon(weapon);
@@ -136,7 +136,7 @@ public final class TestUnitValoration {
         final UnitTemplate template;
         final AttributesHolder attributes;
         Equipment equip;
-        Weapon weapon;
+        UnitWeapon weapon;
 
         template = Mockito.mock(UnitTemplate.class);
 
@@ -156,12 +156,12 @@ public final class TestUnitValoration {
 
         Mockito.when(template.getBaseCost()).thenReturn(1);
 
-        weapon = Mockito.mock(Weapon.class);
+        weapon = Mockito.mock(UnitWeapon.class);
         Mockito.when(weapon.getCost()).thenReturn(2);
 
         unit.addWeapon(weapon);
 
-        weapon = Mockito.mock(Weapon.class);
+        weapon = Mockito.mock(UnitWeapon.class);
         Mockito.when(weapon.getCost()).thenReturn(3);
 
         unit.addWeapon(weapon);
