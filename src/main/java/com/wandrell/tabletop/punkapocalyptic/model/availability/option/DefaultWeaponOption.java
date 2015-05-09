@@ -23,15 +23,15 @@ import java.util.LinkedHashSet;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitWeapon;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.Weapon;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.WeaponEnhancement;
 
 public final class DefaultWeaponOption implements WeaponOption {
 
-    private final UnitWeapon                    availWeapon;
+    private final Weapon                        availWeapon;
     private final Collection<WeaponEnhancement> weaponEnhcn = new LinkedHashSet<WeaponEnhancement>();
 
-    public DefaultWeaponOption(final UnitWeapon weapon,
+    public DefaultWeaponOption(final Weapon weapon,
             final Collection<WeaponEnhancement> enhancements) {
         super();
 
@@ -75,7 +75,7 @@ public final class DefaultWeaponOption implements WeaponOption {
     }
 
     @Override
-    public final UnitWeapon getWeapon() {
+    public final Weapon getWeapon() {
         return availWeapon;
     }
 
