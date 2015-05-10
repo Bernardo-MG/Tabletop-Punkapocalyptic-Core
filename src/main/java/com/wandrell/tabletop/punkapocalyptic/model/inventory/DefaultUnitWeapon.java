@@ -85,7 +85,8 @@ public final class DefaultUnitWeapon implements UnitWeapon {
         final DefaultUnitWeapon other;
 
         other = (DefaultUnitWeapon) obj;
-        return Objects.equals(template.getName(), other.template.getName());
+        return Objects.equals(template.getNameToken(),
+                other.template.getNameToken());
     }
 
     @Override
@@ -112,7 +113,7 @@ public final class DefaultUnitWeapon implements UnitWeapon {
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(template.getName());
+        return Objects.hashCode(template.getNameToken());
     }
 
     @Override

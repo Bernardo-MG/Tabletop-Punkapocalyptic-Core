@@ -87,7 +87,7 @@ public final class DefaultArmor implements Armor {
     }
 
     @Override
-    public final String getName() {
+    public final String getNameToken() {
         return armorName;
     }
 

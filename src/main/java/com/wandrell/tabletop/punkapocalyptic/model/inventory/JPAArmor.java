@@ -103,7 +103,7 @@ public final class JPAArmor implements Armor, PersistenceEntity {
     }
 
     @Override
-    public final String getName() {
+    public final String getNameToken() {
         return armorName;
     }
 

@@ -74,7 +74,7 @@ public abstract class AbstractJPAWeapon implements Weapon, PersistenceEntity {
     }
 
     @Override
-    public final String getName() {
+    public final String getNameToken() {
         return name;
     }
 
