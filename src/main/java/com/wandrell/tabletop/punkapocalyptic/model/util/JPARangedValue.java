@@ -15,28 +15,24 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.util;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
 
-public class DefaultRangedValue implements RangedValue {
+@Embeddable
+public class JPARangedValue implements RangedValue {
 
-    private final Integer distanceLong;
-    private final Integer distanceMedium;
-    private final Integer distanceShort;
+    @Column(name = "long")
+    private Integer distanceLong;
+    @Column(name = "medium")
+    private Integer distanceMedium;
+    @Column(name = "short")
+    private Integer distanceShort;
 
-    public DefaultRangedValue(final Integer distanceShort,
-            final Integer distanceMedium, final Integer distanceLong) {
+    public JPARangedValue() {
         super();
-
-        checkNotNull(distanceShort, "Received a null pointer as short distance");
-        checkNotNull(distanceMedium,
-                "Received a null pointer as medium distance");
-        checkNotNull(distanceLong, "Received a null pointer as long distance");
-
-        this.distanceShort = distanceShort;
-        this.distanceMedium = distanceMedium;
-        this.distanceLong = distanceLong;
     }
 
     @Override
@@ -52,6 +48,18 @@ public class DefaultRangedValue implements RangedValue {
     @Override
     public final Integer getShortValue() {
         return distanceShort;
+    }
+
+    public final void setLongValue(final Integer longVal) {
+        distanceLong = longVal;
+    }
+
+    public final void setMediumValue(final Integer mediumVal) {
+        distanceMedium = mediumVal;
+    }
+
+    public final void setShortValue(final Integer shortVal) {
+        distanceShort = shortVal;
     }
 
     @Override
