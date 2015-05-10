@@ -17,22 +17,49 @@ package com.wandrell.tabletop.punkapocalyptic.model.unit.mutation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.util.persistence.PersistenceEntity;
 
-public final class DefaultMutation implements Mutation, AttributeBonusMutation {
+@Entity(name = "Mutation")
+@Table(name = "mutations")
+public final class JPAMutation implements Mutation, AttributeBonusMutation,
+        PersistenceEntity {
 
-    private final Integer actionsBonus;
-    private final Integer agilityBonus;
-    private final Integer combatBonus;
-    private final Integer cost;
-    private final String  name;
-    private final Integer precisionBonus;
-    private final Integer strengthBonus;
-    private final Integer techBonus;
-    private final Integer toughnessBonus;
+    @Column(name = "actions")
+    private Integer actionsBonus;
+    @Column(name = "agility")
+    private Integer agilityBonus;
+    @Column(name = "combat")
+    private Integer combatBonus;
+    @Column(name = "cost")
+    private Integer cost;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id = -1;
+    @Column(name = "name")
+    private String  name;
+    @Column(name = "precision")
+    private Integer precisionBonus;
+    @Column(name = "strength")
+    private Integer strengthBonus;
+    @Column(name = "tech")
+    private Integer techBonus;
+    @Column(name = "toughness")
+    private Integer toughnessBonus;
 
-    public DefaultMutation(final DefaultMutation mutation) {
+    public JPAMutation() {
+        super();
+    }
+
+    public JPAMutation(final JPAMutation mutation) {
         super();
 
         checkNotNull(mutation, "Received a null pointer as mutation");
@@ -49,34 +76,6 @@ public final class DefaultMutation implements Mutation, AttributeBonusMutation {
         toughnessBonus = mutation.toughnessBonus;
     }
 
-    public DefaultMutation(final String name, final Integer cost,
-            final Integer actions, final Integer agility, final Integer combat,
-            final Integer precision, final Integer strength,
-            final Integer tech, final Integer toughness) {
-        super();
-
-        checkNotNull(name, "Received a null pointer as name");
-        checkNotNull(cost, "Received a null pointer as cost");
-        checkNotNull(actions, "Received a null pointer as actions");
-        checkNotNull(agility, "Received a null pointer as agility");
-        checkNotNull(combat, "Received a null pointer as combat");
-        checkNotNull(precision, "Received a null pointer as precision");
-        checkNotNull(strength, "Received a null pointer as strength");
-        checkNotNull(tech, "Received a null pointer as tech");
-        checkNotNull(toughness, "Received a null pointer as toughness");
-
-        this.name = name;
-        this.cost = cost;
-
-        actionsBonus = actions;
-        agilityBonus = agility;
-        combatBonus = combat;
-        precisionBonus = precision;
-        strengthBonus = strength;
-        techBonus = tech;
-        toughnessBonus = toughness;
-    }
-
     @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {
@@ -91,9 +90,9 @@ public final class DefaultMutation implements Mutation, AttributeBonusMutation {
             return false;
         }
 
-        DefaultMutation other;
+        JPAMutation other;
 
-        other = (DefaultMutation) obj;
+        other = (JPAMutation) obj;
         return Objects.equal(name, other.name);
     }
 
@@ -118,6 +117,11 @@ public final class DefaultMutation implements Mutation, AttributeBonusMutation {
     }
 
     @Override
+    public final Integer getId() {
+        return id;
+    }
+
+    @Override
     public final String getName() {
         return name;
     }
@@ -137,14 +141,55 @@ public final class DefaultMutation implements Mutation, AttributeBonusMutation {
         return techBonus;
     }
 
+    public final void getTechBonus(final Integer tech) {
+        techBonus = tech;
+    }
+
     @Override
     public final Integer getToughnessBonus() {
         return toughnessBonus;
     }
 
+    public final void getToughnessBonus(final Integer toughness) {
+        toughnessBonus = toughness;
+    }
+
     @Override
     public final int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    public final void setActionsBonus(final Integer actions) {
+        actionsBonus = actions;
+    }
+
+    public final void setAgilityBonus(final Integer agility) {
+        agilityBonus = agility;
+    }
+
+    public final void setCombatBonus(final Integer combat) {
+        combatBonus = combat;
+    }
+
+    public final void setCost(final Integer cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public final void setId(final Integer id) {
+        this.id = id;
+    }
+
+    public final void setName(final String name) {
+        this.name = name;
+    }
+
+    public final void setPrecisionBonus(final Integer precision) {
+        precisionBonus = precision;
+    }
+
+    public final void setStrengthBonus(final Integer strength) {
+        strengthBonus = strength;
     }
 
     @Override

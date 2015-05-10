@@ -19,26 +19,36 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.google.common.base.MoreObjects;
+import com.wandrell.util.persistence.PersistenceEntity;
 
-public final class DefaultFaction implements Faction {
+@Entity(name = "Faction")
+@Table(name = "factions")
+public final class JPAFaction implements Faction, PersistenceEntity {
 
-    private final String factionName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id = -1;
+    @Column(name = "name")
+    private String  nameToken;
 
-    public DefaultFaction(final DefaultFaction faction) {
+    public JPAFaction() {
+        super();
+    }
+
+    public JPAFaction(final JPAFaction faction) {
         super();
 
         checkNotNull(faction, "Received a null pointer as faction");
 
-        factionName = faction.factionName;
-    }
-
-    public DefaultFaction(final String name) {
-        super();
-
-        checkNotNull(name, "Received a null pointer as name");
-
-        this.factionName = name;
+        nameToken = faction.nameToken;
     }
 
     @Override
@@ -55,25 +65,39 @@ public final class DefaultFaction implements Faction {
             return false;
         }
 
-        final DefaultFaction other;
+        final JPAFaction other;
 
-        other = (DefaultFaction) obj;
-        return Objects.equals(factionName, other.factionName);
+        other = (JPAFaction) obj;
+        return Objects.equals(nameToken, other.nameToken);
+    }
+
+    @Override
+    public final Integer getId() {
+        return id;
     }
 
     @Override
     public final String getNameToken() {
-        return factionName;
+        return nameToken;
     }
 
     @Override
     public final int hashCode() {
-        return Objects.hashCode(factionName);
+        return Objects.hashCode(nameToken);
+    }
+
+    @Override
+    public final void setId(final Integer id) {
+        this.id = id;
+    }
+
+    public final void setNameToken(final String name) {
+        nameToken = name;
     }
 
     @Override
     public final String toString() {
-        return MoreObjects.toStringHelper(this).add("name", factionName)
+        return MoreObjects.toStringHelper(this).add("name", nameToken)
                 .toString();
     }
 

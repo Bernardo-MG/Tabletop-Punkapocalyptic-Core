@@ -1,21 +1,18 @@
 package com.wandrell.tabletop.testing.punkapocalyptic.core.test.unit.inventory.weapon.ranged;
 
-import java.util.LinkedList;
-
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitBasedStrengthRangedWeapon;
-import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.JPAStrengthRangedWeapon;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
 
 public final class TestUnitBasedStrengthRangedWeapon {
 
-    private UnitBasedStrengthRangedWeapon weapon;
+    private JPAStrengthRangedWeapon weapon;
 
     public TestUnitBasedStrengthRangedWeapon() {
         super();
@@ -23,17 +20,11 @@ public final class TestUnitBasedStrengthRangedWeapon {
 
     @BeforeTest
     public final void initializeWeapon() {
-        final RangedValue penetration;
         final RangedValue strength;
-        final RangedValue distanceCM;
-        final RangedValue distanceInches;
         final Unit unit;
         final AttributesHolder attributes;
 
-        penetration = Mockito.mock(RangedValue.class);
         strength = Mockito.mock(RangedValue.class);
-        distanceCM = Mockito.mock(RangedValue.class);
-        distanceInches = Mockito.mock(RangedValue.class);
 
         unit = Mockito.mock(Unit.class);
 
@@ -47,9 +38,12 @@ public final class TestUnitBasedStrengthRangedWeapon {
 
         Mockito.when(unit.getAttributes()).thenReturn(attributes);
 
-        weapon = new UnitBasedStrengthRangedWeapon(unit, "weapon", 0, false,
-                new LinkedList<SpecialRule>(), penetration, strength,
-                distanceCM, distanceInches, false);
+        weapon = new JPAStrengthRangedWeapon();
+
+        weapon.setUnit(unit);
+        weapon.setShortStrength(1);
+        weapon.setMediumStrength(2);
+        weapon.setLongStrength(3);
     }
 
     @Test

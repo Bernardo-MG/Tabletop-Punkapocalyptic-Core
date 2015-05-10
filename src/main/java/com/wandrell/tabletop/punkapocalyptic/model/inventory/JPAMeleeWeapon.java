@@ -17,18 +17,27 @@ package com.wandrell.tabletop.punkapocalyptic.model.inventory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
-import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
-
-public final class DefaultMeleeWeapon extends AbstractWeapon implements
+@Entity
+@DiscriminatorValue("melee")
+public final class JPAMeleeWeapon extends AbstractJPAWeapon implements
         MeleeWeapon {
 
-    private final Integer weaponCombat;
-    private final Integer weaponPenet;
-    private final Integer weaponStr;
+    @Column(name = "combat")
+    private Integer weaponCombat = 0;
+    @Column(name = "penetration")
+    private Integer weaponPenet  = 0;
+    @Column(name = "strength")
+    private Integer weaponStr    = 0;
 
-    public DefaultMeleeWeapon(final DefaultMeleeWeapon weapon) {
+    public JPAMeleeWeapon() {
+        super();
+    }
+
+    public JPAMeleeWeapon(final JPAMeleeWeapon weapon) {
         super(weapon);
 
         checkNotNull(weapon, "Received a null pointer as weapon");
@@ -36,21 +45,6 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
         weaponCombat = weapon.weaponCombat;
         weaponPenet = weapon.weaponPenet;
         weaponStr = weapon.weaponStr;
-    }
-
-    public DefaultMeleeWeapon(final String name, final Integer cost,
-            final Integer strength, final Integer penetration,
-            final Integer combat, final Boolean twoHanded,
-            final Collection<SpecialRule> rules) {
-        super(name, cost, twoHanded, rules);
-
-        checkNotNull(combat, "Received a null pointer as combat");
-        checkNotNull(penetration, "Received a null pointer as penetration");
-        checkNotNull(strength, "Received a null pointer as strength");
-
-        this.weaponCombat = combat;
-        this.weaponPenet = penetration;
-        this.weaponStr = strength;
     }
 
     @Override
@@ -66,6 +60,18 @@ public final class DefaultMeleeWeapon extends AbstractWeapon implements
     @Override
     public final Integer getStrength() {
         return weaponStr;
+    }
+
+    public final void setCombat(final Integer combat) {
+        weaponCombat = combat;
+    }
+
+    public final void setPenetration(final Integer penetration) {
+        weaponPenet = penetration;
+    }
+
+    public final void setStrength(final Integer strength) {
+        weaponStr = strength;
     }
 
 }
