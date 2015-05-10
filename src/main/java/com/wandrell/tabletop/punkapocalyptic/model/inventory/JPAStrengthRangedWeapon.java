@@ -55,6 +55,10 @@ public final class JPAStrengthRangedWeapon extends AbstractJPARangedWeapon
                 + super.getMediumStrength();
     }
 
+    public final String getName() {
+        return getNameToken();
+    }
+
     @Override
     public final Integer getShortStrength() {
         return getUnit().getAttributes().getStrength()

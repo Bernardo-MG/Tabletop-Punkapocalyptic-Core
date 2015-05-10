@@ -52,6 +52,10 @@ public final class JPAMeleeWeapon extends AbstractJPAWeapon implements
         return weaponCombat;
     }
 
+    public final String getName() {
+        return getNameToken();
+    }
+
     @Override
     public final Integer getPenetration() {
         return weaponPenet;

@@ -64,6 +64,10 @@ public final class JPAWeaponEnhancement implements WeaponEnhancement,
         return id;
     }
 
+    public final String getName() {
+        return getNameToken();
+    }
+
     @Override
     public final String getNameToken() {
         return name;

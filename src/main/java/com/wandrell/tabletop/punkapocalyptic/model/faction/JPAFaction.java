@@ -76,6 +76,10 @@ public final class JPAFaction implements Faction, PersistenceEntity {
         return id;
     }
 
+    public final String getName() {
+        return getNameToken();
+    }
+
     @Override
     public final String getNameToken() {
         return nameToken;

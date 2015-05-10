@@ -64,6 +64,10 @@ public final class JPAUnitTemplate implements UnitTemplate, PersistenceEntity {
         return id;
     }
 
+    public final String getName() {
+        return getNameToken();
+    }
+
     @Override
     public final String getNameToken() {
         return name;

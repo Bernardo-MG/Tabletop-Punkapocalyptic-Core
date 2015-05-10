@@ -121,8 +121,12 @@ public final class JPAMutation implements Mutation, AttributeBonusMutation,
         return id;
     }
 
-    @Override
     public final String getName() {
+        return getNameToken();
+    }
+
+    @Override
+    public final String getNameToken() {
         return name;
     }
 
