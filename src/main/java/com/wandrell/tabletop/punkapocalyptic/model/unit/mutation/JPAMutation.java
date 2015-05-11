@@ -121,6 +121,7 @@ public final class JPAMutation implements Mutation, AttributeBonusMutation,
         return id;
     }
 
+    @Override
     public final String getName() {
         return getNameToken();
     }
@@ -164,35 +165,51 @@ public final class JPAMutation implements Mutation, AttributeBonusMutation,
     }
 
     public final void setActionsBonus(final Integer actions) {
+        checkNotNull(actions, "Received a null pointer as actions");
+
         actionsBonus = actions;
     }
 
     public final void setAgilityBonus(final Integer agility) {
+        checkNotNull(agility, "Received a null pointer as agility");
+
         agilityBonus = agility;
     }
 
     public final void setCombatBonus(final Integer combat) {
+        checkNotNull(combat, "Received a null pointer as combat");
+
         combatBonus = combat;
     }
 
     public final void setCost(final Integer cost) {
+        checkNotNull(cost, "Received a null pointer as cost");
+
         this.cost = cost;
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setName(final String name) {
+        checkNotNull(name, "Received a null pointer as name");
+
         this.name = name;
     }
 
     public final void setPrecisionBonus(final Integer precision) {
+        checkNotNull(precision, "Received a null pointer as precision");
+
         precisionBonus = precision;
     }
 
     public final void setStrengthBonus(final Integer strength) {
+        checkNotNull(strength, "Received a null pointer as strength");
+
         strengthBonus = strength;
     }
 

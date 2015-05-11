@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.ruleset;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -98,16 +100,22 @@ public final class JPAConstraintData implements ConstraintData,
     }
 
     public final void setContext(final Collection<String> context) {
+        checkNotNull(context, "Received a null pointer as context");
+
         getContextModifiable().clear();
         getContextModifiable().addAll(context);
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setNameToken(final String name) {
+        checkNotNull(name, "Received a null pointer as name");
+
         this.name = name;
     }
 

@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.punkapocalyptic.model.inventory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -98,19 +100,27 @@ public abstract class AbstractJPAWeapon implements Weapon, PersistenceEntity {
     }
 
     public final void setCost(final Integer cost) {
+        checkNotNull(cost, "Received a null pointer as cost");
+
         this.cost = cost;
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setName(final String name) {
+        checkNotNull(name, "Received a null pointer as name");
+
         this.name = name;
     }
 
     public final void setSpecialRules(final Collection<JPASpecialRule> rules) {
+        checkNotNull(rules, "Received a null pointer as rules");
+
         getSpecialRulesEditable().clear();
         getSpecialRulesEditable().addAll(rules);
     }

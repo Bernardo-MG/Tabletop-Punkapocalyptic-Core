@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.availability;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -118,6 +120,8 @@ public final class JPAUnitArmorAvailability implements UnitArmorAvailability,
     }
 
     public final void setArmorOptions(final Collection<JPAArmorOption> options) {
+        checkNotNull(options, "Received a null pointer as options");
+
         getArmorOptionsModifiable().clear();
         getArmorOptionsModifiable().addAll(options);
     }
@@ -128,10 +132,14 @@ public final class JPAUnitArmorAvailability implements UnitArmorAvailability,
     }
 
     public final void setInitialArmor(final JPAArmorOption armor) {
+        checkNotNull(armor, "Received a null pointer as armor");
+
         initialArmor = armor;
     }
 
     public final void setUnit(final JPAUnitTemplate unit) {
+        checkNotNull(unit, "Received a null pointer as unit");
+
         this.unit = unit;
     }
 

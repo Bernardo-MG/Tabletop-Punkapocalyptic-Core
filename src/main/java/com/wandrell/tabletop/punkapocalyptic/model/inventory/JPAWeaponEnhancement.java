@@ -64,6 +64,7 @@ public final class JPAWeaponEnhancement implements WeaponEnhancement,
         return id;
     }
 
+    @Override
     public final String getName() {
         return getNameToken();
     }
@@ -74,15 +75,21 @@ public final class JPAWeaponEnhancement implements WeaponEnhancement,
     }
 
     public final void setCost(final Integer cost) {
+        checkNotNull(cost, "Received a null pointer as cost");
+
         this.cost = cost;
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setName(final String name) {
+        checkNotNull(name, "Received a null pointer as name");
+
         this.name = name;
     }
 

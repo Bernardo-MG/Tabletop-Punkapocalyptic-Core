@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.availability.option;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -110,16 +112,22 @@ public final class JPAWeaponOption implements WeaponOption, PersistenceEntity {
 
     public final void setEnhancements(
             final Collection<JPAWeaponEnhancement> enhancements) {
+        checkNotNull(enhancements, "Received a null pointer as enhancements");
+
         getEnhancementsModifiable().clear();
         getEnhancementsModifiable().addAll(enhancements);
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setWeapon(final AbstractJPAWeapon weapon) {
+        checkNotNull(weapon, "Received a null pointer as weapon");
+
         this.weapon = weapon;
     }
 

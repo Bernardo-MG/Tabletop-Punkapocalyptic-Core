@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.punkapocalyptic.model.unit;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -64,6 +66,7 @@ public final class JPAUnitTemplate implements UnitTemplate, PersistenceEntity {
         return id;
     }
 
+    @Override
     public final String getName() {
         return getNameToken();
     }
@@ -80,6 +83,8 @@ public final class JPAUnitTemplate implements UnitTemplate, PersistenceEntity {
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 

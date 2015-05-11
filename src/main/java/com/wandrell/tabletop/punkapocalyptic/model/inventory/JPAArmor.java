@@ -118,19 +118,27 @@ public final class JPAArmor implements Armor, PersistenceEntity {
     }
 
     public final void setArmor(final Integer armor) {
+        checkNotNull(armor, "Received a null pointer as armor");
+
         armorValue = armor;
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setName(final String name) {
+        checkNotNull(name, "Received a null pointer as name");
+
         armorName = name;
     }
 
     public final void setSpecialRules(final Collection<JPASpecialRule> rules) {
+        checkNotNull(rules, "Received a null pointer as rules");
+
         getSpecialRulesModifiable().clear();
         getSpecialRulesModifiable().addAll(rules);
     }

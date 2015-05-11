@@ -52,6 +52,7 @@ public final class JPAMeleeWeapon extends AbstractJPAWeapon implements
         return weaponCombat;
     }
 
+    @Override
     public final String getName() {
         return getNameToken();
     }
@@ -67,14 +68,20 @@ public final class JPAMeleeWeapon extends AbstractJPAWeapon implements
     }
 
     public final void setCombat(final Integer combat) {
+        checkNotNull(combat, "Received a null pointer as combat");
+
         weaponCombat = combat;
     }
 
     public final void setPenetration(final Integer penetration) {
+        checkNotNull(penetration, "Received a null pointer as penetration");
+
         weaponPenet = penetration;
     }
 
     public final void setStrength(final Integer strength) {
+        checkNotNull(strength, "Received a null pointer as strength");
+
         weaponStr = strength;
     }
 

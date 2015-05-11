@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.availability;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -114,20 +116,28 @@ public final class JPAFactionUnitAvailability implements
 
     public final void setConstraints(
             final Collection<JPAConstraintData> constraints) {
+        checkNotNull(constraints, "Received a null pointer as constraints");
+
         getConstraintsModifiable().clear();
         getConstraintsModifiable().addAll(constraints);
     }
 
     public final void setFaction(final JPAFaction faction) {
+        checkNotNull(faction, "Received a null pointer as faction");
+
         this.faction = faction;
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setUnit(final JPAUnitTemplate template) {
+        checkNotNull(template, "Received a null pointer as template");
+
         availUnit = template;
     }
 

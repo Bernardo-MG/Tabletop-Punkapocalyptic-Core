@@ -76,6 +76,7 @@ public final class JPASpecialRule implements SpecialRule, PersistenceEntity {
         return id;
     }
 
+    @Override
     public final String getName() {
         return getNameToken();
     }
@@ -92,10 +93,14 @@ public final class JPASpecialRule implements SpecialRule, PersistenceEntity {
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setNameToken(final String name) {
+        checkNotNull(name, "Received a null pointer as name");
+
         nameToken = name;
     }
 

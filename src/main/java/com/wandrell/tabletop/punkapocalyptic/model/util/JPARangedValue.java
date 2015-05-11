@@ -15,11 +15,12 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.util;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
 
 @Embeddable
 public class JPARangedValue implements RangedValue {
@@ -51,14 +52,20 @@ public class JPARangedValue implements RangedValue {
     }
 
     public final void setLongValue(final Integer longVal) {
+        checkNotNull(longVal, "Received a null pointer as long value");
+
         distanceLong = longVal;
     }
 
     public final void setMediumValue(final Integer mediumVal) {
+        checkNotNull(mediumVal, "Received a null pointer as medium value");
+
         distanceMedium = mediumVal;
     }
 
     public final void setShortValue(final Integer shortVal) {
+        checkNotNull(shortVal, "Received a null pointer as short value");
+
         distanceShort = shortVal;
     }
 

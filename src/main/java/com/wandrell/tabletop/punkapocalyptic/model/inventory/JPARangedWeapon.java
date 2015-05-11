@@ -40,6 +40,7 @@ public final class JPARangedWeapon extends AbstractJPARangedWeapon {
         return super.getMediumStrength();
     }
 
+    @Override
     public final String getName() {
         return getNameToken();
     }

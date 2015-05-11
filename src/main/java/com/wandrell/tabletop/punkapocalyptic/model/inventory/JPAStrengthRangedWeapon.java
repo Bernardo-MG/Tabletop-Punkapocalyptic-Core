@@ -55,6 +55,7 @@ public final class JPAStrengthRangedWeapon extends AbstractJPARangedWeapon
                 + super.getMediumStrength();
     }
 
+    @Override
     public final String getName() {
         return getNameToken();
     }
@@ -67,6 +68,8 @@ public final class JPAStrengthRangedWeapon extends AbstractJPARangedWeapon
 
     @Override
     public final void setUnit(final Unit unit) {
+        checkNotNull(unit, "Received a null pointer as unit");
+
         this.unit = unit;
     }
 

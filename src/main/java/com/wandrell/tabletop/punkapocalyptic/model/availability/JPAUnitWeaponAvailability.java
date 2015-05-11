@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.availability;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -125,14 +127,20 @@ public final class JPAUnitWeaponAvailability implements UnitWeaponAvailability,
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setMaxWeapons(final Integer max) {
+        checkNotNull(max, "Received a null pointer as max");
+
         maxWeapons = max;
     }
 
     public final void setMinWeapons(final Integer min) {
+        checkNotNull(min, "Received a null pointer as min");
+
         minWeapons = min;
     }
 

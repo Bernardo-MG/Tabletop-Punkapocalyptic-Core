@@ -15,6 +15,8 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.model.availability;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -119,20 +121,28 @@ public final class JPAUnitMutationAvailability implements
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setMaxMutations(final Integer max) {
+        checkNotNull(max, "Received a null pointer as max");
+
         maxMutations = max;
     }
 
     public final void
             setMutationOptions(final Collection<JPAMutation> mutations) {
+        checkNotNull(mutations, "Received a null pointer as mutations");
+
         getMutationOptionsModifiable().clear();
         getMutationOptionsModifiable().addAll(mutations);
     }
 
     public final void setUnit(final JPAUnitTemplate unit) {
+        checkNotNull(unit, "Received a null pointer as unit");
+
         this.unit = unit;
     }
 

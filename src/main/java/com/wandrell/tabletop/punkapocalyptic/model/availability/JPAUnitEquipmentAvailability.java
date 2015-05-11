@@ -1,5 +1,7 @@
 package com.wandrell.tabletop.punkapocalyptic.model.availability;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -96,16 +98,22 @@ public final class JPAUnitEquipmentAvailability implements
 
     public final void setEquipmentOptions(
             final Collection<JPAEquipment> equipment) {
+        checkNotNull(equipment, "Received a null pointer as equipment");
+
         getEquipmentOptionsModifiable().clear();
         getEquipmentOptionsModifiable().addAll(equipment);
     }
 
     @Override
     public final void setId(final Integer id) {
+        checkNotNull(id, "Received a null pointer as id");
+
         this.id = id;
     }
 
     public final void setUnit(final JPAUnitTemplate unit) {
+        checkNotNull(unit, "Received a null pointer as unit");
+
         this.unit = unit;
     }
 

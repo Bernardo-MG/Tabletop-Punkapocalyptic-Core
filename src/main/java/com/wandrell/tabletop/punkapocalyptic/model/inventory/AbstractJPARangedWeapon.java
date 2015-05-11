@@ -128,38 +128,56 @@ public abstract class AbstractJPARangedWeapon extends AbstractJPAWeapon
     }
 
     public final void setDistancesImperialUnits(final RangedValue distances) {
+        checkNotNull(distances, "Received a null pointer as distances");
+
         distancesInches = distances;
     }
 
     public final void setDistancesMetricSystem(final RangedValue distances) {
+        checkNotNull(distances, "Received a null pointer as distances");
+
         distancesCM = distances;
     }
 
     public final void setFirearm(final Boolean firearm) {
+        checkNotNull(firearm, "Received a null pointer as firearm");
+
         this.firearm = firearm;
     }
 
     public final void setLongPenetration(final Integer penetration) {
+        checkNotNull(penetration, "Received a null pointer as penetration");
+
         penetrationLong = penetration;
     }
 
     public final void setLongStrength(final Integer strength) {
+        checkNotNull(strength, "Received a null pointer as strength");
+
         strengthLong = strength;
     }
 
     public final void setMediumPenetration(final Integer penetration) {
+        checkNotNull(penetration, "Received a null pointer as penetration");
+
         penetrationMedium = penetration;
     }
 
     public final void setMediumStrength(final Integer strength) {
+        checkNotNull(strength, "Received a null pointer as strength");
+
         strengthMedium = strength;
     }
 
     public final void setShortPenetration(final Integer penetration) {
+        checkNotNull(penetration, "Received a null pointer as penetration");
+
         penetrationShort = penetration;
     }
 
     public final void setShortStrength(final Integer strength) {
+        checkNotNull(strength, "Received a null pointer as strength");
+
         strengthShort = strength;
     }
 
