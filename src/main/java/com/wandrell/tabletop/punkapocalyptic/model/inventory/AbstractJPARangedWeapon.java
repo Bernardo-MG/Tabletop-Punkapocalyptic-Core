@@ -21,43 +21,46 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
+import com.wandrell.tabletop.punkapocalyptic.model.util.JPARangedValue;
 import com.wandrell.tabletop.punkapocalyptic.model.util.RangedValue;
 
+@Entity
 public abstract class AbstractJPARangedWeapon extends AbstractJPAWeapon
         implements RangedWeapon {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "long",
-                    column = @Column(name = "long_cm")),
-            @AttributeOverride(name = "medium", column = @Column(
+            @AttributeOverride(name = "distanceLong", column = @Column(
+                    name = "long_cm")),
+            @AttributeOverride(name = "distanceMedium", column = @Column(
                     name = "medium_cm")),
-            @AttributeOverride(name = "short", column = @Column(
+            @AttributeOverride(name = "distanceShort", column = @Column(
                     name = "short_cm")) })
-    private RangedValue distancesCM;
+    private JPARangedValue distancesCM;
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "long", column = @Column(
+            @AttributeOverride(name = "distanceLong", column = @Column(
                     name = "long_inches")),
-            @AttributeOverride(name = "medium", column = @Column(
+            @AttributeOverride(name = "distanceMedium", column = @Column(
                     name = "medium_inches")),
-            @AttributeOverride(name = "short", column = @Column(
+            @AttributeOverride(name = "distanceShort", column = @Column(
                     name = "short_inches")) })
-    private RangedValue distancesInches;
-    private Boolean     firearm;
+    private JPARangedValue distancesInches;
+    private Boolean        firearm;
     @Column(name = "long_penetration")
-    private Integer     penetrationLong;
+    private Integer        penetrationLong;
     @Column(name = "medium_penetration")
-    private Integer     penetrationMedium;
+    private Integer        penetrationMedium;
     @Column(name = "short_penetration")
-    private Integer     penetrationShort;
+    private Integer        penetrationShort;
     @Column(name = "long_strength")
-    private Integer     strengthLong;
+    private Integer        strengthLong;
     @Column(name = "medium_strength")
-    private Integer     strengthMedium;
+    private Integer        strengthMedium;
     @Column(name = "short_strength")
-    private Integer     strengthShort;
+    private Integer        strengthShort;
 
     public AbstractJPARangedWeapon() {
         super();
@@ -127,13 +130,13 @@ public abstract class AbstractJPARangedWeapon extends AbstractJPAWeapon
         return firearm;
     }
 
-    public final void setDistancesImperialUnits(final RangedValue distances) {
+    public final void setDistancesImperialUnits(final JPARangedValue distances) {
         checkNotNull(distances, "Received a null pointer as distances");
 
         distancesInches = distances;
     }
 
-    public final void setDistancesMetricSystem(final RangedValue distances) {
+    public final void setDistancesMetricSystem(final JPARangedValue distances) {
         checkNotNull(distances, "Received a null pointer as distances");
 
         distancesCM = distances;

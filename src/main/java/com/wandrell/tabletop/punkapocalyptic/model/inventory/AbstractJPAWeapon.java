@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -28,7 +29,7 @@ import com.wandrell.tabletop.punkapocalyptic.model.ruleset.JPASpecialRule;
 import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "Weapon")
-@Inheritance
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "weapon_type")
 @DiscriminatorOptions(force = true)
 @Table(name = "weapons")
