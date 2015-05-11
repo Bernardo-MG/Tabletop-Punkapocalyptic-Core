@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -61,7 +61,7 @@ public final class JPAFactionUnitAvailability implements
             name = "faction_unit_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "constraint_id",
                     referencedColumnName = "id") })
-    private final Collection<JPAConstraintData> unitConstrn = new LinkedList<>();
+    private final Collection<JPAConstraintData> unitConstrn = new LinkedHashSet<>();
 
     public JPAFactionUnitAvailability() {
         super();

@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -45,7 +45,7 @@ public abstract class AbstractJPAWeapon implements Weapon, PersistenceEntity {
             name = "weapon_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "rule_id",
                     referencedColumnName = "id") })
-    private final Collection<JPASpecialRule> rules = new LinkedList<>();
+    private final Collection<JPASpecialRule> rules = new LinkedHashSet<>();
     @Column(name = "two_handed")
     private Boolean                          twoHanded;
 

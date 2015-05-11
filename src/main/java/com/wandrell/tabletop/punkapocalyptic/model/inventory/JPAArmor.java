@@ -72,6 +72,17 @@ public final class JPAArmor implements Armor, PersistenceEntity {
         armorRules.addAll(armor.armorRules);
     }
 
+    public JPAArmor(final String name, final Integer armor) {
+        super();
+
+        checkNotNull(name, "Received a null pointer as name");
+        checkNotNull(armor, "Received a null pointer as armor");
+
+        this.armorValue = armor;
+
+        armorName = name;
+    }
+
     @Override
     public final boolean equals(final Object obj) {
         if (this == obj) {

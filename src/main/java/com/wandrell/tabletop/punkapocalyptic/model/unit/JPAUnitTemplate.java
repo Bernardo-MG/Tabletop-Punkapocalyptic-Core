@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -21,6 +22,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.JPASpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.JPAEditableAttributesHolder;
@@ -49,6 +51,26 @@ public final class JPAUnitTemplate implements UnitTemplate, PersistenceEntity {
 
     public JPAUnitTemplate() {
         super();
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        JPAUnitTemplate other;
+
+        other = (JPAUnitTemplate) obj;
+        return Objects.equals(name, other.name);
     }
 
     @Override
@@ -82,10 +104,21 @@ public final class JPAUnitTemplate implements UnitTemplate, PersistenceEntity {
     }
 
     @Override
+    public final int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
     public final void setId(final Integer id) {
         checkNotNull(id, "Received a null pointer as id");
 
         this.id = id;
+    }
+
+    @Override
+    public final String toString() {
+        return MoreObjects.toStringHelper(this).add("name", name)
+                .add("cost", cost).toString();
     }
 
     private final Collection<JPASpecialRule> getSpecialRulesModifiable() {

@@ -21,19 +21,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.punkapocalyptic.model.availability.option.ArmorOption;
-import com.wandrell.tabletop.punkapocalyptic.model.availability.option.DefaultArmorOption;
+import com.wandrell.tabletop.punkapocalyptic.model.availability.option.JPAArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
-import com.wandrell.tabletop.punkapocalyptic.model.inventory.DefaultArmor;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
+import com.wandrell.tabletop.punkapocalyptic.model.inventory.JPAArmor;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitWeapon;
-import com.wandrell.tabletop.punkapocalyptic.model.ruleset.SpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.AttributesListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
@@ -43,12 +41,10 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.UnitBonusAttribute
 
 public final class DefaultUnit implements Unit, MutantUnit {
 
-    private ArmorOption                  armor     = new DefaultArmorOption(
-                                                           new DefaultArmor(
+    private ArmorOption                  armor     = new JPAArmorOption(
+                                                           new JPAArmor(
                                                                    "unarmored",
-                                                                   0,
-                                                                   new LinkedList<SpecialRule>()),
-                                                           0);
+                                                                   0), 0);
     private final AttributesHolder       attributes;
     private final Collection<Equipment>  equipment = new LinkedHashSet<Equipment>();
     private final EventListenerList      listeners = new EventListenerList();

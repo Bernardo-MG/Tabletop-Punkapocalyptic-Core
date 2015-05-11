@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -35,7 +35,7 @@ public final class JPAUnitEquipmentAvailability implements
             name = "unit_equipment_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "equipment_id",
                     referencedColumnName = "id") })
-    private final Collection<JPAEquipment> equipmentOptions = new LinkedList<>();
+    private final Collection<JPAEquipment> equipmentOptions = new LinkedHashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer                        id               = -1;
