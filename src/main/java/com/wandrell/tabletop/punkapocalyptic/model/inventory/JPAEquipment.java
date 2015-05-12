@@ -85,11 +85,6 @@ public final class JPAEquipment implements Equipment, PersistenceEntity {
     }
 
     @Override
-    public final String getName() {
-        return getNameToken();
-    }
-
-    @Override
     public final String getNameToken() {
         return name;
     }

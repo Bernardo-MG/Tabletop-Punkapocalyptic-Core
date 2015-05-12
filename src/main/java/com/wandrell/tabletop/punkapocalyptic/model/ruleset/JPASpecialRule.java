@@ -77,11 +77,6 @@ public final class JPASpecialRule implements SpecialRule, PersistenceEntity {
     }
 
     @Override
-    public final String getName() {
-        return getNameToken();
-    }
-
-    @Override
     public final String getNameToken() {
         return nameToken;
     }
