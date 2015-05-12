@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitWeapon;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.DefaultGroupedUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.DefaultUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
@@ -14,9 +13,9 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 
-public final class TestUnitValoration {
+public final class TestDefaultUnitValoration {
 
-    public TestUnitValoration() {
+    public TestDefaultUnitValoration() {
         super();
     }
 
@@ -26,50 +25,8 @@ public final class TestUnitValoration {
     }
 
     @Test
-    public final void testValoration_GroupedUnit() throws Exception {
-        Assert.assertEquals(getGroupedUnit().getValoration(), (Integer) 30);
-    }
-
-    @Test
     public final void testValoration_MutantUnit() throws Exception {
         Assert.assertEquals(getMutantUnit().getValoration(), (Integer) 28);
-    }
-
-    private final DefaultGroupedUnit getGroupedUnit() {
-        final DefaultGroupedUnit unit;
-        final UnitTemplate template;
-        Equipment equip;
-        UnitWeapon weapon;
-
-        template = Mockito.mock(UnitTemplate.class);
-
-        unit = new DefaultGroupedUnit(template);
-
-        Mockito.when(template.getBaseCost()).thenReturn(1);
-
-        weapon = Mockito.mock(UnitWeapon.class);
-        Mockito.when(weapon.getCost()).thenReturn(2);
-
-        unit.addWeapon(weapon);
-
-        weapon = Mockito.mock(UnitWeapon.class);
-        Mockito.when(weapon.getCost()).thenReturn(3);
-
-        unit.addWeapon(weapon);
-
-        equip = Mockito.mock(Equipment.class);
-        Mockito.when(equip.getCost()).thenReturn(4);
-
-        unit.addEquipment(equip);
-
-        equip = Mockito.mock(Equipment.class);
-        Mockito.when(equip.getCost()).thenReturn(5);
-
-        unit.addEquipment(equip);
-
-        unit.getGroupSize().setValue(2);
-
-        return unit;
     }
 
     private final MutantUnit getMutantUnit() {
