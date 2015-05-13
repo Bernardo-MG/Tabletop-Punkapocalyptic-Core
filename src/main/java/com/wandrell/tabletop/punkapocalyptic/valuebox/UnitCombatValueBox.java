@@ -37,7 +37,16 @@ public final class UnitCombatValueBox extends AbstractValueBox {
         unit.addUnitListener(new UnitListenerAdapter() {
 
             @Override
-            public final void mutationChanged(final EventObject event) {
+            public final void mutationAdded(final EventObject event) {
+                final Integer value;
+
+                value = getValue();
+
+                fireValueChangedEvent(new ValueChangeEvent(this, value, value));
+            }
+
+            @Override
+            public final void mutationRemoved(final EventObject event) {
                 final Integer value;
 
                 value = getValue();
@@ -64,7 +73,7 @@ public final class UnitCombatValueBox extends AbstractValueBox {
                     .getMutations()) {
                 if (mutation instanceof AttributeBonusMutation) {
                     result += ((AttributeBonusMutation) mutation)
-                            .getCombatBonus();
+                            .getAttributesBonus().getCombat();
                 }
             }
         }

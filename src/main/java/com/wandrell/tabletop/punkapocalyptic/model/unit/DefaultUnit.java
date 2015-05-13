@@ -54,11 +54,15 @@ public final class DefaultUnit implements Unit, MutantUnit {
     private final Collection<UnitWeapon> weapons   = new LinkedHashSet<UnitWeapon>();
 
     {
+        final Unit unit;
+
+        unit = this;
         listenerStatus = new ValorationListener() {
 
             @Override
-            public void valorationChanged(final EventObject event) {
-                fireValorationChangedEvent(new EventObject(this));
+            public void valorationChanged(final ValueChangeEvent event) {
+                fireValorationChangedEvent(new ValueChangeEvent(unit,
+                        event.getOldValue(), event.getNewValue()));
             }
 
         };
@@ -102,18 +106,29 @@ public final class DefaultUnit implements Unit, MutantUnit {
     @Override
     public final void addEquipment(final Equipment equipment) {
         checkNotNull(equipment, "Received a null pointer as equipment");
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
 
         getEquipmentModifiable().add(equipment);
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
     }
 
     @Override
     public final void addMutation(final Mutation mutation) {
+        checkNotNull(equipment, "Received a null pointer as mutation");
+
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         getMutationsModifiable().add(mutation);
 
-        fireValorationChangedEvent(new EventObject(this));
-        fireMutationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
+        fireMutationAddedEvent(new EventObject(this));
     }
 
     @Override
@@ -127,18 +142,28 @@ public final class DefaultUnit implements Unit, MutantUnit {
     public final void addWeapon(final UnitWeapon weapon) {
         checkNotNull(weapon, "Received a null pointer as weapon");
 
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         getWeaponsModifiable().add(weapon);
 
         weapon.addValorationListener(getStatusListener());
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
     }
 
     @Override
     public final void clearEquipment() {
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         getEquipmentModifiable().clear();
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
     }
 
     @Override
@@ -148,9 +173,14 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
     @Override
     public final void clearWeapons() {
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         getWeaponsModifiable().clear();
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
     }
 
     @Override
@@ -220,17 +250,31 @@ public final class DefaultUnit implements Unit, MutantUnit {
 
     @Override
     public final void removeEquipment(final Equipment equipment) {
+        checkNotNull(equipment, "Received a null pointer as equipment");
+
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         getEquipmentModifiable().remove(equipment);
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
     }
 
     @Override
     public final void removeMutation(final Mutation mutation) {
+        checkNotNull(mutation, "Received a null pointer as mutation");
+
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         getMutationsModifiable().remove(mutation);
 
-        fireValorationChangedEvent(new EventObject(this));
-        fireMutationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
+        fireMutationRemovedEvent(new EventObject(this));
     }
 
     @Override
@@ -242,20 +286,30 @@ public final class DefaultUnit implements Unit, MutantUnit {
     public final void removeWeapon(final UnitWeapon weapon) {
         checkNotNull(armor, "Received a null pointer as weapon");
 
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         getWeaponsModifiable().remove(weapon);
 
         weapon.removeValorationListener(getStatusListener());
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
     }
 
     @Override
     public final void setArmor(final ArmorOption armor) {
         checkNotNull(armor, "Received a null pointer as armor");
 
+        final Integer valorationOld;
+
+        valorationOld = getValoration();
+
         this.armor = armor;
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getValoration()));
     }
 
     @Override
@@ -291,12 +345,21 @@ public final class DefaultUnit implements Unit, MutantUnit {
         }
     }
 
-    private final void fireMutationChangedEvent(final EventObject evt) {
+    private final void fireMutationAddedEvent(final EventObject evt) {
         final UnitListener[] listnrs;
 
         listnrs = getListeners().getListeners(UnitListener.class);
         for (final UnitListener l : listnrs) {
-            l.mutationChanged(evt);
+            l.mutationAdded(evt);
+        }
+    }
+
+    private final void fireMutationRemovedEvent(final EventObject evt) {
+        final UnitListener[] listnrs;
+
+        listnrs = getListeners().getListeners(UnitListener.class);
+        for (final UnitListener l : listnrs) {
+            l.mutationRemoved(evt);
         }
     }
 
@@ -336,7 +399,7 @@ public final class DefaultUnit implements Unit, MutantUnit {
         }
     }
 
-    private final void fireValorationChangedEvent(final EventObject evt) {
+    private final void fireValorationChangedEvent(final ValueChangeEvent evt) {
         final UnitListener[] listnrs;
 
         listnrs = getListeners().getListeners(UnitListener.class);

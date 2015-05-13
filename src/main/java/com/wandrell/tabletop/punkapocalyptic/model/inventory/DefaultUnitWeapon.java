@@ -19,13 +19,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.Objects;
 
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
 
 public final class DefaultUnitWeapon implements UnitWeapon {
@@ -56,9 +56,14 @@ public final class DefaultUnitWeapon implements UnitWeapon {
         checkNotNull(enhancement,
                 "Received a null pointer as weapon enhancement");
 
+        final Integer valorationOld;
+
         getEnhancementsModifiable().add(enhancement);
 
-        fireValorationChangedEvent(new EventObject(this));
+        valorationOld = getCost();
+
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getCost()));
     }
 
     @Override
@@ -98,7 +103,7 @@ public final class DefaultUnitWeapon implements UnitWeapon {
             costEnhance += enhance.getCost();
         }
 
-        return getTemplate().getCost() + costEnhance;
+        return getWeaponTemplate().getCost() + costEnhance;
     }
 
     @Override
@@ -107,7 +112,7 @@ public final class DefaultUnitWeapon implements UnitWeapon {
     }
 
     @Override
-    public final Weapon getTemplate() {
+    public final Weapon getWeaponTemplate() {
         return template;
     }
 
@@ -118,9 +123,14 @@ public final class DefaultUnitWeapon implements UnitWeapon {
 
     @Override
     public final void removeEnhancement(final WeaponEnhancement enhancement) {
+        final Integer valorationOld;
+
+        valorationOld = getCost();
+
         getEnhancementsModifiable().remove(enhancement);
 
-        fireValorationChangedEvent(new EventObject(this));
+        fireValorationChangedEvent(new ValueChangeEvent(this, valorationOld,
+                getCost()));
     }
 
     @Override
@@ -135,7 +145,7 @@ public final class DefaultUnitWeapon implements UnitWeapon {
                 .add("enhancements", enhancements).toString();
     }
 
-    private final void fireValorationChangedEvent(final EventObject evt) {
+    private final void fireValorationChangedEvent(final ValueChangeEvent evt) {
         final ValorationListener[] listnrs;
 
         listnrs = getListeners().getListeners(ValorationListener.class);

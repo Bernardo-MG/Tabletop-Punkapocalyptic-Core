@@ -21,6 +21,7 @@ public final class TestDefaultUnitAttributeBonusMutation {
         final MutantUnit unit;
         final UnitTemplate template;
         final AttributesHolder attributes;
+        final AttributesHolder attributesBonus;
         final AttributeBonusMutation mutation;
 
         template = Mockito.mock(UnitTemplate.class);
@@ -37,13 +38,17 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Mockito.when(template.getAttributes()).thenReturn(attributes);
 
         mutation = Mockito.mock(AttributeBonusMutation.class);
-        Mockito.when(mutation.getActionsBonus()).thenReturn(2);
-        Mockito.when(mutation.getAgilityBonus()).thenReturn(0);
-        Mockito.when(mutation.getCombatBonus()).thenReturn(0);
-        Mockito.when(mutation.getPrecisionBonus()).thenReturn(0);
-        Mockito.when(mutation.getStrengthBonus()).thenReturn(0);
-        Mockito.when(mutation.getTechBonus()).thenReturn(0);
-        Mockito.when(mutation.getToughnessBonus()).thenReturn(0);
+        attributesBonus = Mockito.mock(AttributesHolder.class);
+
+        Mockito.when(attributesBonus.getActions()).thenReturn(2);
+        Mockito.when(attributesBonus.getAgility()).thenReturn(0);
+        Mockito.when(attributesBonus.getCombat()).thenReturn(0);
+        Mockito.when(attributesBonus.getPrecision()).thenReturn(0);
+        Mockito.when(attributesBonus.getStrength()).thenReturn(0);
+        Mockito.when(attributesBonus.getTech()).thenReturn(0);
+        Mockito.when(attributesBonus.getToughness()).thenReturn(0);
+
+        Mockito.when(mutation.getAttributesBonus()).thenReturn(attributesBonus);
 
         unit = new DefaultUnit(template);
 
@@ -63,6 +68,7 @@ public final class TestDefaultUnitAttributeBonusMutation {
         final MutantUnit unit;
         final UnitTemplate template;
         final AttributesHolder attributes;
+        final AttributesHolder attributesBonus;
         final AttributeBonusMutation mutation;
 
         template = Mockito.mock(UnitTemplate.class);
@@ -79,13 +85,17 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Mockito.when(template.getAttributes()).thenReturn(attributes);
 
         mutation = Mockito.mock(AttributeBonusMutation.class);
-        Mockito.when(mutation.getActionsBonus()).thenReturn(0);
-        Mockito.when(mutation.getAgilityBonus()).thenReturn(2);
-        Mockito.when(mutation.getCombatBonus()).thenReturn(0);
-        Mockito.when(mutation.getPrecisionBonus()).thenReturn(0);
-        Mockito.when(mutation.getStrengthBonus()).thenReturn(0);
-        Mockito.when(mutation.getTechBonus()).thenReturn(0);
-        Mockito.when(mutation.getToughnessBonus()).thenReturn(0);
+        attributesBonus = Mockito.mock(AttributesHolder.class);
+
+        Mockito.when(attributesBonus.getActions()).thenReturn(0);
+        Mockito.when(attributesBonus.getAgility()).thenReturn(2);
+        Mockito.when(attributesBonus.getCombat()).thenReturn(0);
+        Mockito.when(attributesBonus.getPrecision()).thenReturn(0);
+        Mockito.when(attributesBonus.getStrength()).thenReturn(0);
+        Mockito.when(attributesBonus.getTech()).thenReturn(0);
+        Mockito.when(attributesBonus.getToughness()).thenReturn(0);
+
+        Mockito.when(mutation.getAttributesBonus()).thenReturn(attributesBonus);
 
         unit = new DefaultUnit(template);
 
@@ -105,6 +115,7 @@ public final class TestDefaultUnitAttributeBonusMutation {
         final MutantUnit unit;
         final UnitTemplate template;
         final AttributesHolder attributes;
+        final AttributesHolder attributesBonus;
         final AttributeBonusMutation mutation;
 
         template = Mockito.mock(UnitTemplate.class);
@@ -121,13 +132,17 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Mockito.when(template.getAttributes()).thenReturn(attributes);
 
         mutation = Mockito.mock(AttributeBonusMutation.class);
-        Mockito.when(mutation.getActionsBonus()).thenReturn(0);
-        Mockito.when(mutation.getAgilityBonus()).thenReturn(0);
-        Mockito.when(mutation.getCombatBonus()).thenReturn(2);
-        Mockito.when(mutation.getPrecisionBonus()).thenReturn(0);
-        Mockito.when(mutation.getStrengthBonus()).thenReturn(0);
-        Mockito.when(mutation.getTechBonus()).thenReturn(0);
-        Mockito.when(mutation.getToughnessBonus()).thenReturn(0);
+        attributesBonus = Mockito.mock(AttributesHolder.class);
+
+        Mockito.when(attributesBonus.getActions()).thenReturn(0);
+        Mockito.when(attributesBonus.getAgility()).thenReturn(0);
+        Mockito.when(attributesBonus.getCombat()).thenReturn(2);
+        Mockito.when(attributesBonus.getPrecision()).thenReturn(0);
+        Mockito.when(attributesBonus.getStrength()).thenReturn(0);
+        Mockito.when(attributesBonus.getTech()).thenReturn(0);
+        Mockito.when(attributesBonus.getToughness()).thenReturn(0);
+
+        Mockito.when(mutation.getAttributesBonus()).thenReturn(attributesBonus);
 
         unit = new DefaultUnit(template);
 
@@ -147,6 +162,7 @@ public final class TestDefaultUnitAttributeBonusMutation {
         final MutantUnit unit;
         final UnitTemplate template;
         final AttributesHolder attributes;
+        final AttributesHolder attributesBonus;
         final AttributeBonusMutation mutation;
 
         template = Mockito.mock(UnitTemplate.class);
@@ -163,13 +179,17 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Mockito.when(template.getAttributes()).thenReturn(attributes);
 
         mutation = Mockito.mock(AttributeBonusMutation.class);
-        Mockito.when(mutation.getActionsBonus()).thenReturn(0);
-        Mockito.when(mutation.getAgilityBonus()).thenReturn(0);
-        Mockito.when(mutation.getCombatBonus()).thenReturn(0);
-        Mockito.when(mutation.getPrecisionBonus()).thenReturn(2);
-        Mockito.when(mutation.getStrengthBonus()).thenReturn(0);
-        Mockito.when(mutation.getTechBonus()).thenReturn(0);
-        Mockito.when(mutation.getToughnessBonus()).thenReturn(0);
+        attributesBonus = Mockito.mock(AttributesHolder.class);
+
+        Mockito.when(attributesBonus.getActions()).thenReturn(0);
+        Mockito.when(attributesBonus.getAgility()).thenReturn(0);
+        Mockito.when(attributesBonus.getCombat()).thenReturn(0);
+        Mockito.when(attributesBonus.getPrecision()).thenReturn(2);
+        Mockito.when(attributesBonus.getStrength()).thenReturn(0);
+        Mockito.when(attributesBonus.getTech()).thenReturn(0);
+        Mockito.when(attributesBonus.getToughness()).thenReturn(0);
+
+        Mockito.when(mutation.getAttributesBonus()).thenReturn(attributesBonus);
 
         unit = new DefaultUnit(template);
 
@@ -189,6 +209,7 @@ public final class TestDefaultUnitAttributeBonusMutation {
         final MutantUnit unit;
         final UnitTemplate template;
         final AttributesHolder attributes;
+        final AttributesHolder attributesBonus;
         final AttributeBonusMutation mutation;
 
         template = Mockito.mock(UnitTemplate.class);
@@ -205,13 +226,17 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Mockito.when(template.getAttributes()).thenReturn(attributes);
 
         mutation = Mockito.mock(AttributeBonusMutation.class);
-        Mockito.when(mutation.getActionsBonus()).thenReturn(0);
-        Mockito.when(mutation.getAgilityBonus()).thenReturn(0);
-        Mockito.when(mutation.getCombatBonus()).thenReturn(0);
-        Mockito.when(mutation.getPrecisionBonus()).thenReturn(0);
-        Mockito.when(mutation.getStrengthBonus()).thenReturn(2);
-        Mockito.when(mutation.getTechBonus()).thenReturn(0);
-        Mockito.when(mutation.getToughnessBonus()).thenReturn(0);
+        attributesBonus = Mockito.mock(AttributesHolder.class);
+
+        Mockito.when(attributesBonus.getActions()).thenReturn(0);
+        Mockito.when(attributesBonus.getAgility()).thenReturn(0);
+        Mockito.when(attributesBonus.getCombat()).thenReturn(0);
+        Mockito.when(attributesBonus.getPrecision()).thenReturn(0);
+        Mockito.when(attributesBonus.getStrength()).thenReturn(2);
+        Mockito.when(attributesBonus.getTech()).thenReturn(0);
+        Mockito.when(attributesBonus.getToughness()).thenReturn(0);
+
+        Mockito.when(mutation.getAttributesBonus()).thenReturn(attributesBonus);
 
         unit = new DefaultUnit(template);
 
@@ -231,6 +256,7 @@ public final class TestDefaultUnitAttributeBonusMutation {
         final MutantUnit unit;
         final UnitTemplate template;
         final AttributesHolder attributes;
+        final AttributesHolder attributesBonus;
         final AttributeBonusMutation mutation;
 
         template = Mockito.mock(UnitTemplate.class);
@@ -247,13 +273,17 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Mockito.when(template.getAttributes()).thenReturn(attributes);
 
         mutation = Mockito.mock(AttributeBonusMutation.class);
-        Mockito.when(mutation.getActionsBonus()).thenReturn(0);
-        Mockito.when(mutation.getAgilityBonus()).thenReturn(0);
-        Mockito.when(mutation.getCombatBonus()).thenReturn(0);
-        Mockito.when(mutation.getPrecisionBonus()).thenReturn(0);
-        Mockito.when(mutation.getStrengthBonus()).thenReturn(0);
-        Mockito.when(mutation.getTechBonus()).thenReturn(2);
-        Mockito.when(mutation.getToughnessBonus()).thenReturn(0);
+        attributesBonus = Mockito.mock(AttributesHolder.class);
+
+        Mockito.when(attributesBonus.getActions()).thenReturn(0);
+        Mockito.when(attributesBonus.getAgility()).thenReturn(0);
+        Mockito.when(attributesBonus.getCombat()).thenReturn(0);
+        Mockito.when(attributesBonus.getPrecision()).thenReturn(0);
+        Mockito.when(attributesBonus.getStrength()).thenReturn(0);
+        Mockito.when(attributesBonus.getTech()).thenReturn(2);
+        Mockito.when(attributesBonus.getToughness()).thenReturn(0);
+
+        Mockito.when(mutation.getAttributesBonus()).thenReturn(attributesBonus);
 
         unit = new DefaultUnit(template);
 
@@ -273,6 +303,7 @@ public final class TestDefaultUnitAttributeBonusMutation {
         final MutantUnit unit;
         final UnitTemplate template;
         final AttributesHolder attributes;
+        final AttributesHolder attributesBonus;
         final AttributeBonusMutation mutation;
 
         template = Mockito.mock(UnitTemplate.class);
@@ -289,13 +320,17 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Mockito.when(template.getAttributes()).thenReturn(attributes);
 
         mutation = Mockito.mock(AttributeBonusMutation.class);
-        Mockito.when(mutation.getActionsBonus()).thenReturn(0);
-        Mockito.when(mutation.getAgilityBonus()).thenReturn(0);
-        Mockito.when(mutation.getCombatBonus()).thenReturn(0);
-        Mockito.when(mutation.getPrecisionBonus()).thenReturn(0);
-        Mockito.when(mutation.getStrengthBonus()).thenReturn(0);
-        Mockito.when(mutation.getTechBonus()).thenReturn(0);
-        Mockito.when(mutation.getToughnessBonus()).thenReturn(2);
+        attributesBonus = Mockito.mock(AttributesHolder.class);
+
+        Mockito.when(attributesBonus.getActions()).thenReturn(0);
+        Mockito.when(attributesBonus.getAgility()).thenReturn(0);
+        Mockito.when(attributesBonus.getCombat()).thenReturn(0);
+        Mockito.when(attributesBonus.getPrecision()).thenReturn(0);
+        Mockito.when(attributesBonus.getStrength()).thenReturn(0);
+        Mockito.when(attributesBonus.getTech()).thenReturn(0);
+        Mockito.when(attributesBonus.getToughness()).thenReturn(2);
+
+        Mockito.when(mutation.getAttributesBonus()).thenReturn(attributesBonus);
 
         unit = new DefaultUnit(template);
 
@@ -309,5 +344,4 @@ public final class TestDefaultUnitAttributeBonusMutation {
         Assert.assertEquals(unit.getAttributes().getTech(), (Integer) 0);
         Assert.assertEquals(unit.getAttributes().getToughness(), (Integer) 3);
     }
-
 }

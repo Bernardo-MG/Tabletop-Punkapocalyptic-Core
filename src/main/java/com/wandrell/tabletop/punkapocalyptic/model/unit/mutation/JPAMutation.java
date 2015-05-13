@@ -17,7 +17,10 @@ package com.wandrell.tabletop.punkapocalyptic.model.unit.mutation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +29,8 @@ import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.JPAAttributesHolder;
 import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "Mutation")
@@ -33,47 +38,33 @@ import com.wandrell.util.persistence.PersistenceEntity;
 public final class JPAMutation implements Mutation, AttributeBonusMutation,
         PersistenceEntity {
 
-    @Column(name = "actions")
-    private Integer actionsBonus;
-    @Column(name = "agility")
-    private Integer agilityBonus;
-    @Column(name = "combat")
-    private Integer combatBonus;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "actions", column = @Column(
+                    name = "actions_bonus")),
+            @AttributeOverride(name = "agility", column = @Column(
+                    name = "agility_bonus")),
+            @AttributeOverride(name = "combat", column = @Column(
+                    name = "combat_bonus")),
+            @AttributeOverride(name = "precision", column = @Column(
+                    name = "precision_bonus")),
+            @AttributeOverride(name = "strength", column = @Column(
+                    name = "strength_bonus")),
+            @AttributeOverride(name = "tech", column = @Column(
+                    name = "tech_bonus")),
+            @AttributeOverride(name = "toughness", column = @Column(
+                    name = "toughness_bonus")) })
+    private final JPAAttributesHolder attributes = new JPAAttributesHolder();
     @Column(name = "cost")
-    private Integer cost;
+    private Integer                   cost;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id = -1;
+    private Integer                   id         = -1;
     @Column(name = "name")
-    private String  name;
-    @Column(name = "precision")
-    private Integer precisionBonus;
-    @Column(name = "strength")
-    private Integer strengthBonus;
-    @Column(name = "tech")
-    private Integer techBonus;
-    @Column(name = "toughness")
-    private Integer toughnessBonus;
+    private String                    name;
 
     public JPAMutation() {
         super();
-    }
-
-    public JPAMutation(final JPAMutation mutation) {
-        super();
-
-        checkNotNull(mutation, "Received a null pointer as mutation");
-
-        this.name = mutation.name;
-        this.cost = mutation.cost;
-
-        actionsBonus = mutation.actionsBonus;
-        agilityBonus = mutation.agilityBonus;
-        combatBonus = mutation.combatBonus;
-        precisionBonus = mutation.precisionBonus;
-        strengthBonus = mutation.strengthBonus;
-        techBonus = mutation.techBonus;
-        toughnessBonus = mutation.toughnessBonus;
     }
 
     @Override
@@ -97,18 +88,8 @@ public final class JPAMutation implements Mutation, AttributeBonusMutation,
     }
 
     @Override
-    public final Integer getActionsBonus() {
-        return actionsBonus;
-    }
-
-    @Override
-    public final Integer getAgilityBonus() {
-        return agilityBonus;
-    }
-
-    @Override
-    public final Integer getCombatBonus() {
-        return combatBonus;
+    public final AttributesHolder getAttributesBonus() {
+        return attributes;
     }
 
     @Override
@@ -127,54 +108,8 @@ public final class JPAMutation implements Mutation, AttributeBonusMutation,
     }
 
     @Override
-    public final Integer getPrecisionBonus() {
-        return precisionBonus;
-    }
-
-    @Override
-    public final Integer getStrengthBonus() {
-        return strengthBonus;
-    }
-
-    @Override
-    public final Integer getTechBonus() {
-        return techBonus;
-    }
-
-    public final void getTechBonus(final Integer tech) {
-        techBonus = tech;
-    }
-
-    @Override
-    public final Integer getToughnessBonus() {
-        return toughnessBonus;
-    }
-
-    public final void getToughnessBonus(final Integer toughness) {
-        toughnessBonus = toughness;
-    }
-
-    @Override
     public final int hashCode() {
         return Objects.hashCode(name);
-    }
-
-    public final void setActionsBonus(final Integer actions) {
-        checkNotNull(actions, "Received a null pointer as actions");
-
-        actionsBonus = actions;
-    }
-
-    public final void setAgilityBonus(final Integer agility) {
-        checkNotNull(agility, "Received a null pointer as agility");
-
-        agilityBonus = agility;
-    }
-
-    public final void setCombatBonus(final Integer combat) {
-        checkNotNull(combat, "Received a null pointer as combat");
-
-        combatBonus = combat;
     }
 
     public final void setCost(final Integer cost) {
@@ -194,18 +129,6 @@ public final class JPAMutation implements Mutation, AttributeBonusMutation,
         checkNotNull(name, "Received a null pointer as name");
 
         this.name = name;
-    }
-
-    public final void setPrecisionBonus(final Integer precision) {
-        checkNotNull(precision, "Received a null pointer as precision");
-
-        precisionBonus = precision;
-    }
-
-    public final void setStrengthBonus(final Integer strength) {
-        checkNotNull(strength, "Received a null pointer as strength");
-
-        strengthBonus = strength;
     }
 
     @Override

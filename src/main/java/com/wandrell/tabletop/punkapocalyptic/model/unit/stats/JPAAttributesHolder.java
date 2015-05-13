@@ -15,8 +15,7 @@ import com.wandrell.tabletop.valuebox.DefaultValueBox;
 import com.wandrell.tabletop.valuebox.ValueBox;
 
 @Embeddable
-public final class JPAEditableAttributesHolder implements
-        EditableAttributesHolder {
+public final class JPAAttributesHolder implements AttributesHolder {
 
     private final ValueBox          actions;
     private final ValueBox          agility;
@@ -28,7 +27,7 @@ public final class JPAEditableAttributesHolder implements
     private final ValueBox          tech;
     private final ValueBox          toughness;
 
-    public JPAEditableAttributesHolder() {
+    public JPAAttributesHolder() {
         super();
 
         actions = new DefaultValueBox();
@@ -42,8 +41,7 @@ public final class JPAEditableAttributesHolder implements
         setAttributesListeners();
     }
 
-    public JPAEditableAttributesHolder(
-            final JPAEditableAttributesHolder attributes) {
+    public JPAAttributesHolder(final JPAAttributesHolder attributes) {
         super();
 
         actions = attributes.actions.createNewInstance();
@@ -60,11 +58,6 @@ public final class JPAEditableAttributesHolder implements
     @Override
     public final void addAttributesListener(final AttributesListener listener) {
         getListeners().add(AttributesListener.class, listener);
-    }
-
-    @Override
-    public final JPAEditableAttributesHolder createNewInstance() {
-        return new JPAEditableAttributesHolder(this);
     }
 
     @Column(name = "actions")
@@ -122,37 +115,30 @@ public final class JPAEditableAttributesHolder implements
         getListeners().remove(AttributesListener.class, listener);
     }
 
-    @Override
     public final void setActions(final Integer actions) {
         getActionsValueBox().setValue(actions);
     }
 
-    @Override
     public final void setAgility(Integer agility) {
         getAgilityValueBox().setValue(agility);
     }
 
-    @Override
     public final void setCombat(Integer combat) {
         getCombatValueBox().setValue(combat);
     }
 
-    @Override
     public final void setPrecision(Integer precision) {
         getPrecisionValueBox().setValue(precision);
     }
 
-    @Override
     public final void setStrength(final Integer strength) {
         getStrengthValueBox().setValue(strength);
     }
 
-    @Override
     public final void setTech(final Integer tech) {
         getTechValueBox().setValue(tech);
     }
 
-    @Override
     public final void setToughness(final Integer toughness) {
         getToughnessValueBox().setValue(toughness);
     }

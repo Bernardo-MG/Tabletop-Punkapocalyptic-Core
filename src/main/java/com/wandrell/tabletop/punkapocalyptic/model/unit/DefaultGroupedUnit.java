@@ -18,7 +18,6 @@ package com.wandrell.tabletop.punkapocalyptic.model.unit;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
-import java.util.EventObject;
 import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
@@ -47,13 +46,17 @@ public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
 
         checkNotNull(unit, "Received a null pointer as unit");
 
+        final Unit unitThis;
+
         this.unit = unit.unit.createNewInstance();
 
+        unitThis = this;
         size.addValueChangeListener(new ValueChangeListener() {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
-                fireValorationChangedEvent(new EventObject(this));
+                fireValorationChangedEvent(new ValueChangeEvent(unitThis, event
+                        .getOldValue(), event.getNewValue()));
             }
 
         });
@@ -64,13 +67,17 @@ public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
 
         checkNotNull(template, "Received a null pointer as unit template");
 
+        final Unit unit;
+
         this.unit = new DefaultUnit(template);
 
+        unit = this;
         size.addValueChangeListener(new ValueChangeListener() {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
-                fireValorationChangedEvent(new EventObject(this));
+                fireValorationChangedEvent(new ValueChangeEvent(unit, event
+                        .getOldValue(), event.getNewValue()));
             }
 
         });
@@ -211,7 +218,7 @@ public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
                 .toString();
     }
 
-    private final void fireValorationChangedEvent(final EventObject evt) {
+    private final void fireValorationChangedEvent(final ValueChangeEvent evt) {
         final UnitListener[] listnrs;
 
         listnrs = getListeners().getListeners(UnitListener.class);

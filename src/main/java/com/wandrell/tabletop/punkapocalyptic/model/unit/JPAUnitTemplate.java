@@ -25,7 +25,7 @@ import javax.persistence.Table;
 import com.google.common.base.MoreObjects;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.JPASpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
-import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.JPAEditableAttributesHolder;
+import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.JPAAttributesHolder;
 import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "UnitTemplate")
@@ -34,20 +34,20 @@ import com.wandrell.util.persistence.PersistenceEntity;
 public final class JPAUnitTemplate implements UnitTemplate, PersistenceEntity {
 
     @Embedded
-    private final JPAEditableAttributesHolder attributes = new JPAEditableAttributesHolder();
+    private final JPAAttributesHolder        attributes = new JPAAttributesHolder();
     @Column(name = "cost")
-    private Integer                           cost;
+    private Integer                          cost;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer                           id         = -1;
+    private Integer                          id         = -1;
     @Column(name = "name")
-    private String                            name;
+    private String                           name;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "unit_template_rules", joinColumns = { @JoinColumn(
             name = "template_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "rule_id",
                     referencedColumnName = "id") })
-    private final Collection<JPASpecialRule>  rules      = new LinkedHashSet<JPASpecialRule>();
+    private final Collection<JPASpecialRule> rules      = new LinkedHashSet<JPASpecialRule>();
 
     public JPAUnitTemplate() {
         super();

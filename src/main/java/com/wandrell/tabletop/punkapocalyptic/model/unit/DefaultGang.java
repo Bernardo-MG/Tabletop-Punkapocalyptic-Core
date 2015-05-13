@@ -19,7 +19,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EventObject;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -164,9 +163,13 @@ public final class DefaultGang implements Gang {
 
     @Override
     public final void setBullets(final Integer bullets) {
+        final Integer bulletsOld;
+
+        bulletsOld = this.bullets;
+
         this.bullets = bullets;
 
-        fireBulletsChangedEvent(new EventObject(this));
+        fireBulletsChangedEvent(new ValueChangeEvent(this, bulletsOld, bullets));
     }
 
     @Override
@@ -175,7 +178,7 @@ public final class DefaultGang implements Gang {
                 .add("units", units).toString();
     }
 
-    private final void fireBulletsChangedEvent(final EventObject evt) {
+    private final void fireBulletsChangedEvent(final ValueChangeEvent evt) {
         final GangListener[] listnrs;
 
         listnrs = getListeners().getListeners(GangListener.class);
@@ -202,7 +205,7 @@ public final class DefaultGang implements Gang {
         }
     }
 
-    private final void fireValorationChangedEvent(final EventObject evt) {
+    private final void fireValorationChangedEvent(final ValueChangeEvent evt) {
         final GangListener[] listnrs;
 
         listnrs = getListeners().getListeners(GangListener.class);
@@ -232,7 +235,8 @@ public final class DefaultGang implements Gang {
 
             @Override
             public final void valueChanged(final ValueChangeEvent event) {
-                fireValorationChangedEvent(new EventObject(gang));
+                fireValorationChangedEvent(new ValueChangeEvent(gang, event
+                        .getOldValue(), event.getNewValue()));
             }
 
         });
