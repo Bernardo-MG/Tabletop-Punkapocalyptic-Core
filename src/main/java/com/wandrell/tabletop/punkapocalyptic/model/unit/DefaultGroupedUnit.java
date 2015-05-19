@@ -23,8 +23,6 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.event.ValueChangeEvent;
-import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.availability.option.ArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Equipment;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.UnitWeapon;
@@ -32,8 +30,10 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
-import com.wandrell.tabletop.valuebox.DefaultValueBox;
-import com.wandrell.tabletop.valuebox.ValueBox;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
+import com.wandrell.tabletop.stat.event.ValueChangeListener;
+import com.wandrell.tabletop.stat.valuebox.DefaultValueBox;
+import com.wandrell.tabletop.stat.valuebox.ValueBox;
 
 public final class DefaultGroupedUnit implements GroupedUnit, MutantUnit {
 

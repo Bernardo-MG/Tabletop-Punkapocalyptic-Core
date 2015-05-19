@@ -25,7 +25,6 @@ import java.util.LinkedHashSet;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.punkapocalyptic.model.availability.option.ArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.availability.option.JPAArmorOption;
 import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
@@ -38,6 +37,7 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.UnitBonusAttributesHolder;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
 
 public final class DefaultUnit implements Unit, MutantUnit {
 

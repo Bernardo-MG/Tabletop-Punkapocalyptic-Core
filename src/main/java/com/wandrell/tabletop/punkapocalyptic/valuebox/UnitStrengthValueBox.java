@@ -17,15 +17,15 @@ package com.wandrell.tabletop.punkapocalyptic.valuebox;
 
 import java.util.EventObject;
 
-import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListenerAdapter;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.AttributeBonusMutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
-import com.wandrell.tabletop.valuebox.AbstractValueBox;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
+import com.wandrell.tabletop.stat.valuebox.AbstractValueBoxEventFirer;
 
-public final class UnitStrengthValueBox extends AbstractValueBox {
+public final class UnitStrengthValueBox extends AbstractValueBoxEventFirer {
 
     private final Unit unit;
 
@@ -58,11 +58,6 @@ public final class UnitStrengthValueBox extends AbstractValueBox {
     }
 
     @Override
-    public final UnitStrengthValueBox createNewInstance() {
-        return new UnitStrengthValueBox(getUnit());
-    }
-
-    @Override
     public final Integer getValue() {
         Integer result;
 
@@ -79,6 +74,11 @@ public final class UnitStrengthValueBox extends AbstractValueBox {
         }
 
         return result;
+    }
+
+    @Override
+    public final void setValue(final Integer value) {
+        throw new UnsupportedOperationException("Setting the value is disabled");
     }
 
     private final Unit getUnit() {

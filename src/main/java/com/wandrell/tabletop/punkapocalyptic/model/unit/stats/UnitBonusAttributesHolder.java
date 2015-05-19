@@ -2,8 +2,6 @@ package com.wandrell.tabletop.punkapocalyptic.model.unit.stats;
 
 import javax.swing.event.EventListenerList;
 
-import com.wandrell.tabletop.event.ValueChangeEvent;
-import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.AttributesListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
@@ -14,7 +12,9 @@ import com.wandrell.tabletop.punkapocalyptic.valuebox.UnitPrecisionValueBox;
 import com.wandrell.tabletop.punkapocalyptic.valuebox.UnitStrengthValueBox;
 import com.wandrell.tabletop.punkapocalyptic.valuebox.UnitTechValueBox;
 import com.wandrell.tabletop.punkapocalyptic.valuebox.UnitToughnessValueBox;
-import com.wandrell.tabletop.valuebox.ValueBox;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
+import com.wandrell.tabletop.stat.event.ValueChangeListener;
+import com.wandrell.tabletop.stat.valuebox.ValueBox;
 
 public final class UnitBonusAttributesHolder implements AttributesHolder {
 

@@ -7,12 +7,12 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 import javax.swing.event.EventListenerList;
 
-import com.wandrell.tabletop.event.ValueChangeEvent;
-import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.AttributesListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListener;
-import com.wandrell.tabletop.valuebox.DefaultValueBox;
-import com.wandrell.tabletop.valuebox.ValueBox;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
+import com.wandrell.tabletop.stat.event.ValueChangeListener;
+import com.wandrell.tabletop.stat.valuebox.DefaultValueBox;
+import com.wandrell.tabletop.stat.valuebox.ValueBox;
 
 @Embeddable
 public final class JPAAttributesHolder implements AttributesHolder {
@@ -44,13 +44,13 @@ public final class JPAAttributesHolder implements AttributesHolder {
     public JPAAttributesHolder(final JPAAttributesHolder attributes) {
         super();
 
-        actions = attributes.actions.createNewInstance();
-        agility = attributes.agility.createNewInstance();
-        combat = attributes.combat.createNewInstance();
-        precision = attributes.precision.createNewInstance();
-        strength = attributes.strength.createNewInstance();
-        tech = attributes.tech.createNewInstance();
-        toughness = attributes.toughness.createNewInstance();
+        actions = new DefaultValueBox(attributes.actions.getValue());
+        agility = new DefaultValueBox(attributes.agility.getValue());
+        combat = new DefaultValueBox(attributes.combat.getValue());
+        precision = new DefaultValueBox(attributes.precision.getValue());
+        strength = new DefaultValueBox(attributes.strength.getValue());
+        tech = new DefaultValueBox(attributes.tech.getValue());
+        toughness = new DefaultValueBox(attributes.toughness.getValue());
 
         setAttributesListeners();
     }

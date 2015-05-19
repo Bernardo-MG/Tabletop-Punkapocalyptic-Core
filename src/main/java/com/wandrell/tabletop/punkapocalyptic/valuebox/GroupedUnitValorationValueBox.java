@@ -15,13 +15,14 @@
  */
 package com.wandrell.tabletop.punkapocalyptic.valuebox;
 
-import com.wandrell.tabletop.event.ValueChangeEvent;
-import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
-import com.wandrell.tabletop.valuebox.AbstractValueBox;
-import com.wandrell.tabletop.valuebox.ValueBox;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
+import com.wandrell.tabletop.stat.event.ValueChangeListener;
+import com.wandrell.tabletop.stat.valuebox.AbstractValueBoxEventFirer;
+import com.wandrell.tabletop.stat.valuebox.ValueBox;
 
-public final class GroupedUnitValorationValueBox extends AbstractValueBox {
+public final class GroupedUnitValorationValueBox extends
+        AbstractValueBoxEventFirer {
 
     private final ValueChangeListener listener;
     private final ValueBox            size;
@@ -57,13 +58,13 @@ public final class GroupedUnitValorationValueBox extends AbstractValueBox {
     }
 
     @Override
-    public final GroupedUnitValorationValueBox createNewInstance() {
-        return new GroupedUnitValorationValueBox(this);
+    public final Integer getValue() {
+        return getUnit().getValoration() * getSize().getValue();
     }
 
     @Override
-    public final Integer getValue() {
-        return getUnit().getValoration() * getSize().getValue();
+    public final void setValue(final Integer value) {
+        throw new UnsupportedOperationException("Setting the value is disabled");
     }
 
     private final ValueBox getSize() {

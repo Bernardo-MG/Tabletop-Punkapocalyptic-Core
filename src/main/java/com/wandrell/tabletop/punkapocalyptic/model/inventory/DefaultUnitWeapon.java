@@ -25,8 +25,8 @@ import java.util.Objects;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.event.ValueChangeEvent;
 import com.wandrell.tabletop.punkapocalyptic.model.event.ValorationListener;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
 
 public final class DefaultUnitWeapon implements UnitWeapon {
 

@@ -25,12 +25,12 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.tabletop.event.ValueChangeEvent;
-import com.wandrell.tabletop.event.ValueChangeListener;
 import com.wandrell.tabletop.punkapocalyptic.model.faction.Faction;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.GangListener;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitEvent;
-import com.wandrell.tabletop.valuebox.ValueBox;
+import com.wandrell.tabletop.stat.event.ValueChangeEvent;
+import com.wandrell.tabletop.stat.event.ValueChangeListener;
+import com.wandrell.tabletop.stat.valuebox.ValueBox;
 
 public final class DefaultGang implements Gang {
 
