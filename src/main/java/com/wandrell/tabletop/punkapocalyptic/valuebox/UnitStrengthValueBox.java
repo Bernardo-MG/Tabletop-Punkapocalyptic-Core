@@ -22,8 +22,8 @@ import com.wandrell.tabletop.punkapocalyptic.model.unit.event.UnitListenerAdapte
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.AttributeBonusMutation;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.MutantUnit;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.mutation.Mutation;
-import com.wandrell.tabletop.stat.event.ValueChangeEvent;
-import com.wandrell.tabletop.stat.valuebox.AbstractValueBoxEventFirer;
+import com.wandrell.tabletop.stats.event.ValueChangeEvent;
+import com.wandrell.tabletop.stats.valuebox.AbstractValueBoxEventFirer;
 
 public final class UnitStrengthValueBox extends AbstractValueBoxEventFirer {
 

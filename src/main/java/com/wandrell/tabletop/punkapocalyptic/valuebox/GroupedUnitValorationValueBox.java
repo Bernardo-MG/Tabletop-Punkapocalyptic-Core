@@ -16,10 +16,10 @@
 package com.wandrell.tabletop.punkapocalyptic.valuebox;
 
 import com.wandrell.tabletop.punkapocalyptic.model.unit.Unit;
-import com.wandrell.tabletop.stat.event.ValueChangeEvent;
-import com.wandrell.tabletop.stat.event.ValueChangeListener;
-import com.wandrell.tabletop.stat.valuebox.AbstractValueBoxEventFirer;
-import com.wandrell.tabletop.stat.valuebox.ValueBox;
+import com.wandrell.tabletop.stats.event.ValueChangeEvent;
+import com.wandrell.tabletop.stats.event.ValueChangeListener;
+import com.wandrell.tabletop.stats.valuebox.AbstractValueBoxEventFirer;
+import com.wandrell.tabletop.stats.valuebox.ValueBox;
 
 public final class GroupedUnitValorationValueBox extends
         AbstractValueBoxEventFirer {
