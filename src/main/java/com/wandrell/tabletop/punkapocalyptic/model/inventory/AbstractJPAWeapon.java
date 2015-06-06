@@ -23,8 +23,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.persistence.PersistenceEntity;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.JPASpecialRule;
-import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "Weapon")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

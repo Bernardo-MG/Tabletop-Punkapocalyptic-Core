@@ -29,9 +29,9 @@ import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.persistence.PersistenceEntity;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.JPAAttributesHolder;
-import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "Mutation")
 @Table(name = "mutations")

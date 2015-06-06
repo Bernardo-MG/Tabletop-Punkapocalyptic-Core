@@ -36,10 +36,10 @@ import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.persistence.PersistenceEntity;
 import com.wandrell.tabletop.punkapocalyptic.model.availability.option.JPAWeaponOption;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.JPAUnitTemplate;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
-import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "UnitWeaponAvailability")
 @Table(name = "unit_weapons")

@@ -23,10 +23,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.persistence.PersistenceEntity;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.JPASpecialRule;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.AttributesHolder;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.stats.JPAAttributesHolder;
-import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "UnitTemplate")
 @Table(name = "unit_templates")

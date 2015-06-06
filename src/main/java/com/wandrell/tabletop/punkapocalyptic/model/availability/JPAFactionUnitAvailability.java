@@ -35,12 +35,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.persistence.PersistenceEntity;
 import com.wandrell.tabletop.punkapocalyptic.model.faction.Faction;
 import com.wandrell.tabletop.punkapocalyptic.model.faction.JPAFaction;
 import com.wandrell.tabletop.punkapocalyptic.model.ruleset.JPAConstraintData;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.JPAUnitTemplate;
 import com.wandrell.tabletop.punkapocalyptic.model.unit.UnitTemplate;
-import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "FactionUnitAvailability")
 @Table(name = "faction_units")

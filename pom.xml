@@ -117,7 +117,7 @@
 		<slf4j.version>1.7.7</slf4j.version>
 		<tabletop.version>0.1.0-SNAPSHOT</tabletop.version>
 		<testng.version>6.8.8</testng.version>
-		<wandrell.utils.version>0.1.0-SNAPSHOT</wandrell.utils.version>
+		<wandrell.persistence.version>0.1.0-SNAPSHOT</wandrell.persistence.version>
 		<!-- Plugins versions -->
 		<plugin.checkstyle.version>2.13</plugin.checkstyle.version>
 		<plugin.compiler.version>3.2</plugin.compiler.version>
@@ -141,11 +141,6 @@
 
 	<repositories>
 		<repository>
-			<id>wandrell-releases</id>
-			<name>Wandrell releases repository</name>
-			<url>http://dl.bintray.com/bernardo-mg/maven</url>
-		</repository>
-		<repository>
 			<id>wandrell-snapshots</id>
 			<name>Wandrell snapshots repository</name>
 			<url>http://maven.wandrell.com</url>
@@ -160,10 +155,10 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
-			<!-- Java Utils -->
+			<!-- Java Persistence Utils -->
 			<groupId>com.wandrell</groupId>
-			<artifactId>java-utils</artifactId>
-			<version>${wandrell.utils.version}</version>
+			<artifactId>persistence-utils</artifactId>
+			<version>${wandrell.persistence.version}</version>
 		</dependency>
 		<dependency>
 			<!-- Jaxen -->

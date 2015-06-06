@@ -31,8 +31,8 @@ import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.wandrell.persistence.PersistenceEntity;
 import com.wandrell.tabletop.procedure.ConstraintData;
-import com.wandrell.util.persistence.PersistenceEntity;
 
 /**
  * Default implementation of {@link ConstraintData};

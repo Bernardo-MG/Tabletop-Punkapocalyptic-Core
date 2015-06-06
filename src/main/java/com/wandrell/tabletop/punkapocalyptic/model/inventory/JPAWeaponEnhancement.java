@@ -25,7 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
-import com.wandrell.util.persistence.PersistenceEntity;
+import com.wandrell.persistence.PersistenceEntity;
 
 @Entity(name = "WeaponEnhancement")
 @Table(name = "weapon_enhancement")

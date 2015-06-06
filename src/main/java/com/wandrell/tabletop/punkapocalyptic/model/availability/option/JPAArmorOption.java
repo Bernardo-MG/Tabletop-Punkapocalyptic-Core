@@ -13,9 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
+import com.wandrell.persistence.PersistenceEntity;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.Armor;
 import com.wandrell.tabletop.punkapocalyptic.model.inventory.JPAArmor;
-import com.wandrell.util.persistence.PersistenceEntity;
 
 @Entity(name = "ArmorOption")
 @Table(name = "armor_options")
